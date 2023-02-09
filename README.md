@@ -1,15 +1,27 @@
-## NextJS project bootstrapped with several features.
+# News Aggregator
 
-- yarn as a package manager
-- TypeScript Support
-- ESLint and Code Formatting Configurations
-- TailwindCss Support
-- Git commit message linting and formatting hooks
-- src directory structure
+## RoadMap
 
-Upcoming Features
+Structure & Language:
 
-- [ ] Ready to use theme template
-- [ ] Separate branch with NextAuth configured
-- [ ] Separate branch with Redux configured
-- [ ] Separate branch with Context API configured
+- Atomic Design: atoms, molecules, organisms
+- Typescript
+
+Frontend:
+
+- UI: React, MUI Components
+- State Management: Context API
+
+Backend:
+
+- NodeJS & NextJS (SSR)
+- Database: SQL
+  - PostgresSQL
+    - gg: node client for connecting to postgres
+    - prisma: ORM for postgres
+
+External APIs:
+
+- News API (newsapi.org) - This API provides a simple and easy-to-use interface to access news articles from over 70,000 sources, including major news outlets such as CNN, BBC, The New York Times, and more.
+- Google News API (news.google.com) - This API provides access to Google's database of news articles, which includes articles from a wide range of sources and is updated in real-time.
+- Microsoft News API (docs.microsoft.com) - This API provides access to a range of news sources, including news outlets, blogs, and other sources. The API uses machine learning algorithms to provide personalized news recommendations for each user.
