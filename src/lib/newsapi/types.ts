@@ -229,6 +229,11 @@ export interface INewsApiArticle {
    * The unformatted content of the article, where available. This is truncated to 200 chars.
    */
   content: string | null;
+
+  /**
+   * The category used to query the article.
+   */
+  category: ApiNewsCategory | null;
 }
 
 /**

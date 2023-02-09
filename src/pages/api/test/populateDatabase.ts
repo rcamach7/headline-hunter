@@ -1,4 +1,5 @@
 import Newsapi, { ApiNewsCategory } from '../../../lib/newsapi';
+import { PrismaClient } from '@prisma/client';
 
 const newsClient = new Newsapi(process.env.NEWS_API_KEY);
 const defaultCategories: ApiNewsCategory[] = [
@@ -23,6 +24,9 @@ async function getTopNewsByCategory(category: ApiNewsCategory) {
 async function getDefaultNews() {
   const promises = defaultCategories.map(async (category) => {
     const topNews = await getTopNewsByCategory(category);
+    topNews.articles.forEach((article) => {
+      article.category = category;
+    });
     return topNews.articles;
   });
 
@@ -36,6 +40,7 @@ async function getDefaultNews() {
 }
 
 export default async function handler(req, res) {
+  const prisma = new PrismaClient();
   const newsArticles = await getDefaultNews();
 
   res.status(200).json(newsArticles);
