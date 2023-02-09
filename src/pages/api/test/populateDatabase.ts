@@ -1,17 +1,12 @@
 import Newsapi, { ApiNewsCategory } from '../../../lib/newsapi';
 
 const newsClient = new Newsapi(process.env.NEWS_API_KEY);
-const defaultCategories = [
+const defaultCategories: ApiNewsCategory[] = [
   'business',
-  'entertainment',
-  'general',
-  'health',
-  'science',
-  'sports',
-  'technology',
-  'environment',
-  'politics',
-  'lifestyle',
+  // 'entertainment',
+  // 'sports',
+  // 'technology',
+  // 'politics',
 ];
 
 async function getTopNewsByCategory(category: ApiNewsCategory) {
@@ -23,4 +18,25 @@ async function getTopNewsByCategory(category: ApiNewsCategory) {
   });
 
   return topHeadlines;
+}
+
+async function getDefaultNews() {
+  const promises = defaultCategories.map(async (category) => {
+    const topNews = await getTopNewsByCategory(category);
+    return topNews.articles;
+  });
+
+  const nestedArticles = await Promise.all(promises);
+  const newsArticles = nestedArticles.reduce(
+    (acc, articles) => acc.concat(articles),
+    []
+  );
+
+  return newsArticles;
+}
+
+export default async function handler(req, res) {
+  const newsArticles = await getDefaultNews();
+
+  res.status(200).json(newsArticles);
 }

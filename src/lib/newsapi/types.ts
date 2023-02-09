@@ -87,11 +87,28 @@ export type ApiNewsResponseStatus = 'ok' | 'error';
 export type ApiNewsCategory =
   | 'business'
   | 'entertainment'
-  | 'general'
+  | 'General'
   | 'health'
   | 'science'
   | 'sports'
-  | 'technology';
+  | 'technology'
+  | 'environment'
+  | 'politics'
+  | 'gaming'
+  | 'music'
+  | 'travel'
+  | 'tv-and-film'
+  | 'world'
+  | 'us'
+  | 'books'
+  | 'art'
+  | 'automobiles'
+  | 'culinary'
+  | 'finance'
+  | 'lifestyle'
+  | 'real-estate'
+  | 'fashion'
+  | 'food';
 
 /**
  * Possible options: relevancy, popularity, publishedAt.
