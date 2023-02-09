@@ -1,5 +1,7 @@
 # News Aggregator
 
+Our news aggregator website aggregates articles from a variety of sources and presents them in a unified interface. This allows users to easily access a range of news and stay updated on current events from a variety of perspectives.
+
 ## RoadMap
 
 Structure & Language:
@@ -14,7 +16,7 @@ Frontend:
 
 Backend:
 
-- NodeJS & NextJS (SSR)
+- Node & Next.js (SSR)
 - Database: SQL
   - PostgresSQL
     - gg: node client for connecting to postgres
