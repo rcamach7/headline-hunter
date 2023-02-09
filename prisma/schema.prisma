@@ -7,7 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id   Int    @id @default(autoincrement())
-  name String
+model Article {
+  id          String     @id @default(uuid())
+  insertedAt  DateTime   @default(now())
+  sourceId    String
+  sourceName  String
+  author      String?
+  title       String
+  description String
+  url         String
+  urlToImage  String
+  publishedAt DateTime
+  content     String
+  categories  Category[]
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  articles    Article[]
 }
