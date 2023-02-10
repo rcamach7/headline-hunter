@@ -24,11 +24,12 @@ model Article {
 }
 
 model Category {
-  id         String    @id @default(uuid())
-  type       String
-  articles   Article[]
-  savedBy    User[]    @relation("SavedCategories")
-  dislikedBy User[]    @relation("DislikedCategories")
+  id          String    @id @default(uuid())
+  type        String
+  lastUpdated DateTime  @default(now())
+  articles    Article[]
+  savedBy     User[]    @relation("SavedCategories")
+  dislikedBy  User[]    @relation("DislikedCategories")
 }
 
 model User {
