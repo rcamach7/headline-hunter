@@ -18,30 +18,117 @@ async function getTopNewsByCategory(category: ApiNewsCategory) {
     page: 1,
   });
 
-  return topHeadlines;
+  return topHeadlines.articles;
 }
 
 async function getDefaultNews() {
-  const promises = defaultCategories.map(async (category) => {
-    const topNews = await getTopNewsByCategory(category);
-    topNews.articles.forEach((article) => {
-      article.category = category;
-    });
-    return topNews.articles;
+  // P1: Query all categories that are defined as default news categories.
+  const prisma = new PrismaClient();
+  const categories = await prisma.category.findMany({
+    where: {
+      type: {
+        in: defaultCategories,
+      },
+    },
   });
 
-  const nestedArticles = await Promise.all(promises);
-  const newsArticles = nestedArticles.reduce(
-    (acc, articles) => acc.concat(articles),
-    []
-  );
+  // P:2 Traverse each category, and check the lastUpdated field.
+  const promises = categories.map(async (category) => {
+    const lastUpdated = new Date(category.lastUpdated);
+    const now = new Date();
+    const diff = now.getTime() - lastUpdated.getTime();
+    const diffHours = Math.floor(diff / 1000 / 60 / 60);
 
-  return newsArticles;
+    // P:2.1 If the lastUpdated field is older than 1 day,
+    // then query NewsAPI for new articles from that category type.
+    if (diffHours > 1) {
+      const articles = await getTopNewsByCategory(
+        category.type as ApiNewsCategory
+      );
+      /**
+       * P:2.1.1 Add all the articles returned into the Articles table.
+       * The category field must be set to the category that was queried.
+       */
+      const newArticles = await prisma.article.createMany({
+        data: articles.map((article) => ({
+          author: article.author,
+          title: article.title,
+          description: article.description,
+          content: article.content,
+          url: article.url,
+          urlToImage: article.urlToImage,
+          publishedAt: article.publishedAt,
+          sourceId: article.source.name,
+          sourceName: article.source.name,
+          categories: {
+            connect: {
+              id: category.id,
+            },
+          },
+        })),
+      });
+      const articleIds = newArticles.data.map((article) => article.id);
+
+      /** P: 2.1.2
+       *  Update that category to have reference to each article just queried.
+       */
+      await prisma.category.update({
+        where: {
+          id: category.id,
+        },
+        data: {
+          articles: {
+            connect: newArticles.map((article) => ({
+              id: article.id,
+            })),
+          },
+          lastUpdated: now,
+        },
+      });
+
+      // const updatedCategory = await prisma.category.update({
+      //   where: {
+      //     id: category.id,
+      //   },
+      //   data: {
+      //     articles: {
+      //       create: articles.map((article) => ({
+      //         author: article.author,
+      //         title: article.title,
+      //         description: article.description,
+      //         content: article.content,
+      //         url: article.url,
+      //         urlToImage: article.urlToImage,
+      //         publishedAt: article.publishedAt,
+      //         sourceId: article.source.name,
+      //         sourceName: article.source.name,
+      //         categories: {
+      //           connect: {
+      //             id: category.id,
+      //           },
+      //         },
+      //       })),
+      //     },
+      //     lastUpdated: now,
+      //   },
+      // });
+      // return updatedCategory;
+    } else {
+      return category;
+    }
+  });
+
+  // const nestedArticles = await Promise.all(promises);
+  // const newsArticles = nestedArticles.reduce(
+  //   (acc, articles) => acc.concat(articles),
+  //   []
+  // );
+
+  return categories;
 }
 
 export default async function handler(req, res) {
-  const prisma = new PrismaClient();
-  const newsArticles = await getDefaultNews();
+  const categories = await getDefaultNews();
 
-  res.status(200).json(newsArticles);
+  res.status(200).json(categories);
 }
