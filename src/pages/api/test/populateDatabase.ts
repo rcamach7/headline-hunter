@@ -4,44 +4,15 @@ import { v4 } from 'uuid';
 
 const defaultCategories: ApiNewsCategory[] = [
   'business',
-  // 'entertainment',
+  'entertainment',
   // 'sports',
   // 'technology',
   // 'politics',
 ];
 
 export default async function handler(req, res) {
-  // const articles = await getDefaultNews();
+  const articles = await getDefaultNews();
 
-  // res.status(200).json(articles);
-  const prisma = new PrismaClient();
-  // await prisma.article.create({
-  //   data: {
-  //     id: v4(),
-  //     author: 'Author',
-  //     title: 'Title2',
-  //     description: 'Description',
-  //     categories: {
-  //       connect: {
-  //         id: 'b4f1136a-8c98-4d7c-ac69-e063f57adce9',
-  //       },
-  //     },
-  //   },
-  // });
-  // await prisma.category.create({
-  //   data: {
-  //     type: 'business',
-  //   },
-  // });
-  const articles = await prisma.article.findUnique({
-    where: {
-      title: 'Title2',
-    },
-    include: {
-      categories: true,
-    },
-  });
-  console.log(articles);
   res.status(200).json({ articles });
 }
 
@@ -72,7 +43,7 @@ async function getDefaultNews() {
      * P:2.1 If the lastUpdated field is older than 1 hour,
      * then query NewsAPI for new articles from that category type.
      */
-    if (diffHours > 0.5) {
+    if (true) {
       const articles = await getTopNewsByCategory(
         category.type as ApiNewsCategory
       );
