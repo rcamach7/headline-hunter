@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Category {
+  id          String    @id @default(uuid())
+  type        String
+  lastUpdated DateTime  @default(now())
+  articles    Article[]
+  savedBy     User[]
+  // dislikedBy  User[]    @relation("DislikedCategories")
+}
+
 model Article {
   id          String     @id @default(uuid())
   insertedAt  DateTime   @default(now())
@@ -20,21 +29,12 @@ model Article {
   sourceId    String?
   sourceName  String?
   categories  Category[]
-  savedBy     User[]     @relation("SavedArticles")
-}
-
-model Category {
-  id          String    @id @default(uuid())
-  type        String
-  lastUpdated DateTime  @default(now())
-  articles    Article[]
-  savedBy     User[]    @relation("SavedCategories")
-  dislikedBy  User[]    @relation("DislikedCategories")
+  savedBy     User[]
 }
 
 model User {
-  id                 String     @id @default(uuid())
-  savedArticles      Article[]  @relation("SavedArticles")
-  savedCategories    Category[] @relation("SavedCategories")
-  dislikedCategories Category[] @relation("DislikedCategories")
+  id              String     @id @default(uuid())
+  savedArticles   Article[]
+  savedCategories Category[]
+  // dislikedCategories Category[] @relation("DislikedCategories")
 }
