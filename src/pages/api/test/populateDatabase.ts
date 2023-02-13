@@ -1,5 +1,5 @@
 import Newsapi, { ApiNewsCategory } from '../../../lib/newsapi';
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../../lib/prisma';
 import { v4 } from 'uuid';
 
 const defaultCategories: ApiNewsCategory[] = [
@@ -21,7 +21,6 @@ async function getDefaultNews() {
    * P1: Query all categories that are defined as default news categories.
    * TODO: If a category is not found, create it.
    */
-  const prisma = new PrismaClient();
   ensureDefaultCategoriesExist();
   const categories = await prisma.category.findMany({
     where: {
@@ -138,7 +137,6 @@ async function getTopNewsByCategory(category: ApiNewsCategory) {
 }
 
 async function ensureDefaultCategoriesExist() {
-  const prisma = new PrismaClient();
   for (const category of defaultCategories) {
     const existingCategory = await prisma.category.findFirst({
       where: {
