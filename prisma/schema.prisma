@@ -10,7 +10,7 @@ datasource db {
 model Article {
   id          String     @id @default(uuid())
   insertedAt  DateTime   @default(now())
-  author      String?
+  author      String
   title       String     @unique
   description String?
   content     String?

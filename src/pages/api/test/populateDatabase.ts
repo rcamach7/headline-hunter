@@ -54,15 +54,15 @@ async function getDefaultNews() {
       await prisma.article.createMany({
         data: articles.map((article) => ({
           id: article.id,
-          author: article.author,
+          author: article.author ? article.author : 'Unknown',
           title: article.title,
           description: article.description,
           content: article.content,
           url: article.url,
           urlToImage: article.urlToImage,
-          publishedAt: article.publishedAt,
-          sourceId: article.source.name,
-          sourceName: article.source.name,
+          publishedAt: article.publishedAt ? article.publishedAt : now,
+          sourceId: article.source.name ? article.source.name : 'Unknown',
+          sourceName: article.source.name ? article.source.name : 'Unknown',
           categories: {
             connect: {
               id: category.id,
