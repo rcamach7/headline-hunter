@@ -11,9 +11,9 @@ const defaultCategories: ApiNewsCategory[] = [
 ];
 
 export default async function handler(req, res) {
-  const articles = await getDefaultNews();
+  // const articles = await getDefaultNews();
 
-  res.status(200).json({ articles });
+  res.status(200).json({});
 }
 
 async function getDefaultNews() {
@@ -33,7 +33,7 @@ async function getDefaultNews() {
   /**
    * P:2 Traverse each category, and check the lastUpdated field.
    */
-  const promises = categories.map(async (category) => {
+  const updateCategoryArticlesPromises = categories.map(async (category) => {
     const lastUpdated = new Date(category.lastUpdated);
     const now = new Date();
     const diff = now.getTime() - lastUpdated.getTime();
@@ -43,7 +43,7 @@ async function getDefaultNews() {
      * P:2.1 If the lastUpdated field is older than 1 hour,
      * then query NewsAPI for new articles from that category type.
      */
-    if (true) {
+    if (diffHours > 1) {
       const articles = await getTopNewsByCategory(
         category.type as ApiNewsCategory
       );
@@ -51,61 +51,67 @@ async function getDefaultNews() {
        * P:2.1.1 Add all the articles returned into the Articles table.
        * The category field must be set to the category that was queried.
        */
-      await prisma.article.createMany({
-        data: articles.map((article) => ({
-          id: article.id,
-          author: article.author ? article.author : 'Unknown',
-          title: article.title,
-          description: article.description,
-          content: article.content,
-          url: article.url,
-          urlToImage: article.urlToImage,
-          publishedAt: article.publishedAt ? article.publishedAt : now,
-          sourceId: article.source.name ? article.source.name : 'Unknown',
-          sourceName: article.source.name ? article.source.name : 'Unknown',
-          categories: {
-            connect: {
-              id: category.id,
-            },
-          },
-        })),
-      });
-
-      /**
-       * P: 2.1.2 Update that category to have reference
-       * to each article just queried.
-       */
-      const updatedCategory = await prisma.category.update({
-        where: {
-          id: category.id,
-        },
-        data: {
-          articles: {
-            connect: articles.map((article) => ({
+      const createArticlesPromises = articles.map((article) =>
+        prisma.article
+          .create({
+            data: {
               id: article.id,
-            })),
-          },
-          lastUpdated: now,
-        },
-      });
-
-      return updatedCategory;
-    } else {
-      return category;
+              author: article.author ? article.author : 'Unknown',
+              title: article.title,
+              description: article.description,
+              content: article.content,
+              url: article.url,
+              urlToImage: article.urlToImage,
+              publishedAt: article.publishedAt ? article.publishedAt : now,
+              sourceId: article.source.name ? article.source.name : 'Unknown',
+              sourceName: article.source.name ? article.source.name : 'Unknown',
+              categories: {
+                connect: {
+                  id: category.id,
+                },
+              },
+            },
+          })
+          /**
+           * P: 2.1.2 Update that category to have reference
+           * to each article just queried.
+           */
+          .then((createdArticle) => {
+            return prisma.category.update({
+              where: {
+                id: category.id,
+              },
+              data: {
+                articles: {
+                  connect: {
+                    id: createdArticle.id,
+                  },
+                },
+              },
+            });
+          })
+          .catch((error) => {
+            console.error(
+              `An error occurred while creating article with ID: ${article.id}`
+            );
+            console.error(error);
+          })
+      );
+      await Promise.all(createArticlesPromises);
     }
   });
+  await Promise.all(updateCategoryArticlesPromises);
 
   /**
    * P:3 Return a complete collection of all
    * articles under these default categories, now that it's all up to date.
    */
-  const updatedCategories = await Promise.all(promises);
   const allArticles = await prisma.article.findMany({
     where: {
       categories: {
         some: {
           id: {
-            in: updatedCategories.map((category) => category.id),
+            in: categories.map((category) => category.id),
           },
         },
       },
