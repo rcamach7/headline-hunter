@@ -11,9 +11,9 @@ const defaultCategories: ApiNewsCategory[] = [
 ];
 
 export default async function handler(req, res) {
-  // const articles = await getDefaultNews();
+  const articles = await getDefaultNews();
 
-  res.status(200).json({});
+  res.status(200).json({ articles });
 }
 
 async function getDefaultNews() {
@@ -22,6 +22,7 @@ async function getDefaultNews() {
    * TODO: If a category is not found, create it.
    */
   const prisma = new PrismaClient();
+  ensureDefaultCategoriesExist();
   const categories = await prisma.category.findMany({
     where: {
       type: {
@@ -134,4 +135,22 @@ async function getTopNewsByCategory(category: ApiNewsCategory) {
     id: v4() as string,
     ...article,
   }));
+}
+
+async function ensureDefaultCategoriesExist() {
+  const prisma = new PrismaClient();
+  for (const category of defaultCategories) {
+    const existingCategory = await prisma.category.findFirst({
+      where: {
+        type: category,
+      },
+    });
+    if (!existingCategory) {
+      await prisma.category.create({
+        data: {
+          type: category,
+        },
+      });
+    }
+  }
 }
