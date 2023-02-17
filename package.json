@@ -13,6 +13,9 @@
     "commit-msg": "node ci/commit-msg.mjs $1"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.9",
     "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.10.0",
     "newsapi": "^2.4.1",
