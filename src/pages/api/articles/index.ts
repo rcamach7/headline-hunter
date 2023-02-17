@@ -1,5 +1,5 @@
-import Newsapi, { ApiNewsCategory } from '../../../lib/newsapi';
-import prisma from '../../../lib/prisma';
+import Newsapi, { ApiNewsCategory } from '@/lib/newsapi';
+import prisma from '@/lib/prisma';
 import { v4 } from 'uuid';
 
 const defaultCategories: ApiNewsCategory[] = [
