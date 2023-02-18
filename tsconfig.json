@@ -3,7 +3,10 @@
     "baseUrl": ".",
     "paths": {
       "@/auth/*": ["src/pages/api/auth/*"],
-      "@/lib/*": ["src/lib/*"]
+      "@/lib/*": ["src/lib/*"],
+      "@/components/atoms": ["src/components/atoms/index.ts"],
+      "@/components/molecules": ["src/components/molecules/index.ts"],
+      "@/components/organisms": ["src/components/organisms/index.ts"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
