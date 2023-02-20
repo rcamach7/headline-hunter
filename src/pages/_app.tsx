@@ -8,9 +8,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
         <AppBar />
         <Component {...pageProps} />
+        <CssBaseline />
       </ThemeProvider>
     </SessionProvider>
   );
