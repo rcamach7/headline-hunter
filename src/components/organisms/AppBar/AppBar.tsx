@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
 import {
   AppBar,
   Box,
@@ -12,7 +11,8 @@ import {
   IconButton,
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon } from '@mui/icons-material';
-import Image from 'next/image';
+import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
+import DynamicLogo from './DynamicLogo';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -80,35 +80,9 @@ export default function SearchAppBar() {
               ))}
             </Menu>
           </Box>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: 'flex', sm: 'none', alignItems: 'center' },
-              minWidth: 50,
-              pr: 1,
-            }}
-          >
-            <Image
-              src="/h_h.svg"
-              alt="Headline Hunter"
-              width={50}
-              height={50}
-            />
-          </Box>
 
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: 'none', sm: 'flex', alignItems: 'center' },
-            }}
-          >
-            <Image
-              src="/headline_hunter.svg"
-              alt="Headline Hunter"
-              width={200}
-              height={50}
-            />
-          </Box>
+          {/* Renders S/M Logo Based On ScreenSize */}
+          <DynamicLogo />
 
           <Search>
             <SearchIconWrapper>
