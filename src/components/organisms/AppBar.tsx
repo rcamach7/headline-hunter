@@ -84,7 +84,8 @@ export default function SearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ pl: { xs: 0, md: 3 } }}>
+          {/* MOBILE MENU HAMBURGER BUTTON */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -130,6 +131,7 @@ export default function SearchAppBar() {
           >
             Headline Hunter
           </Typography>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -142,7 +144,7 @@ export default function SearchAppBar() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, pl: 1 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
