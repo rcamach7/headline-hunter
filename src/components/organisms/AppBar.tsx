@@ -13,6 +13,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon } from '@mui/icons-material';
+import Image from 'next/image';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -86,7 +87,7 @@ export default function SearchAppBar() {
       <AppBar position="static">
         <Toolbar sx={{ pl: { xs: 0, md: 3 } }}>
           {/* MOBILE MENU HAMBURGER BUTTON */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -122,15 +123,35 @@ export default function SearchAppBar() {
               ))}
             </Menu>
           </Box>
-
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'flex', sm: 'none', alignItems: 'center' },
+              minWidth: 50,
+              pr: 1,
+            }}
           >
-            Headline Hunter
-          </Typography>
+            <Image
+              src="/h_h.svg"
+              alt="Headline Hunter"
+              width={50}
+              height={50}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', sm: 'flex', alignItems: 'center' },
+            }}
+          >
+            <Image
+              src="/headline_hunter.svg"
+              alt="Headline Hunter"
+              width={200}
+              height={50}
+            />
+          </Box>
 
           <Search>
             <SearchIconWrapper>
