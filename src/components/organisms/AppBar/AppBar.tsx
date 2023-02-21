@@ -45,7 +45,7 @@ export default function SearchAppBar() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: 'background.default' }}>
         <Toolbar sx={{ pl: { xs: 0, sm: 2, md: 3 } }}>
           {/* MOBILE MENU HAMBURGER BUTTON */}
           <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
@@ -78,7 +78,11 @@ export default function SearchAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{ background: 'background.default' }}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
