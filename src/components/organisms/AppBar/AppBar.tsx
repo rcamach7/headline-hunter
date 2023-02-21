@@ -13,11 +13,15 @@ import {
 import { Search as SearchIcon, Menu as MenuIcon } from '@mui/icons-material';
 import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
 import DynamicLogo from './DynamicLogo';
+import { signIn, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function SearchAppBar() {
+  const userSession = useSession();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -42,9 +46,9 @@ export default function SearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar sx={{ pl: { xs: 0, md: 3 } }}>
+        <Toolbar sx={{ pl: { xs: 0, sm: 2, md: 3 } }}>
           {/* MOBILE MENU HAMBURGER BUTTON */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -95,9 +99,12 @@ export default function SearchAppBar() {
           </Search>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Open Settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, pl: 1 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt={userSession.data ? userSession.data.user.name : 'Guest'}
+                  src={userSession.data ? userSession.data.user.image : null}
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -116,11 +123,15 @@ export default function SearchAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {userSession.status === 'authenticated' ? (
+                <MenuItem onClick={() => signOut()}>
+                  <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
-              ))}
+              ) : (
+                <MenuItem onClick={() => signIn()}>
+                  <Typography textAlign="center">Sign In</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>
