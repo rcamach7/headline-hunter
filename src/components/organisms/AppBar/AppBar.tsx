@@ -14,14 +14,13 @@ import { Search as SearchIcon, Menu as MenuIcon } from '@mui/icons-material';
 import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
 import DynamicLogo from './DynamicLogo';
 import { signIn, signOut } from 'next-auth/react';
+import { useUserContext } from 'src/context/UserContext';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 
-interface Props {
-  user: { name: string; image: string } | null;
-}
+export default function SearchAppBar() {
+  const user = { name: 'John Doe', image: '/images/avatar.png' };
 
-export default function SearchAppBar({ user }: Props) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -127,7 +126,7 @@ export default function SearchAppBar({ user }: Props) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {user ? (
+              {/* {user ? (
                 <MenuItem onClick={() => signOut()}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
@@ -135,7 +134,15 @@ export default function SearchAppBar({ user }: Props) {
                 <MenuItem onClick={() => signIn()}>
                   <Typography textAlign="center">Sign In</Typography>
                 </MenuItem>
-              )}
+              )} */}
+
+              <MenuItem onClick={() => signOut()}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
+
+              <MenuItem onClick={() => signIn()}>
+                <Typography textAlign="center">Sign In</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

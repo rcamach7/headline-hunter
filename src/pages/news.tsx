@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { AppBar } from '@/components/organisms';
 
 export default function News() {
   return (
@@ -6,6 +7,7 @@ export default function News() {
       <Head>
         <title>HH: News</title>
       </Head>
+      <AppBar />
     </>
   );
 }
