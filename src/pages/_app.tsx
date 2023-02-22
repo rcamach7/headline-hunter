@@ -10,7 +10,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     <SessionProvider session={session}>
       <UserContextProvider>
         <ThemeProvider theme={theme}>
-          <AppBar />
           <Component {...pageProps} />
           <CssBaseline />
         </ThemeProvider>

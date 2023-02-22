@@ -14,14 +14,14 @@ import { Search as SearchIcon, Menu as MenuIcon } from '@mui/icons-material';
 import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
 import DynamicLogo from './DynamicLogo';
 import { signIn, signOut } from 'next-auth/react';
-import { useSession } from 'next-auth/react';
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export default function SearchAppBar() {
-  const userSession = useSession();
+interface Props {
+  user: { name: string; image: string } | null;
+}
 
+export default function SearchAppBar({ user }: Props) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -106,8 +106,8 @@ export default function SearchAppBar() {
             <Tooltip title="Open Settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, pl: 1 }}>
                 <Avatar
-                  alt={userSession.data ? userSession.data.user.name : 'Guest'}
-                  src={userSession.data ? userSession.data.user.image : null}
+                  alt={user ? user.name : 'Guest'}
+                  src={user ? user.image : null}
                 />
               </IconButton>
             </Tooltip>
@@ -127,7 +127,7 @@ export default function SearchAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {userSession.status === 'authenticated' ? (
+              {user ? (
                 <MenuItem onClick={() => signOut()}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
