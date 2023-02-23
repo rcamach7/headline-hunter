@@ -15,11 +15,27 @@ import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
 import DynamicLogo from './DynamicLogo';
 import { signIn, signOut } from 'next-auth/react';
 import { useUserContext } from 'src/context/UserContext';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const pages = ['Products', 'Pricing', 'Blog'];
+let pageOptions = [
+  { path: '/', name: 'Home' },
+  { path: '/news', name: 'News' },
+  { path: '/account', name: 'Account' },
+];
 
 export default function SearchAppBar() {
+  const router = useRouter();
   const { user, preferences } = useUserContext();
+
+  React.useEffect(() => {
+    if (router.pathname) {
+      pageOptions = pageOptions.filter(
+        (option) => option.path !== router.pathname
+      );
+    }
+  }, [router]);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -126,6 +142,17 @@ export default function SearchAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              {pageOptions.map((page, i) => (
+                <MenuItem key={i}>
+                  <Typography textAlign="center">
+                    <Link href={page.path}>
+                      <a style={{ textDecoration: 'none', color: 'inherit' }}>
+                        {page.name}
+                      </a>
+                    </Link>
+                  </Typography>
+                </MenuItem>
+              ))}
               {user ? (
                 <MenuItem onClick={() => signOut()}>
                   <Typography textAlign="center">Logout</Typography>
