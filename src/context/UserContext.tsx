@@ -8,17 +8,19 @@ export const useUserContext = () => useContext(UserContext);
 export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [preferences, setPreferences] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
 
   useEffect(() => {
-    console.log('user', user);
-    console.log('preferences', preferences);
-  }, [user, preferences]);
-
-  useEffect(() => {
     const fetchPreferences = async () => {
-      const { data } = await axios.get('/api/preferences');
-      setPreferences(data.preferences);
+      setIsLoading(true);
+      try {
+        const { data } = await axios.get('/api/preferences');
+        setPreferences(data.preferences);
+      } catch (error) {
+        console.error('Error fetching preferences:', error);
+      }
+      setIsLoading(false);
     };
 
     if (session) {
@@ -31,7 +33,9 @@ export const UserContextProvider = ({ children }) => {
   }, [session]);
 
   return (
-    <UserContext.Provider value={{ user, preferences, setPreferences }}>
+    <UserContext.Provider
+      value={{ user, preferences, setPreferences, isLoading }}
+    >
       {children}
     </UserContext.Provider>
   );
