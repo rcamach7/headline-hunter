@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import axios from 'axios';
 
 export const UserContext = createContext(null);
 export const useUserContext = () => useContext(UserContext);
@@ -11,11 +12,18 @@ export const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     console.log('user', user);
-  }, [user]);
+    console.log('preferences', preferences);
+  }, [user, preferences]);
 
   useEffect(() => {
+    const fetchPreferences = async () => {
+      const { data } = await axios.get('/api/preferences');
+      setPreferences(data.preferences);
+    };
+
     if (session) {
       setUser(session.user);
+      fetchPreferences();
     } else {
       setUser(null);
       setPreferences(null);
