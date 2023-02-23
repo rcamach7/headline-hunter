@@ -19,7 +19,7 @@ import { useUserContext } from 'src/context/UserContext';
 const pages = ['Products', 'Pricing', 'Blog'];
 
 export default function SearchAppBar() {
-  const user = { name: 'John Doe', image: '/images/avatar.png' };
+  const { user, preferences } = useUserContext();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -126,7 +126,7 @@ export default function SearchAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {/* {user ? (
+              {user ? (
                 <MenuItem onClick={() => signOut()}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
@@ -134,15 +134,7 @@ export default function SearchAppBar() {
                 <MenuItem onClick={() => signIn()}>
                   <Typography textAlign="center">Sign In</Typography>
                 </MenuItem>
-              )} */}
-
-              <MenuItem onClick={() => signOut()}>
-                <Typography textAlign="center">Logout</Typography>
-              </MenuItem>
-
-              <MenuItem onClick={() => signIn()}>
-                <Typography textAlign="center">Sign In</Typography>
-              </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>
