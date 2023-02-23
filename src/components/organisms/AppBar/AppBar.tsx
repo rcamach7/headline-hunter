@@ -1,12 +1,11 @@
 import * as React from 'react';
+import { useUserContext } from 'src/context/UserContext';
 import {
   AppBar,
   Box,
   Toolbar,
-  Typography,
   Menu,
   Tooltip,
-  MenuItem,
   Avatar,
   IconButton,
 } from '@mui/material';
@@ -14,9 +13,7 @@ import { Search as SearchIcon, Menu as MenuIcon } from '@mui/icons-material';
 import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
 import DynamicLogo from './DynamicLogo';
 import UserMenuItems from './UserMenuItems';
-import { useUserContext } from 'src/context/UserContext';
-
-const pages = ['Products', 'Pricing', 'Blog'];
+import CategoryMenuItems from './CategoryMenuItems';
 
 export default function SearchAppBar() {
   const { user, preferences } = useUserContext();
@@ -76,15 +73,10 @@ export default function SearchAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ background: 'background.default' }}
-                >
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <CategoryMenuItems
+                preferences={preferences}
+                handleCloseNavMenu={handleCloseNavMenu}
+              />
             </Menu>
           </Box>
 
