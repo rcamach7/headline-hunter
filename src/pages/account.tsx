@@ -9,6 +9,8 @@ export default function Account({ session }) {
       <Head>
         <title>HH: My Account</title>
       </Head>
+
+      <h1>Account Page</h1>
     </>
   );
 }
