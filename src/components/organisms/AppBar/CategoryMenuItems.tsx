@@ -21,7 +21,7 @@ export default function CategoryMenuItems({
 }: Props) {
   return (
     <>
-      {preferences.savedCategories && (
+      {preferences?.savedCategories && (
         <MenuItem disabled={true} sx={{ py: 0, height: 10 }}>
           <Typography textAlign="center" fontSize={12} sx={{ p: 0 }}>
             Favorite Categories
