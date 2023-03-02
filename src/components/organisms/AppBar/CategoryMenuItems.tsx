@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Typography, MenuItem } from '@mui/material';
+import { Typography, MenuItem, Divider } from '@mui/material';
 import { Preferences } from '@/context/UserContext.types';
+import { text } from 'stream/consumers';
 
 interface Props {
   preferences: Preferences | null;
@@ -22,16 +23,19 @@ export default function CategoryMenuItems({
   return (
     <>
       {preferences?.savedCategories && (
-        <MenuItem disabled={true} sx={{ py: 0 }} dense>
-          <Typography textAlign="center" fontSize={12} sx={{ p: 0 }}>
-            Favorite Categories
-          </Typography>
-        </MenuItem>
+        <>
+          <MenuItem disabled={true} sx={{ py: 0 }} dense>
+            <Typography textAlign="center" fontSize={12} sx={{ p: 0 }}>
+              Favorited
+            </Typography>
+          </MenuItem>
+          <Divider sx={{ background: '#7e736c' }} variant="middle" />
+        </>
       )}
 
       <MenuItem disabled={true} sx={{ py: 0 }} dense>
         <Typography textAlign="center" fontSize={12} sx={{ p: 0 }}>
-          Default Categories
+          Default
         </Typography>
       </MenuItem>
       {defaultCategories.map((category) => (
