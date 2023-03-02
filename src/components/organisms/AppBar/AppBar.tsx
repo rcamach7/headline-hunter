@@ -72,6 +72,9 @@ export default function SearchAppBar() {
               sx={{
                 display: { xs: 'block', md: 'none' },
               }}
+              MenuListProps={{
+                dense: true,
+              }}
             >
               <CategoryMenuItems
                 preferences={preferences}
