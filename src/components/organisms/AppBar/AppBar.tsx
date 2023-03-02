@@ -8,6 +8,7 @@ import {
   Tooltip,
   Avatar,
   IconButton,
+  useMediaQuery,
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon } from '@mui/icons-material';
 import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
@@ -17,6 +18,7 @@ import CategoryMenuItems from './CategoryMenuItems';
 
 export default function SearchAppBar() {
   const { user, preferences } = useUserContext();
+  const isWindowDesktop = useMediaQuery('(min-width:600px)');
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -43,8 +45,7 @@ export default function SearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: 'background.default' }}>
         <Toolbar sx={{ pl: { xs: 0, sm: 2, md: 3 } }}>
-          {/* MOBILE MENU HAMBURGER BUTTON */}
-          <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
+          <Box sx={{ display: 'flex' }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -69,11 +70,8 @@ export default function SearchAppBar() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
               MenuListProps={{
-                dense: true,
+                dense: isWindowDesktop ? false : true,
               }}
             >
               <CategoryMenuItems

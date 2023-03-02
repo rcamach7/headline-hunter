@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Typography, MenuItem, Divider } from '@mui/material';
 import { Preferences } from '@/context/UserContext.types';
-import { text } from 'stream/consumers';
 
 interface Props {
   preferences: Preferences | null;
@@ -39,7 +38,7 @@ export default function CategoryMenuItems({
         </Typography>
       </MenuItem>
       {defaultCategories.map((category) => (
-        <MenuItem key={category} onClick={handleCloseNavMenu} sx={{ py: 0 }}>
+        <MenuItem key={category} onClick={handleCloseNavMenu}>
           {category}
         </MenuItem>
       ))}
