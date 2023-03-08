@@ -9,7 +9,7 @@ export default function Home() {
       </Head>
       <AppBar />
 
-      <h1>Home Page</h1>
+      <h3>Summary Of Different News Page</h3>
     </>
   );
 }
