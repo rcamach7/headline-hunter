@@ -16,7 +16,7 @@ export default function DynamicLogo() {
         <Link href="/">
           <a>
             <Image
-              src="/h_h.svg"
+              src="/logos/h_h.svg"
               alt="Headline Hunter"
               width={50}
               height={50}
@@ -34,7 +34,7 @@ export default function DynamicLogo() {
         <Link href="/">
           <a>
             <Image
-              src="/headline_hunter.svg"
+              src="/logos/headline_hunter.svg"
               alt="Headline Hunter"
               width={200}
               height={50}
