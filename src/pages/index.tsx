@@ -9,7 +9,7 @@ export default function Home() {
       </Head>
       <AppBar />
 
-      <h1>Welcome Page</h1>
+      <h3>Welcome Page</h3>
     </>
   );
 }

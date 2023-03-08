@@ -10,7 +10,7 @@ export default function Account({ session }) {
         <title>HH: My Account</title>
       </Head>
 
-      <h1>Account Page</h1>
+      <h3>Account Page</h3>
     </>
   );
 }

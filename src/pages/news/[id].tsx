@@ -9,7 +9,7 @@ export default function Home() {
       </Head>
       <AppBar />
 
-      <h1>Unique Category Page</h1>
+      <h3>Unique Category Page</h3>
     </>
   );
 }
