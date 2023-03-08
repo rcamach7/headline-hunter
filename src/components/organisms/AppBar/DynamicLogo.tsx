@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import Link from 'next/link';
 import Image from 'next/image';
 
 export default function DynamicLogo() {
@@ -12,7 +13,16 @@ export default function DynamicLogo() {
           pr: 1,
         }}
       >
-        <Image src="/h_h.svg" alt="Headline Hunter" width={50} height={50} />
+        <Link href="/">
+          <a>
+            <Image
+              src="/h_h.svg"
+              alt="Headline Hunter"
+              width={50}
+              height={50}
+            />
+          </a>
+        </Link>
       </Box>
 
       <Box
@@ -21,12 +31,16 @@ export default function DynamicLogo() {
           display: { xs: 'none', sm: 'flex', alignItems: 'center' },
         }}
       >
-        <Image
-          src="/headline_hunter.svg"
-          alt="Headline Hunter"
-          width={200}
-          height={50}
-        />
+        <Link href="/">
+          <a>
+            <Image
+              src="/headline_hunter.svg"
+              alt="Headline Hunter"
+              width={200}
+              height={50}
+            />
+          </a>
+        </Link>
       </Box>
     </>
   );

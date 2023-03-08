@@ -1,7 +1,10 @@
 import Head from 'next/head';
 import { AppBar } from '@/components/organisms';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const { query } = useRouter();
+
   return (
     <>
       <Head>
@@ -9,7 +12,7 @@ export default function Home() {
       </Head>
       <AppBar />
 
-      <h3>Unique Category Page</h3>
+      <h3>{query.id} Category Page</h3>
     </>
   );
 }
