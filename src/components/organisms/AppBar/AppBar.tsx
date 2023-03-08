@@ -11,7 +11,6 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon } from '@mui/icons-material';
-import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
 import DynamicLogo from './DynamicLogo';
 import UserMenuItems from './UserMenuItems';
 import CategoryMenuItems from './CategoryMenuItems';
@@ -83,16 +82,6 @@ export default function SearchAppBar() {
 
           {/* Renders S/M Logo Based On ScreenSize */}
           <DynamicLogo />
-
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open Settings">
