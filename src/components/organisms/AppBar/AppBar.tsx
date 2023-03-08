@@ -14,6 +14,7 @@ import { Menu as MenuIcon } from '@mui/icons-material';
 import DynamicLogo from './DynamicLogo';
 import UserMenuItems from './UserMenuItems';
 import CategoryMenuItems from './CategoryMenuItems';
+import Search from './Search';
 
 export default function SearchAppBar() {
   const { user, preferences } = useUserContext();
@@ -82,6 +83,8 @@ export default function SearchAppBar() {
 
           {/* Renders S/M Logo Based On ScreenSize */}
           <DynamicLogo />
+
+          <Search />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open Settings">

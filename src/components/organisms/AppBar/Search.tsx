@@ -1,13 +1,25 @@
 import { default_categories } from '@/lib/categories';
-import { TextField, Autocomplete } from '@mui/material';
+import { TextField, Autocomplete, Box } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function Search() {
   return (
-    <Autocomplete
-      id="free-solo-demo"
-      freeSolo
-      options={default_categories.map((option) => option.title)}
-      renderInput={(params) => <TextField {...params} label="freeSolo" />}
-    />
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        outline: 'auto',
+      }}
+    >
+      <SearchIcon />
+      <Autocomplete
+        id="free-solo-demo"
+        options={default_categories.map((option) => option.title)}
+        renderInput={(params) => (
+          <TextField {...params} label="Search..." variant="standard" />
+        )}
+      />
+    </Box>
   );
 }
