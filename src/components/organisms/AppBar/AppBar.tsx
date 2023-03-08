@@ -10,7 +10,7 @@ import {
   IconButton,
   useMediaQuery,
 } from '@mui/material';
-import { Search as SearchIcon, Menu as MenuIcon } from '@mui/icons-material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import DynamicLogo from './DynamicLogo';
 import UserMenuItems from './UserMenuItems';
 import CategoryMenuItems from './CategoryMenuItems';
