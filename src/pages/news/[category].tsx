@@ -39,7 +39,7 @@ export default function Home() {
         </Head>
         <AppBar />
 
-        <h3>{query.id} Category Page</h3>
+        <h3>{query.category} Category Page</h3>
       </>
     );
   }
