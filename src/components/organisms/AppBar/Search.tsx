@@ -23,6 +23,7 @@ export default function Search() {
         ml: { xs: 'auto', sm: 0 },
         borderRadius: 1,
         p: 0.5,
+        pl: 1,
         alignItems: 'center',
         backgroundColor: `${isFocused ? '#5D5D5D' : '#3b3b3b'}`,
         '& .MuiInput-underline:before': {

@@ -7,14 +7,17 @@ export default function DynamicLogo() {
     <>
       <Box
         sx={{
-          // flexGrow: 0.5,
-          display: { xs: 'flex', sm: 'none', alignItems: 'center' },
+          display: {
+            xs: 'flex',
+            sm: 'none',
+            alignItems: 'center',
+          },
           minWidth: 50,
           pr: 1,
         }}
       >
         <Link href="/">
-          <a>
+          <a style={{ display: 'flex', alignItems: 'center' }}>
             <Image
               src="/logos/h_h.svg"
               alt="Headline Hunter"
@@ -32,7 +35,7 @@ export default function DynamicLogo() {
         }}
       >
         <Link href="/">
-          <a>
+          <a style={{ display: 'flex', alignItems: 'center' }}>
             <Image
               src="/logos/headline_hunter.svg"
               alt="Headline Hunter"
