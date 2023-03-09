@@ -8,12 +8,12 @@ import { useState } from 'react';
 export default function Home() {
   const { query } = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const [isValidId, setIsValidId] = useState(false);
+  const [isValidCategory, setIsValidCategory] = useState(false);
 
   useEffect(() => {
     setIsLoading(!query.category);
     if (query.category && typeof query.category === 'string') {
-      setIsValidId(
+      setIsValidCategory(
         default_categories
           .map((category) => category.slug)
           .includes(query.category)
@@ -21,14 +21,26 @@ export default function Home() {
     }
   }, [query]);
 
-  return (
-    <>
-      <Head>
-        <title>Headline Hunter</title>
-      </Head>
-      <AppBar />
+  if (!isValidCategory || isLoading) {
+    return (
+      <>
+        <Head>
+          <title>Headline Hunter</title>
+        </Head>
+        <AppBar />
+        {isLoading ? <h3>Loading...</h3> : <h3>Invalid Category</h3>}
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Head>
+          <title>Headline Hunter</title>
+        </Head>
+        <AppBar />
 
-      <h3>{query.id} Category Page</h3>
-    </>
-  );
+        <h3>{query.id} Category Page</h3>
+      </>
+    );
+  }
 }
