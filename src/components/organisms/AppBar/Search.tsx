@@ -17,18 +17,20 @@ export default function Search() {
   return (
     <Box
       sx={{
-        maxWidth: isFocused ? 300 : 200,
+        maxWidth: isFocused ? 250 : 200,
+        ml: { xs: 'auto', sm: 0 },
         flexGrow: 1,
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#5D5D5D',
+        backgroundColor: `${isFocused ? '#5D5D5D' : '#3b3b3b'}`,
         borderRadius: 1,
         p: 0.5,
       }}
     >
       <SearchIcon />
       <Autocomplete
-        id="free-solo-demo"
+        id="search-categories"
+        freeSolo
         options={default_categories.map((option) => option.title)}
         renderInput={(params) => (
           <TextField

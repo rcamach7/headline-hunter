@@ -7,7 +7,7 @@ export default function DynamicLogo() {
     <>
       <Box
         sx={{
-          flexGrow: 1,
+          // flexGrow: 0.5,
           display: { xs: 'flex', sm: 'none', alignItems: 'center' },
           minWidth: 50,
           pr: 1,
