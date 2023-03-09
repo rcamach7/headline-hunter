@@ -17,14 +17,20 @@ export default function Search() {
   return (
     <Box
       sx={{
-        maxWidth: isFocused ? 250 : 200,
-        ml: { xs: 'auto', sm: 0 },
         flexGrow: 1,
         display: 'flex',
-        alignItems: 'center',
-        backgroundColor: `${isFocused ? '#5D5D5D' : '#3b3b3b'}`,
+        maxWidth: isFocused ? 250 : 200,
+        ml: { xs: 'auto', sm: 0 },
         borderRadius: 1,
         p: 0.5,
+        alignItems: 'center',
+        backgroundColor: `${isFocused ? '#5D5D5D' : '#3b3b3b'}`,
+        '& .MuiInput-underline:before': {
+          borderBottom: 'none',
+        },
+        '& .MuiInput-underline:after': {
+          borderBottomColor: 'text.primary',
+        },
       }}
     >
       <SearchIcon />
@@ -40,7 +46,7 @@ export default function Search() {
             onBlur={handleBlur}
           />
         )}
-        sx={{ flexGrow: 1 }}
+        sx={{ flexGrow: 1, pl: 0.5 }}
       />
     </Box>
   );
