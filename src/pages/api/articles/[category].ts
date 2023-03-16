@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '@/lib/prisma';
 import { authOptions } from '@/auth/[...nextauth]';
 
 export default async function handler(
@@ -11,6 +12,14 @@ export default async function handler(
 
   switch (req.method) {
     case 'GET':
+      const articles = await prisma.article.findMany({
+        include: {
+          categories: {
+            where: { type: category },
+          },
+        },
+      });
+      res.status(200).json({ articles });
       break;
     default:
       res.setHeader('Allow', ['GET']);

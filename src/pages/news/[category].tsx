@@ -17,11 +17,11 @@ export default function Home() {
       setIsLoading(false);
       if (existsInDefaultCategories(query.category)) {
         setIsValidCategory(true);
-      } else {
-        setIsValidCategory(false);
         fetchCategoryArticles(query.category).then((articles) => {
           setArticles(articles);
         });
+      } else {
+        setIsValidCategory(false);
       }
     } else {
       setIsLoading(true);
@@ -53,6 +53,14 @@ export default function Home() {
 }
 
 async function fetchCategoryArticles(category: string) {
+  try {
+    console.log('fetching category articles: ');
+    const response = await axios.get('/api/articles/' + category);
+    console.log(response);
+  } catch (err) {
+    console.log(err);
+  }
+
   return [];
 }
 
