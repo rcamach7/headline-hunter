@@ -3,6 +3,7 @@ import Newsapi, { ApiNewsCategory } from '@/lib/newsapi';
 import { v4 } from 'uuid';
 
 const MAX_ARTICLES = 20;
+const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
 
 export const getArticlesByCategory = async (category: string) => {
   let articles = [];
@@ -59,13 +60,9 @@ const refreshArticlesByCategory = async (type: string) => {
   const diffHours = Math.floor(diff / 1000 / 60 / 60);
 
   // If the last updated is older than X hours, then update the articles
-  if (diffHours > 4 || newCategory) {
-    console.log('updating articles for category: ' + category.type);
+  if (diffHours > MINIMUM_HOURS_BETWEEN_UPDATES || newCategory) {
     const articles = await getTopNewsByCategory(
       category.type as ApiNewsCategory
-    );
-    console.log(
-      'found ' + articles.length + ' articles for category: ' + category.type
     );
 
     /**
@@ -76,15 +73,15 @@ const refreshArticlesByCategory = async (type: string) => {
         .create({
           data: {
             id: article.id,
-            author: article.author ? article.author : 'Unknown',
-            title: article.title,
-            description: article.description,
-            content: article.content,
-            url: article.url,
-            urlToImage: article.urlToImage,
-            publishedAt: article.publishedAt ? article.publishedAt : now,
-            sourceId: article.source.name ? article.source.name : 'Unknown',
-            sourceName: article.source.name ? article.source.name : 'Unknown',
+            author: article.author ?? 'Unknown',
+            title: article.title ?? 'Unknown',
+            description: article.description ?? 'Unknown',
+            content: article.content ?? 'Unknown',
+            url: article.url ?? 'Unknown',
+            urlToImage: article.urlToImage ?? 'Unknown',
+            publishedAt: article.publishedAt ?? now,
+            sourceId: article.source.name ?? 'Unknown',
+            sourceName: article.source.name ?? 'Unknown',
             categories: {
               connect: {
                 id: category.id,
@@ -131,7 +128,6 @@ const refreshArticlesByCategory = async (type: string) => {
 
     return true;
   } else {
-    console.log('articles for category: ' + category.type + ' are up to date');
     return false;
   }
 };
