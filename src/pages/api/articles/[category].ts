@@ -14,11 +14,17 @@ export default async function handler(
     case 'GET':
       const articles = await prisma.article.findMany({
         include: {
+          categories: true,
+        },
+        where: {
           categories: {
-            where: { type: category },
+            some: {
+              type: category,
+            },
           },
         },
       });
+      console.log(articles);
       res.status(200).json({ articles });
       break;
     default:
