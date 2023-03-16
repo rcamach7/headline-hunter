@@ -12,20 +12,7 @@ export default async function handler(
 
   switch (req.method) {
     case 'GET':
-      const articles = await prisma.article.findMany({
-        include: {
-          categories: true,
-        },
-        where: {
-          categories: {
-            some: {
-              type: category,
-            },
-          },
-        },
-      });
-      console.log(articles);
-      res.status(200).json({ articles });
+      res.status(200).json({});
       break;
     default:
       res.setHeader('Allow', ['GET']);
