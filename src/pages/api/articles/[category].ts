@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '@/lib/prisma';
-import { authOptions } from '@/auth/[...nextauth]';
+import { getArticlesByCategory } from '@/services/articleService';
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +11,9 @@ export default async function handler(
 
   switch (req.method) {
     case 'GET':
-      res.status(200).json({});
+      const articles = await getArticlesByCategory(category as string);
+      console.log(articles);
+      res.status(200).json({ articles });
       break;
     default:
       res.setHeader('Allow', ['GET']);

@@ -3,7 +3,12 @@ import Newsapi, { ApiNewsCategory } from '@/lib/newsapi';
 import { v4 } from 'uuid';
 
 export const getArticlesByCategory = async (category: string) => {
-  await refreshArticlesByCategory(category);
+  try {
+    await refreshArticlesByCategory(category);
+  } catch (error) {
+    console.log('An error occurred while refreshing articles');
+    console.log(error);
+  }
 
   const articles = await prisma.article.findMany({
     include: {
