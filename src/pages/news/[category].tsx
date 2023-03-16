@@ -11,13 +11,11 @@ export default function Home() {
   const [isValidCategory, setIsValidCategory] = useState(false);
 
   useEffect(() => {
-    setIsLoading(!query.category);
     if (query.category && typeof query.category === 'string') {
-      setIsValidCategory(
-        default_categories
-          .map((category) => category.slug)
-          .includes(query.category)
-      );
+      setIsLoading(false);
+      setIsValidCategory(existsInDefaultCategories(query.category));
+    } else {
+      setIsLoading(true);
     }
   }, [query]);
 
@@ -43,4 +41,8 @@ export default function Home() {
       </>
     );
   }
+}
+
+function existsInDefaultCategories(category: string) {
+  return default_categories.map((cat) => cat.slug).includes(category);
 }
