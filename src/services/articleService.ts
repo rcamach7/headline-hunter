@@ -4,6 +4,7 @@ import { v4 } from 'uuid';
 
 const MAX_ARTICLES = 20;
 const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
+const PAST_DAYS_TO_QUERY = 15;
 
 export const getArticlesByCategory = async (category: string) => {
   let articles = [];
@@ -145,7 +146,7 @@ async function getTopNewsByCategory(category: ApiNewsCategory) {
   if (!topHeadlines.articles.length) {
     const currentDate = new Date();
     const fromDate = new Date();
-    fromDate.setDate(currentDate.getDate() - 15);
+    fromDate.setDate(currentDate.getDate() - PAST_DAYS_TO_QUERY);
 
     topHeadlines = await newsClient.getEverything({
       q: category,
