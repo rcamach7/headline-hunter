@@ -2,28 +2,33 @@ import prisma from '@/lib/prisma';
 import Newsapi, { ApiNewsCategory } from '@/lib/newsapi';
 import { v4 } from 'uuid';
 
+const MAX_ARTICLES = 20;
+
 export const getArticlesByCategory = async (category: string) => {
+  let articles = [];
+
   try {
     await refreshArticlesByCategory(category);
+
+    articles = await prisma.article.findMany({
+      include: {
+        categories: true,
+      },
+      where: {
+        categories: {
+          some: {
+            type: category,
+          },
+        },
+      },
+      take: MAX_ARTICLES,
+    });
   } catch (error) {
-    console.log('An error occurred while refreshing articles');
+    console.log('An error occurred while processing articles');
     console.log(error);
   }
 
-  const articles = await prisma.article.findMany({
-    include: {
-      categories: true,
-    },
-    where: {
-      categories: {
-        some: {
-          type: category,
-        },
-      },
-    },
-  });
-
-  return articles || [];
+  return articles;
 };
 
 /**
