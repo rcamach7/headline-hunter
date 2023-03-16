@@ -4,6 +4,7 @@ import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function Home() {
   const { query } = useRouter();
