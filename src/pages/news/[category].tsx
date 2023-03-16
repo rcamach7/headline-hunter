@@ -9,11 +9,19 @@ export default function Home() {
   const { query } = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isValidCategory, setIsValidCategory] = useState(false);
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     if (query.category && typeof query.category === 'string') {
       setIsLoading(false);
-      setIsValidCategory(existsInDefaultCategories(query.category));
+      if (existsInDefaultCategories(query.category)) {
+        setIsValidCategory(true);
+      } else {
+        setIsValidCategory(false);
+        fetchCategoryArticles(query.category).then((articles) => {
+          setArticles(articles);
+        });
+      }
     } else {
       setIsLoading(true);
     }
@@ -41,6 +49,10 @@ export default function Home() {
       </>
     );
   }
+}
+
+async function fetchCategoryArticles(category: string) {
+  return [];
 }
 
 function existsInDefaultCategories(category: string) {
