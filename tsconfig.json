@@ -7,7 +7,8 @@
       "@/context/*": ["src/context/*"],
       "@/components/atoms": ["src/components/atoms/index.ts"],
       "@/components/molecules": ["src/components/molecules/index.ts"],
-      "@/components/organisms": ["src/components/organisms/index.ts"]
+      "@/components/organisms": ["src/components/organisms/index.ts"],
+      "@/services/*": ["src/services/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
