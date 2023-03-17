@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Typography, MenuItem, Divider } from '@mui/material';
 import { Preferences } from '@/context/UserContext.types';
+import Link from 'next/link';
 
 interface Props {
   preferences: Preferences | null;
@@ -39,7 +40,14 @@ export default function CategoryMenuItems({
       </MenuItem>
       {defaultCategories.map((category) => (
         <MenuItem key={category} onClick={handleCloseNavMenu}>
-          {category}
+          <Link href={`/news/${category}`} passHref>
+            <Typography
+              sx={{ color: 'text.primary', textDecoration: 'none' }}
+              variant="body2"
+            >
+              {category}
+            </Typography>
+          </Link>
         </MenuItem>
       ))}
     </>
