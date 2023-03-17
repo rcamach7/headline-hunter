@@ -25,11 +25,15 @@ export type Article = {
 };
 
 export type User = {
-  id: string;
   name?: string;
   email?: string;
-  emailVerified?: boolean;
   image?: string;
+};
+
+export type Preferences = {
+  savedArticles: Article[];
+  savedCategories: Category[];
+  dislikedCategories: Category[];
 };
 
 export {};

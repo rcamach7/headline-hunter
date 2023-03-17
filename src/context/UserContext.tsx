@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { UserContextType } from './UserContext.types';
+import { User, Preferences } from '@/lib/types';
 
 export const UserContext = createContext(null);
 export const useUserContext = (): UserContextType => {
@@ -13,8 +14,8 @@ export const useUserContext = (): UserContextType => {
 };
 
 export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [preferences, setPreferences] = useState(null);
+  const [user, setUser] = useState<User>(null);
+  const [preferences, setPreferences] = useState<Preferences>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
 
