@@ -5,19 +5,26 @@ import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Article } from '@/lib/types';
+import { useUserContext } from '@/context/UserContext';
 
-export default function Home() {
-  const { query } = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
+export default function CategoryPage() {
+  const {
+    query: { cat },
+  } = useRouter();
+  const category = cat as string;
+
   const [isValidCategory, setIsValidCategory] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { preferences } = useUserContext();
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    if (query.category && typeof query.category === 'string') {
+    if (category) {
       setIsLoading(false);
-      if (existsInDefaultCategories(query.category)) {
+      if (existsInDefaultCategories(category)) {
         setIsValidCategory(true);
-        fetchCategoryArticles(query.category).then((articles) => {
+        fetchCategoryArticles(category).then((articles) => {
           setArticles(articles);
         });
       } else {
@@ -26,7 +33,7 @@ export default function Home() {
     } else {
       setIsLoading(true);
     }
-  }, [query]);
+  }, [category]);
 
   if (!isValidCategory || isLoading) {
     return (
@@ -46,7 +53,7 @@ export default function Home() {
         </Head>
         <AppBar />
 
-        <h3>{query.category} Category Page</h3>
+        <h3>{category} Category Page</h3>
       </>
     );
   }

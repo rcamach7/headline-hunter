@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useUserContext } from 'src/context/UserContext';
+import { useUserContext } from '@/context/UserContext';
 import {
   AppBar,
   Box,
