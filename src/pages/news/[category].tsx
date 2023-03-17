@@ -55,11 +55,10 @@ export default function Home() {
 async function fetchCategoryArticles(category: string) {
   try {
     const response = await axios.get('/api/articles/' + category);
-    console.log(response.data.articles);
+    return response.data.articles;
   } catch (err) {
     console.log(err);
   }
-
   return [];
 }
 

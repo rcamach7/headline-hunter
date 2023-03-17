@@ -12,7 +12,6 @@ export default async function handler(
   switch (req.method) {
     case 'GET':
       const articles = await getArticlesByCategory(category as string);
-      console.log(articles);
       res.status(200).json({ articles });
       break;
     default:
