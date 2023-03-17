@@ -1,17 +1,16 @@
 import Head from 'next/head';
+import axios from 'axios';
 import { default_categories } from '@/lib/categories';
 import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Article } from '@/lib/types';
 
 export default function Home() {
   const { query } = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isValidCategory, setIsValidCategory] = useState(false);
-  const [articles, setArticles] = useState([]);
-
-  console.log(articles);
+  const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     if (query.category && typeof query.category === 'string') {
@@ -56,7 +55,7 @@ export default function Home() {
 async function fetchCategoryArticles(category: string) {
   try {
     const response = await axios.get('/api/articles/' + category);
-    return response.data.articles;
+    return response.data.articles as Article[];
   } catch (err) {
     console.log(err);
   }
