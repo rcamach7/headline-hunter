@@ -6,10 +6,11 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Article } from '@/lib/types';
 import { useUserContext } from '@/context/UserContext';
+import { FavoriteCategoryButton } from '@/components/atoms';
 
 export default function CategoryPage() {
   const {
-    query: { cat },
+    query: { category: cat },
   } = useRouter();
   const category = cat as string;
 
@@ -54,6 +55,8 @@ export default function CategoryPage() {
         <AppBar />
 
         <h3>{category} Category Page</h3>
+
+        <FavoriteCategoryButton category={category} preferences={preferences} />
       </>
     );
   }
