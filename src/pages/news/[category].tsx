@@ -2,8 +2,7 @@ import Head from 'next/head';
 import { default_categories } from '@/lib/categories';
 import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function Home() {
