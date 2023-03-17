@@ -11,6 +11,8 @@ export default function Home() {
   const [isValidCategory, setIsValidCategory] = useState(false);
   const [articles, setArticles] = useState([]);
 
+  console.log(articles);
+
   useEffect(() => {
     if (query.category && typeof query.category === 'string') {
       setIsLoading(false);
