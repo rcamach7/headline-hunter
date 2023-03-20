@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import axios from 'axios';
-import { default_categories } from '@/lib/categories';
 import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -13,37 +12,43 @@ export default function CategoryPage() {
     query: { category: cat },
   } = useRouter();
   const categoryId = cat as string;
-  const [isLoading, setIsLoading] = useState(true);
 
   const [categoryArticles, setCategoryArticles] = useState<{
     category: Category;
     articles: Article[];
-  }>({ category: null, articles: [] });
+    isLoading: boolean;
+  }>({ category: null, articles: [], isLoading: true });
 
-  // useEffect(() => {
-  //   if (category) {
-  //     setIsLoading(false);
-  //     if (existsInDefaultCategories(category)) {
-  //       setIsValidCategory(true);
-  //       fetchCategoryArticles(category).then((articles) => {
-  //         setArticles(articles);
-  //       });
-  //     } else {
-  //       setIsValidCategory(false);
-  //     }
-  //   } else {
-  //     setIsLoading(true);
-  //   }
-  // }, [category]);
+  useEffect(() => {
+    if (categoryId) {
+      fetchCategoryArticles(categoryId).then((categoryArticles) => {
+        setCategoryArticles({
+          category: categoryArticles.category,
+          articles: categoryArticles.articles,
+          isLoading: false,
+        });
+      });
+    } else {
+      setCategoryArticles({
+        category: null,
+        articles: [],
+        isLoading: false,
+      });
+    }
+  }, [categoryId]);
 
-  if (!categoryArticles.category || isLoading) {
+  if (!categoryArticles.category || categoryArticles.isLoading) {
     return (
       <>
         <Head>
           <title>Headline Hunter</title>
         </Head>
         <AppBar />
-        {isLoading ? <h3>Loading...</h3> : <h3>Invalid Category</h3>}
+        {categoryArticles.isLoading ? (
+          <h3>Loading...</h3>
+        ) : (
+          <h3>Invalid Category</h3>
+        )}
       </>
     );
   } else {
@@ -54,9 +59,9 @@ export default function CategoryPage() {
         </Head>
         <AppBar />
 
-        <h3>{category} Category Page</h3>
+        <h3>{categoryArticles.category.type} Category Page</h3>
 
-        <FavoriteCategoryButton category={category} />
+        <FavoriteCategoryButton category={categoryArticles.category.id} />
       </>
     );
   }
@@ -64,14 +69,18 @@ export default function CategoryPage() {
 
 async function fetchCategoryArticles(category: string) {
   try {
-    const response = await axios.get('/api/articles/' + category);
-    return response.data.articles as Article[];
+    const articlesResponse = await axios.get('/api/articles/' + category);
+    const categoryResponse = await axios.get('/api/category/' + category);
+
+    return {
+      category: categoryResponse.data.category as Category,
+      articles: articlesResponse.data.articles as Article[],
+    };
   } catch (err) {
     console.log(err);
   }
-  return [];
-}
-
-function existsInDefaultCategories(category: string) {
-  return default_categories.map((cat) => cat.slug).includes(category);
+  return {
+    category: null,
+    articles: [],
+  };
 }
