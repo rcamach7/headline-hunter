@@ -5,7 +5,6 @@ import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Article } from '@/lib/types';
-import { useUserContext } from '@/context/UserContext';
 import { FavoriteCategoryButton } from '@/components/atoms';
 
 export default function CategoryPage() {
@@ -17,7 +16,6 @@ export default function CategoryPage() {
   const [isValidCategory, setIsValidCategory] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { preferences } = useUserContext();
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
@@ -56,7 +54,7 @@ export default function CategoryPage() {
 
         <h3>{category} Category Page</h3>
 
-        <FavoriteCategoryButton category={category} preferences={preferences} />
+        <FavoriteCategoryButton category={category} />
       </>
     );
   }

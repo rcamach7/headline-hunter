@@ -1,17 +1,14 @@
 import { Button } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { Preferences } from '@/lib/types';
+import { useUserContext } from '@/context/UserContext';
 
 interface Props {
   category: string;
-  preferences: Preferences;
 }
 
-export default function FavoriteCategoryButton({
-  category,
-  preferences,
-}: Props) {
+export default function FavoriteCategoryButton({ category }: Props) {
   const [isFavorite, setIsFavorite] = useState(false);
+  const { preferences } = useUserContext();
 
   useEffect(() => {
     if (preferences) {
