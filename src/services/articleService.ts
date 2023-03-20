@@ -6,11 +6,11 @@ const MAX_ARTICLES = 20;
 const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
 const PAST_DAYS_TO_QUERY = 15;
 
-export const getArticlesByCategory = async (category: string) => {
+export const getArticlesByCategory = async (categoryId: string) => {
   let articles = [];
 
   try {
-    await refreshArticlesByCategory(category);
+    await refreshArticlesByCategory(categoryId);
 
     articles = await prisma.article.findMany({
       include: {
@@ -19,7 +19,7 @@ export const getArticlesByCategory = async (category: string) => {
       where: {
         categories: {
           some: {
-            type: category,
+            id: categoryId,
           },
         },
       },
@@ -38,30 +38,23 @@ export const getArticlesByCategory = async (category: string) => {
  * @param type
  * @returns boolean
  */
-const refreshArticlesByCategory = async (type: string) => {
-  let newCategory = false;
+const refreshArticlesByCategory = async (id: string) => {
   let category = await prisma.category.findFirst({
     where: {
-      type,
+      id,
     },
   });
   if (!category) {
-    newCategory = true;
-    category = await prisma.category.create({
-      data: {
-        id: v4() as string,
-        type,
-        lastUpdated: new Date(),
-      },
-    });
+    return;
   }
+
   const lastUpdated = new Date(category.lastUpdated);
   const now = new Date();
   const diff = now.getTime() - lastUpdated.getTime();
   const diffHours = Math.floor(diff / 1000 / 60 / 60);
 
   // If the last updated is older than X hours, then update the articles
-  if (diffHours > MINIMUM_HOURS_BETWEEN_UPDATES || newCategory) {
+  if (diffHours > MINIMUM_HOURS_BETWEEN_UPDATES) {
     const articles = await getTopNewsByCategory(
       category.type as ApiNewsCategory
     );
