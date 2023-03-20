@@ -6,35 +6,37 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Article } from '@/lib/types';
 import { FavoriteCategoryButton } from '@/components/atoms';
+import { Category } from '@/lib/types';
 
 export default function CategoryPage() {
   const {
     query: { category: cat },
   } = useRouter();
   const category = cat as string;
-
-  const [isValidCategory, setIsValidCategory] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [categoryArticles, setCategoryArticles] = useState<{
+    category: Category;
+    articles: Article[];
+  }>({ category: null, articles: [] });
 
-  useEffect(() => {
-    if (category) {
-      setIsLoading(false);
-      if (existsInDefaultCategories(category)) {
-        setIsValidCategory(true);
-        fetchCategoryArticles(category).then((articles) => {
-          setArticles(articles);
-        });
-      } else {
-        setIsValidCategory(false);
-      }
-    } else {
-      setIsLoading(true);
-    }
-  }, [category]);
+  // useEffect(() => {
+  //   if (category) {
+  //     setIsLoading(false);
+  //     if (existsInDefaultCategories(category)) {
+  //       setIsValidCategory(true);
+  //       fetchCategoryArticles(category).then((articles) => {
+  //         setArticles(articles);
+  //       });
+  //     } else {
+  //       setIsValidCategory(false);
+  //     }
+  //   } else {
+  //     setIsLoading(true);
+  //   }
+  // }, [category]);
 
-  if (!isValidCategory || isLoading) {
+  if (!categoryArticles.category || isLoading) {
     return (
       <>
         <Head>
