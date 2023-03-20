@@ -14,7 +14,6 @@ export default function Search() {
       .get('/api/category')
       .then((res) => {
         setCategories(res.data.categories);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

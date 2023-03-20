@@ -45,7 +45,7 @@ const refreshArticlesByCategory = async (id: string) => {
     },
   });
   if (!category) {
-    return;
+    return false;
   }
 
   const lastUpdated = new Date(category.lastUpdated);
