@@ -11,9 +11,10 @@ export default function Search() {
 
   useEffect(() => {
     axios
-      .get<Category[]>('/api/categories')
+      .get('/api/category')
       .then((res) => {
-        setCategories(res.data);
+        setCategories(res.data.categories);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
