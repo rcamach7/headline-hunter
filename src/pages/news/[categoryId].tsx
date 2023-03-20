@@ -9,7 +9,7 @@ import { Category } from '@/lib/types';
 
 export default function CategoryPage() {
   const {
-    query: { category: cat },
+    query: { categoryId: cat },
   } = useRouter();
   const categoryId = cat as string;
 
@@ -67,10 +67,10 @@ export default function CategoryPage() {
   }
 }
 
-async function fetchCategoryArticles(category: string) {
+async function fetchCategoryArticles(categoryId: string) {
   try {
-    const articlesResponse = await axios.get('/api/articles/' + category);
-    const categoryResponse = await axios.get('/api/category/' + category);
+    const articlesResponse = await axios.get('/api/articles/' + categoryId);
+    const categoryResponse = await axios.get('/api/category/' + categoryId);
 
     return {
       category: categoryResponse.data.category as Category,
