@@ -1,11 +1,24 @@
-import { useState } from 'react';
-import { default_categories } from '@/lib/categories';
+import { useState, useEffect } from 'react';
+import { Category } from '@/lib/types';
 import { TextField, Autocomplete, Box } from '@mui/material';
 import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
 
 export default function Search() {
   const [isFocused, setIsFocused] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    axios
+      .get<Category[]>('/api/categories')
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -40,12 +53,12 @@ export default function Search() {
         id="search-categories"
         freeSolo
         sx={{ flexGrow: 1, pl: 0.5 }}
-        options={default_categories}
+        options={categories}
         getOptionLabel={(option) => {
           if (typeof option === 'string') {
             return option;
           } else {
-            return option.title;
+            return option.type;
           }
         }}
         renderInput={(params) => (
@@ -58,9 +71,9 @@ export default function Search() {
         )}
         renderOption={(props, option) => (
           <li {...props}>
-            <Link href={`/news/${option.slug}`}>
+            <Link href={`/news/${option.id}`}>
               <a style={{ color: 'inherit', textDecoration: 'none' }}>
-                {option.title}
+                {option.type}
               </a>
             </Link>
           </li>
