@@ -12,7 +12,7 @@ export default function CategoryPage() {
   const {
     query: { category: cat },
   } = useRouter();
-  const category = cat as string;
+  const categoryId = cat as string;
   const [isLoading, setIsLoading] = useState(true);
 
   const [categoryArticles, setCategoryArticles] = useState<{
