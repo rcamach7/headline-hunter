@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getCategoryById } from '@/services/categoryService';
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,8 +11,13 @@ export default async function handler(
 
   switch (req.method) {
     case 'GET':
-      res.status(200).json({});
-      break;
+      const category = await getCategoryById(cid as string);
+      if (!category) {
+        return res.status(404).json({ message: 'Category not found' });
+      } else {
+        return res.status(200).json({ category });
+      }
+
     default:
       res.setHeader('Allow', ['GET']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
