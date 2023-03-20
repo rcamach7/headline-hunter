@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useUserContext } from '@/context/UserContext';
+import axios from 'axios';
 
 interface Props {
   category: string;
@@ -21,6 +22,14 @@ export default function FavoriteCategoryButton({ category }: Props) {
       }
     }
   }, [preferences]);
+
+  function triggerFavorite() {
+    if (isFavorite) {
+      // remove from favorites
+    } else {
+      // add to favorites
+    }
+  }
 
   if (!preferences) return null;
   if (isFavorite) {
