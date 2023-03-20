@@ -3,9 +3,8 @@ import axios from 'axios';
 import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Article } from '@/lib/types';
+import { Article, Category } from '@/lib/types';
 import { FavoriteCategoryButton } from '@/components/atoms';
-import { Category } from '@/lib/types';
 
 export default function CategoryPage() {
   const {
