@@ -60,11 +60,17 @@ export default function CategoryPage() {
         </Head>
         <AppBar />
 
-        <h3>{categoryArticles.category.type} Category Page</h3>
+        {/* <h3>{categoryArticles.category.type} Category Page</h3>
+        <FavoriteCategoryButton categoryId={categoryArticles.category.id} /> */}
 
-        <FavoriteCategoryButton categoryId={categoryArticles.category.id} />
-
-        <Box sx={{ display: 'flex', p: 1, flexDirection: 'column' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            p: 1,
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
           {categoryArticles.articles.map((article) => (
             <NewsCard article={article} />
           ))}
