@@ -10,6 +10,12 @@ const theme = createTheme({
       default: '#141313',
       paper: '#1f1f1e',
     },
+    primary: {
+      main: '#e1b472',
+      dark: '#e53e3e',
+      light: '#e53e3e',
+      contrastText: '#7e736c',
+    },
   },
   typography: {
     fontFamily: [
