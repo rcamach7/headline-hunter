@@ -25,6 +25,7 @@
     "next-auth": "^4.19.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-textfit": "^1.1.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
