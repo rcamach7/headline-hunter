@@ -1,8 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
-import { UserContextType } from './UserContext.types';
 import { User } from '@/lib/types';
+
+interface UserContextType {
+  user: User | null;
+}
 
 export const UserContext = createContext(null);
 export const useUserContext = (): UserContextType => {

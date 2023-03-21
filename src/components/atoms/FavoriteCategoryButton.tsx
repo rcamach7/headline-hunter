@@ -9,7 +9,7 @@ interface Props {
 
 export default function FavoriteCategoryButton({ categoryId }: Props) {
   const [isFavorite, setIsFavorite] = useState(false);
-  const { preferences } = useUserContext();
+  const { user } = useUserContext();
 
   async function toggleFavorite() {
     try {
@@ -21,18 +21,16 @@ export default function FavoriteCategoryButton({ categoryId }: Props) {
   }
 
   useEffect(() => {
-    if (preferences) {
-      const { savedCategories } = preferences;
-      if (savedCategories) {
-        const isFavorite = savedCategories.some(
+    if (user) {
+      if (user.savedCategories) {
+        const isFavorited = user.savedCategories.some(
           (savedCategory) => savedCategory.id === categoryId
         );
-        setIsFavorite(isFavorite);
+        setIsFavorite(isFavorited);
       }
     }
-  }, [preferences]);
+  }, [user]);
 
-  if (!preferences) return null;
   if (isFavorite) {
     return (
       <Button variant="contained" color="secondary" onClick={toggleFavorite}>

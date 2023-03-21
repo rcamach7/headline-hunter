@@ -13,15 +13,13 @@ export type Article = {
   insertedAt: Date;
   author: string;
   title: string;
-  description: string;
-  content: string;
+  description?: string;
+  content?: string;
   url: string;
-  urlToImage: string;
+  urlToImage?: string;
   publishedAt: Date;
-  sourceId;
-  string;
-  sourceName: string;
-  categories: Category[];
+  sourceId?: string;
+  sourceName?: string;
 };
 
 export type User = {
