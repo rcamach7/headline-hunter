@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Typography, MenuItem, Divider } from '@mui/material';
-import { Preferences } from '@/context/UserContext.types';
+import { User } from '@/lib/types';
 import Link from 'next/link';
 
 interface Props {
-  preferences: Preferences | null;
+  user: User;
   handleCloseNavMenu: () => void;
 }
 
@@ -16,13 +16,10 @@ const defaultCategories = [
   'politics',
 ];
 
-export default function CategoryMenuItems({
-  handleCloseNavMenu,
-  preferences,
-}: Props) {
+export default function CategoryMenuItems({ handleCloseNavMenu, user }: Props) {
   return (
     <>
-      {preferences?.savedCategories && (
+      {user?.savedCategories && (
         <>
           <MenuItem disabled={true} sx={{ py: 0 }} dense>
             <Typography textAlign="center" fontSize={12} sx={{ p: 0 }}>

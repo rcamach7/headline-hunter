@@ -17,7 +17,7 @@ import CategoryMenuItems from './CategoryMenuItems';
 import Search from './Search';
 
 export default function SearchAppBar() {
-  const { user, preferences } = useUserContext();
+  const { user } = useUserContext();
   const isWindowDesktop = useMediaQuery('(min-width:600px)');
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -75,7 +75,7 @@ export default function SearchAppBar() {
               }}
             >
               <CategoryMenuItems
-                preferences={preferences}
+                user={user}
                 handleCloseNavMenu={handleCloseNavMenu}
               />
             </Menu>
