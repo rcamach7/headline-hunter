@@ -38,6 +38,10 @@ export default function CategoryPage() {
     }
   }, [categoryId]);
 
+  // if (categoryArticles.articles.length) {
+  //   console.log(categoryArticles.articles[0]);
+  // }
+
   if (!categoryArticles.category || categoryArticles.isLoading) {
     return (
       <>
@@ -67,8 +71,9 @@ export default function CategoryPage() {
           sx={{
             display: 'flex',
             p: 1,
-            flexDirection: 'column',
-            alignItems: 'center',
+            // flexDirection: 'column',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
             gap: 2,
           }}
         >

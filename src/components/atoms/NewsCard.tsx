@@ -12,6 +12,7 @@ import * as React from 'react';
 import { Article } from '@/lib/types';
 import { Textfit } from 'react-textfit';
 import { removeNewsSource } from '@/lib/helpers';
+import { formatDistance } from 'date-fns';
 
 interface Props {
   article: Article;
@@ -50,7 +51,22 @@ export default function NewsCard({ article }: Props) {
             alt="article image"
           />
         </Box>
-        <Box sx={{ height: 20 }}>time published and source</Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            px: 1,
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            {article.sourceName}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {formatDistance(new Date(article.publishedAt), new Date(), {
+              addSuffix: true,
+            })}
+          </Typography>
+        </Box>
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
