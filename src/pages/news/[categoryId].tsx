@@ -60,7 +60,7 @@ export default function CategoryPage() {
 
         <h3>{categoryArticles.category.type} Category Page</h3>
 
-        <FavoriteCategoryButton category={categoryArticles.category.id} />
+        <FavoriteCategoryButton categoryId={categoryArticles.category.id} />
       </>
     );
   }
