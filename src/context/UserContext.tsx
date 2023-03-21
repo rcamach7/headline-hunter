@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { UserContextType } from './UserContext.types';
-import { User, Preferences } from '@/lib/types';
+import { User } from '@/lib/types';
 
 export const UserContext = createContext(null);
 export const useUserContext = (): UserContextType => {
@@ -14,37 +14,25 @@ export const useUserContext = (): UserContextType => {
 };
 
 export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState<User>(null);
-  const [preferences, setPreferences] = useState<Preferences>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
+  const [user, setUser] = useState<User>(null);
 
   useEffect(() => {
-    const fetchPreferences = async () => {
-      setIsLoading(true);
+    const fetchUser = async () => {
       try {
-        const { data } = await axios.get('/api/preferences');
-        setPreferences(data.preferences);
+        const { data } = await axios.get('/api/user');
+        setUser(data.user as User);
       } catch (error) {
-        console.error('Error fetching preferences:', error);
+        console.error('Error fetching user', error);
       }
-      setIsLoading(false);
     };
 
     if (session) {
-      setUser(session.user);
-      fetchPreferences();
-    } else {
-      setUser(null);
-      setPreferences(null);
+      fetchUser();
     }
   }, [session]);
 
   return (
-    <UserContext.Provider
-      value={{ user, preferences, setPreferences, isLoading }}
-    >
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
   );
 };
