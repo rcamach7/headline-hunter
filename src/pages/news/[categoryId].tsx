@@ -69,6 +69,7 @@ export default function CategoryPage() {
             p: 1,
             flexDirection: 'column',
             alignItems: 'center',
+            gap: 2,
           }}
         >
           {categoryArticles.articles.map((article) => (
