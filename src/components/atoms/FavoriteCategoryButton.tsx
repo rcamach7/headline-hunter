@@ -9,11 +9,12 @@ interface Props {
 
 export default function FavoriteCategoryButton({ categoryId }: Props) {
   const [isFavorite, setIsFavorite] = useState(false);
-  const { user } = useUserContext();
+  const { user, refreshUser } = useUserContext();
 
   async function toggleFavorite() {
     try {
       await axios.post('/api/user/favoriteCategories/' + categoryId);
+      refreshUser();
       setIsFavorite((prev) => !prev);
     } catch (error) {
       console.error(error);

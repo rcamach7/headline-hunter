@@ -5,6 +5,7 @@ import { User } from '@/lib/types';
 
 interface UserContextType {
   user: User | null;
+  refreshUser: () => {};
 }
 
 export const UserContext = createContext(null);
@@ -20,22 +21,28 @@ export const UserContextProvider = ({ children }) => {
   const { data: session } = useSession();
   const [user, setUser] = useState<User>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data } = await axios.get('/api/user');
-        setUser(data.user as User);
-      } catch (error) {
-        console.error('Error fetching user', error);
-      }
-    };
+  const fetchUser = async () => {
+    try {
+      const { data } = await axios.get('/api/user');
+      setUser(data.user as User);
+    } catch (error) {
+      console.error('Error fetching user', error);
+    }
+  };
 
+  const refreshUser = () => {
+    fetchUser();
+  };
+
+  useEffect(() => {
     if (session) {
       fetchUser();
     }
   }, [session]);
 
   return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, refreshUser }}>
+      {children}
+    </UserContext.Provider>
   );
 };
