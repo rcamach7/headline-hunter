@@ -9,7 +9,7 @@ export default async function handler(
   const session = await getServerSession(req, res, authOptions);
   if (!session) res.status(401).json({ message: 'Unauthorized' });
 
-  const user = prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { email: session.user.email },
     include: {
       savedArticles: true,
@@ -17,13 +17,7 @@ export default async function handler(
       dislikedCategories: true,
     },
   });
+
   if (!user) res.status(404).json({ message: 'User not found' });
-
-  const userPreferences = {
-    savedArticles: user.savedArticles,
-    savedCategories: user.savedCategories,
-    dislikedCategories: user.dislikedCategories,
-  };
-
-  return res.status(200).json({ preferences: userPreferences });
+  return res.status(200).json({ user });
 }

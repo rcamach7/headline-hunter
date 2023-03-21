@@ -28,9 +28,6 @@ export type User = {
   name?: string;
   email?: string;
   image?: string;
-};
-
-export type Preferences = {
   savedArticles: Article[];
   savedCategories: Category[];
   dislikedCategories: Category[];
