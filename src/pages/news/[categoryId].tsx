@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Article, Category } from '@/lib/types';
 import { FavoriteCategoryButton } from '@/components/atoms';
+import { NewsCard } from '@/components/atoms';
+import { Box } from '@mui/material';
 
 export default function CategoryPage() {
   const {
@@ -61,6 +63,12 @@ export default function CategoryPage() {
         <h3>{categoryArticles.category.type} Category Page</h3>
 
         <FavoriteCategoryButton categoryId={categoryArticles.category.id} />
+
+        <Box sx={{ display: 'flex', p: 1, flexDirection: 'column' }}>
+          {categoryArticles.articles.map((article) => (
+            <NewsCard article={article} />
+          ))}
+        </Box>
       </>
     );
   }

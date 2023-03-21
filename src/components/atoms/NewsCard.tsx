@@ -1,5 +1,14 @@
 import {} from '@mui/material';
+import { Article } from '@/lib/types';
 
-export default function NewsCard() {
-  return <></>;
+interface Props {
+  article: Article;
+}
+
+export default function NewsCard({ article }: Props) {
+  return (
+    <>
+      <p>{article.title}</p>
+    </>
+  );
 }
