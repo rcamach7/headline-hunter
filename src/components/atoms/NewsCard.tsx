@@ -7,12 +7,17 @@ import {
   CardActionArea,
   CardActions,
   Box,
+  IconButton,
 } from '@mui/material';
 import * as React from 'react';
 import { Article } from '@/lib/types';
 import { Textfit } from 'react-textfit';
 import { removeNewsSource } from '@/lib/helpers';
 import { formatDistance } from 'date-fns';
+import {
+  FavoriteBorder as FavoriteIcon,
+  ThumbDownOffAlt as ThumbDownOffAltIcon,
+} from '@mui/icons-material';
 
 interface Props {
   article: Article;
@@ -68,10 +73,15 @@ export default function NewsCard({ article }: Props) {
           </Typography>
         </Box>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
+      <CardActions sx={{ display: 'flex' }}>
+        <Button variant="outlined">Smart Summary</Button>
+
+        <IconButton aria-label="save" sx={{ marginLeft: 'auto !important' }}>
+          <FavoriteIcon sx={{ color: 'text.primary' }} />
+        </IconButton>
+        <IconButton aria-label="dislike">
+          <ThumbDownOffAltIcon sx={{ color: 'text.primary' }} />
+        </IconButton>
       </CardActions>
     </Card>
   );
