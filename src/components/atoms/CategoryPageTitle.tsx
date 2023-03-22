@@ -15,9 +15,11 @@ export default function CategoryPageTitle({ title, categoryId }: Props) {
           color: 'white',
           fontWeight: 'bold',
           fontFamily: 'roboto',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
-        {title}
+        {title.toUpperCase()}
       </Typography>
       <FavoriteCategoryButton categoryId={categoryId} />
     </Box>
