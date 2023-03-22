@@ -24,7 +24,7 @@ export default function NewsCardContainer({
         }}
       >
         {articles.map((article) => (
-          <NewsCard article={article} />
+          <NewsCard article={article} key={article.id} />
         ))}
       </Box>
 
