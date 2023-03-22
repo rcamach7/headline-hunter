@@ -13,6 +13,7 @@ export default function PageLoading() {
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 9999,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
       }}
     >
       <CircularProgress />
