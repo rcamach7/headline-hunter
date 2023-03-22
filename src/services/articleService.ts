@@ -23,6 +23,9 @@ export const getArticlesByCategory = async (categoryId: string) => {
           },
         },
       },
+      orderBy: {
+        publishedAt: 'desc',
+      },
       take: MAX_ARTICLES,
     });
   } catch (error) {
