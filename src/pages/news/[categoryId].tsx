@@ -38,10 +38,6 @@ export default function CategoryPage() {
     }
   }, [categoryId]);
 
-  // if (categoryArticles.articles.length) {
-  //   console.log(categoryArticles.articles[0]);
-  // }
-
   if (!categoryArticles.category || categoryArticles.isLoading) {
     return (
       <>

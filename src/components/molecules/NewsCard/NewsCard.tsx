@@ -3,21 +3,15 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  Button,
   CardActionArea,
-  CardActions,
   Box,
-  IconButton,
 } from '@mui/material';
 import * as React from 'react';
 import { Article } from '@/lib/types';
 import { Textfit } from 'react-textfit';
 import { removeNewsSource } from '@/lib/helpers';
-import { formatDistance } from 'date-fns';
-import {
-  FavoriteBorder as FavoriteIcon,
-  ThumbDownOffAlt as ThumbDownOffAltIcon,
-} from '@mui/icons-material';
+import CardActionBar from './CardActionBar';
+import NewsMeta from './NewsMeta';
 
 interface Props {
   article: Article;
@@ -53,36 +47,17 @@ export default function NewsCard({ article }: Props) {
             component="img"
             sx={{ width: '100px', height: '100px' }}
             image={article.urlToImage}
-            alt="article image"
+            alt={`Article image: ${article.title}`}
           />
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            px: 1,
-          }}
-        >
-          <Typography variant="body2" color="text.secondary">
-            {article.sourceName}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {formatDistance(new Date(article.publishedAt), new Date(), {
-              addSuffix: true,
-            })}
-          </Typography>
-        </Box>
-      </CardActionArea>
-      <CardActions sx={{ display: 'flex' }}>
-        <Button variant="outlined">Smart Summary</Button>
 
-        <IconButton aria-label="save" sx={{ marginLeft: 'auto !important' }}>
-          <FavoriteIcon sx={{ color: 'text.primary' }} />
-        </IconButton>
-        <IconButton aria-label="dislike">
-          <ThumbDownOffAltIcon sx={{ color: 'text.primary' }} />
-        </IconButton>
-      </CardActions>
+        <NewsMeta
+          sourceName={article.sourceName}
+          publishedAt={article.publishedAt}
+        />
+      </CardActionArea>
+
+      <CardActionBar />
     </Card>
   );
 }
