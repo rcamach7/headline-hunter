@@ -13,25 +13,38 @@ export default function NewsCardContainer({
   loadMoreArticles,
 }: Props) {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        p: 1,
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        gap: 2,
-      }}
-    >
-      {articles.map((article) => (
-        <NewsCard article={article} />
-      ))}
-      <Button
-        variant="contained"
-        sx={{ color: 'black' }}
-        onClick={loadMoreArticles}
+    <>
+      <Box
+        sx={{
+          display: 'flex',
+          p: 1,
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          gap: 2,
+        }}
       >
-        Load More
-      </Button>
-    </Box>
+        {articles.map((article) => (
+          <NewsCard article={article} />
+        ))}
+      </Box>
+
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          p: 1,
+          pb: 2,
+        }}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={loadMoreArticles}
+          sx={{ color: 'black' }}
+        >
+          Load More
+        </Button>
+      </Box>
+    </>
   );
 }
