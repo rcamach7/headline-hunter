@@ -4,7 +4,7 @@ import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Article, Category } from '@/lib/types';
-import { FavoriteCategoryButton } from '@/components/atoms';
+import { FavoriteCategoryButton, PageLoading } from '@/components/atoms';
 import { NewsCard } from '@/components/molecules';
 import { Box } from '@mui/material';
 
@@ -71,7 +71,7 @@ export default function CategoryPage() {
           <title>Headline Hunter</title>
         </Head>
         <AppBar />
-        {categoryArticles.isLoading && <h3>Loading...</h3>}
+        <PageLoading />
       </>
     );
   }
