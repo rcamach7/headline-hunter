@@ -38,21 +38,7 @@ export default function CategoryPage() {
     }
   }, [categoryId]);
 
-  if (!categoryArticles.category || categoryArticles.isLoading) {
-    return (
-      <>
-        <Head>
-          <title>Headline Hunter</title>
-        </Head>
-        <AppBar />
-        {categoryArticles.isLoading ? (
-          <h3>Loading...</h3>
-        ) : (
-          <h3>Invalid Category</h3>
-        )}
-      </>
-    );
-  } else {
+  if (categoryArticles.category) {
     return (
       <>
         <Head>
@@ -61,13 +47,12 @@ export default function CategoryPage() {
         <AppBar />
 
         {/* <h3>{categoryArticles.category.type} Category Page</h3>
-        <FavoriteCategoryButton categoryId={categoryArticles.category.id} /> */}
+    <FavoriteCategoryButton categoryId={categoryArticles.category.id} /> */}
 
         <Box
           sx={{
             display: 'flex',
             p: 1,
-            // flexDirection: 'column',
             justifyContent: 'center',
             flexWrap: 'wrap',
             gap: 2,
@@ -77,6 +62,16 @@ export default function CategoryPage() {
             <NewsCard article={article} />
           ))}
         </Box>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Head>
+          <title>Headline Hunter</title>
+        </Head>
+        <AppBar />
+        {categoryArticles.isLoading && <h3>Loading...</h3>}
       </>
     );
   }
