@@ -4,7 +4,7 @@ import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Article, Category } from '@/lib/types';
-import { FavoriteCategoryButton, PageLoading } from '@/components/atoms';
+import { CategoryPageTitle, PageLoading } from '@/components/atoms';
 import { NewsCard } from '@/components/molecules';
 import { Box } from '@mui/material';
 
@@ -46,8 +46,10 @@ export default function CategoryPage() {
         </Head>
         <AppBar />
 
-        {/* <h3>{categoryArticles.category.type} Category Page</h3>
-    <FavoriteCategoryButton categoryId={categoryArticles.category.id} /> */}
+        <CategoryPageTitle
+          categoryId={categoryId}
+          title={categoryArticles.category.type}
+        />
 
         <Box
           sx={{
