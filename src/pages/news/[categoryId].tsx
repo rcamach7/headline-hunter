@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Article, Category } from '@/lib/types';
 import { FavoriteCategoryButton } from '@/components/atoms';
-import { NewsCard } from '@/components/atoms';
+import { NewsCard } from '@/components/molecules';
 import { Box } from '@mui/material';
 
 export default function CategoryPage() {
