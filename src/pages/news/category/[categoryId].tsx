@@ -1,12 +1,11 @@
 import Head from 'next/head';
 import axios from 'axios';
-import { AppBar } from '@/components/organisms';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+
 import { Article, Category } from '@/lib/types';
 import { CategoryPageTitle, PageLoading } from '@/components/atoms';
-import { NewsCard } from '@/components/molecules';
-import { Box, Button } from '@mui/material';
+import { AppBar, NewsCardContainer } from '@/components/organisms';
 
 export default function CategoryPage() {
   const {
@@ -73,26 +72,10 @@ export default function CategoryPage() {
           title={categoryArticles.category.type}
         />
 
-        <Box
-          sx={{
-            display: 'flex',
-            p: 1,
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            gap: 2,
-          }}
-        >
-          {categoryArticles.articles.map((article) => (
-            <NewsCard article={article} />
-          ))}
-          <Button
-            variant="contained"
-            sx={{ color: 'black' }}
-            onClick={loadMoreArticles}
-          >
-            Load More
-          </Button>
-        </Box>
+        <NewsCardContainer
+          articles={categoryArticles.articles}
+          loadMoreArticles={loadMoreArticles}
+        />
       </>
     );
   } else {
