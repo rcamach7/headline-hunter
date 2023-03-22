@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react';
 import { Article, Category } from '@/lib/types';
 import { CategoryPageTitle, PageLoading } from '@/components/atoms';
 import { AppBar, NewsCardContainer } from '@/components/organisms';
+import { useLoadingContext } from '@/context/LoadingContext';
 
 export default function CategoryPage() {
+  const { isLoading } = useLoadingContext();
   const {
     query: { categoryId: cat },
   } = useRouter();
@@ -76,6 +78,8 @@ export default function CategoryPage() {
           articles={categoryArticles.articles}
           loadMoreArticles={loadMoreArticles}
         />
+
+        {isLoading && <PageLoading />}
       </>
     );
   } else {

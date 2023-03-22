@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Category } from '@/lib/types';
 import { TextField, Autocomplete, Box } from '@mui/material';
 import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
+
+import { Category } from '@/lib/types';
 
 export default function Search() {
   const [isFocused, setIsFocused] = useState(false);
