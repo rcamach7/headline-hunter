@@ -71,7 +71,7 @@ export default function Search() {
         )}
         renderOption={(props, option) => (
           <li {...props}>
-            <Link href={`/news/${option.id}`}>
+            <Link href={`/news/category/${option.id}`}>
               <a style={{ color: 'inherit', textDecoration: 'none' }}>
                 {option.type}
               </a>

@@ -9,11 +9,26 @@ interface Props {
 }
 
 const defaultCategories = [
-  'business',
-  'entertainment',
-  'sports',
-  'technology',
-  'politics',
+  {
+    id: '4c57b69b-c496-4c79-be6d-966b9094a630',
+    type: 'business',
+  },
+  {
+    id: '546eeaad-af67-45b7-ba7b-ba6cd04c9ba6',
+    type: 'entertainment',
+  },
+  {
+    id: '169e2a7a-e726-4533-9512-8d8a4c8e435c',
+    type: 'sports',
+  },
+  {
+    id: '44d25b34-6778-41cf-a09b-75f7fba28fec',
+    type: 'Technology',
+  },
+  {
+    id: 'b1dfe2c4-14e0-4a14-8ff4-ed8a7df49601',
+    type: 'politics',
+  },
 ];
 
 export default function CategoryMenuItems({ handleCloseNavMenu, user }: Props) {
@@ -36,13 +51,13 @@ export default function CategoryMenuItems({ handleCloseNavMenu, user }: Props) {
         </Typography>
       </MenuItem>
       {defaultCategories.map((category) => (
-        <MenuItem key={category} onClick={handleCloseNavMenu}>
-          <Link href={`/news/${category}`} passHref>
+        <MenuItem key={category.id} onClick={handleCloseNavMenu}>
+          <Link href={`/news/category/${category.id}`} passHref>
             <Typography
               sx={{ color: 'text.primary', textDecoration: 'none' }}
               variant="body2"
             >
-              {category}
+              {category.type}
             </Typography>
           </Link>
         </MenuItem>
