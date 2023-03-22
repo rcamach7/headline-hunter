@@ -19,7 +19,7 @@ interface Props {
 
 export default function NewsCard({ article }: Props) {
   return (
-    <Card sx={{ maxWidth: 345, maxHeight: 200 }}>
+    <Card sx={{ width: 345, maxHeight: 200 }}>
       <CardActionArea>
         <Box sx={{ display: 'flex', p: 1 }}>
           <CardContent
