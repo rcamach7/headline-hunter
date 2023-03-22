@@ -2,16 +2,18 @@ import prisma from '@/lib/prisma';
 import Newsapi, { ApiNewsCategory } from '@/lib/newsapi';
 import { v4 } from 'uuid';
 
-const MAX_ARTICLES = 20;
+const ARTICLES_PER_PAGE = 10;
 const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
 const PAST_DAYS_TO_QUERY = 15;
 
-export const getArticlesByCategory = async (categoryId: string) => {
+export const getArticlesByCategory = async (
+  categoryId: string,
+  pageNumber: number
+) => {
   let articles = [];
 
+  const skipCount = (pageNumber - 1) * ARTICLES_PER_PAGE;
   try {
-    await refreshArticlesByCategory(categoryId);
-
     articles = await prisma.article.findMany({
       include: {
         categories: true,
@@ -26,7 +28,8 @@ export const getArticlesByCategory = async (categoryId: string) => {
       orderBy: {
         publishedAt: 'desc',
       },
-      take: MAX_ARTICLES,
+      skip: skipCount,
+      take: ARTICLES_PER_PAGE,
     });
   } catch (error) {
     console.log('An error occurred while processing articles');

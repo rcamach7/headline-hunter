@@ -5,13 +5,18 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { categoryId } = req.query;
+  const { categoryId, page } = req.query;
+  const pageNumber = parseInt(page as string);
+
   if (!categoryId || Array.isArray(categoryId))
     return res.status(400).json({ message: 'Missing category fields' });
 
   switch (req.method) {
     case 'GET':
-      const articles = await getArticlesByCategory(categoryId as string);
+      const articles = await getArticlesByCategory(
+        categoryId as string,
+        pageNumber
+      );
       res.status(200).json({ articles });
       break;
     default:
