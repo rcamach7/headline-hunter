@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Article, Category } from '@/lib/types';
 import { CategoryPageTitle, PageLoading } from '@/components/atoms';
 import { NewsCard } from '@/components/molecules';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 export default function CategoryPage() {
   const {
@@ -18,22 +18,44 @@ export default function CategoryPage() {
     category: Category;
     articles: Article[];
     isLoading: boolean;
-  }>({ category: null, articles: [], isLoading: true });
+    page: number;
+  }>({ category: null, articles: [], isLoading: true, page: 1 });
+
+  async function loadMoreArticles() {
+    try {
+      const page = categoryArticles.page + 1;
+      const articlesResponse = await axios.get(
+        `/api/articles/${categoryId}?page=${page}`
+      );
+      setCategoryArticles((prevState) => ({
+        category: prevState.category,
+        articles: [...prevState.articles, ...articlesResponse.data.articles],
+        isLoading: false,
+        page,
+      }));
+    } catch (error) {
+      console.error('Error loading more articles:', error);
+    }
+  }
 
   useEffect(() => {
     if (categoryId) {
-      fetchCategoryArticles(categoryId).then((categoryArticles) => {
-        setCategoryArticles({
-          category: categoryArticles.category,
-          articles: categoryArticles.articles,
-          isLoading: false,
-        });
-      });
+      fetchCategoryArticles(categoryId, categoryArticles.page).then(
+        (categoryArticles) => {
+          setCategoryArticles({
+            category: categoryArticles.category,
+            articles: categoryArticles.articles,
+            isLoading: false,
+            page: 1,
+          });
+        }
+      );
     } else {
       setCategoryArticles({
         category: null,
         articles: [],
         isLoading: false,
+        page: 1,
       });
     }
   }, [categoryId]);
@@ -63,6 +85,13 @@ export default function CategoryPage() {
           {categoryArticles.articles.map((article) => (
             <NewsCard article={article} />
           ))}
+          <Button
+            variant="contained"
+            sx={{ color: 'black' }}
+            onClick={loadMoreArticles}
+          >
+            Load More
+          </Button>
         </Box>
       </>
     );
@@ -79,9 +108,11 @@ export default function CategoryPage() {
   }
 }
 
-async function fetchCategoryArticles(categoryId: string) {
+async function fetchCategoryArticles(categoryId: string, page: number) {
   try {
-    const articlesResponse = await axios.get('/api/articles/' + categoryId);
+    const articlesResponse = await axios.get(
+      `/api/articles/${categoryId}?page=${page}`
+    );
     const categoryResponse = await axios.get('/api/category/' + categoryId);
 
     return {
