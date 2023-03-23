@@ -1,4 +1,4 @@
-import { User } from '@/context/UserContext.types';
+import { User } from '@/lib/types';
 import * as React from 'react';
 import { Typography, MenuItem } from '@mui/material';
 import { signIn, signOut } from 'next-auth/react';

@@ -15,7 +15,7 @@ export async function populateCategories() {
 
       await prisma.category.create({
         data: {
-          type: category.title,
+          type: category.title.toLowerCase(),
           id: v4(),
           lastUpdated: yesterday,
         },
