@@ -11,9 +11,10 @@ export const getArticlesByCategory = async (
   pageNumber: number
 ) => {
   let articles = [];
-
-  const skipCount = (pageNumber - 1) * ARTICLES_PER_PAGE;
   try {
+    await refreshArticlesByCategory(categoryId);
+
+    const skipCount = (pageNumber - 1) * ARTICLES_PER_PAGE;
     articles = await prisma.article.findMany({
       include: {
         categories: true,

@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { categoryId, page } = req.query;
-  const pageNumber = parseInt(page as string);
+  const pageNumber = page ? parseInt(page as string) : 1;
 
   if (!categoryId || Array.isArray(categoryId))
     return res.status(400).json({ message: 'Missing category fields' });
