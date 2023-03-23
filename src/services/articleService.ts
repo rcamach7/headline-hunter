@@ -8,6 +8,8 @@ const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
 const PAST_DAYS_TO_QUERY = 15;
 const PAGE_SIZE_PER_QUERY = 50;
 
+const BYPASS_EVERYTHING_QUERY = true;
+
 export const getArticlesByCategory = async (
   categoryId: string,
   pageNumber: number
@@ -148,7 +150,7 @@ async function getTopNewsByCategory(category: string) {
     throw new Error('Failed to fetch top headlines.');
   }
 
-  if (!topHeadlines.articles.length) {
+  if (!topHeadlines.articles.length && !BYPASS_EVERYTHING_QUERY) {
     const currentDate = new Date();
     const fromDate = new Date();
     fromDate.setDate(currentDate.getDate() - PAST_DAYS_TO_QUERY);
@@ -166,8 +168,12 @@ async function getTopNewsByCategory(category: string) {
     }
   }
 
-  return topHeadlines.articles.map((article) => ({
-    id: v4() as string,
-    ...article,
-  }));
+  if (!topHeadlines.articles) {
+    return [];
+  } else {
+    return topHeadlines.articles.map((article) => ({
+      id: v4() as string,
+      ...article,
+    }));
+  }
 }
