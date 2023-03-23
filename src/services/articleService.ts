@@ -6,6 +6,7 @@ import NewsAPI from '@/lib/newsapi';
 const ARTICLES_PER_PAGE = 10;
 const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
 const PAST_DAYS_TO_QUERY = 15;
+const PAGE_SIZE_PER_QUERY = 50;
 
 export const getArticlesByCategory = async (
   categoryId: string,
@@ -140,7 +141,7 @@ async function getTopNewsByCategory(category: string) {
     topHeadlines = await newsClient.getTopHeadlines({
       query: category,
       country: 'us',
-      pageSize: 20,
+      pageSize: PAGE_SIZE_PER_QUERY,
     });
   } catch (error) {
     console.error('Error fetching top headlines:', error);
@@ -155,7 +156,7 @@ async function getTopNewsByCategory(category: string) {
     try {
       topHeadlines = await newsClient.getEverything({
         query: category,
-        pageSize: 20,
+        pageSize: PAGE_SIZE_PER_QUERY,
         to: currentDate,
         from: fromDate,
       });
