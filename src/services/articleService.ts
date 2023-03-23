@@ -1,6 +1,7 @@
-import prisma from '@/lib/prisma';
-import Newsapi, { ApiNewsCategory } from '@/lib/newsapi';
 import { v4 } from 'uuid';
+
+import prisma from '@/lib/prisma';
+import NewsAPI from '@/lib/newsapi';
 
 const ARTICLES_PER_PAGE = 10;
 const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
@@ -59,12 +60,12 @@ const refreshArticlesByCategory = async (id: string) => {
   const now = new Date();
   const diff = now.getTime() - lastUpdated.getTime();
   const diffHours = Math.floor(diff / 1000 / 60 / 60);
+  console.log('point one');
 
   // If the last updated is older than X hours, then update the articles
   if (diffHours > MINIMUM_HOURS_BETWEEN_UPDATES) {
-    const articles = await getTopNewsByCategory(
-      category.type as ApiNewsCategory
-    );
+    const articles = await getTopNewsByCategory(category.type);
+    console.log('point two');
 
     /**
      * Build an array of promises to create each article.
@@ -115,6 +116,7 @@ const refreshArticlesByCategory = async (id: string) => {
           console.error(error);
         })
     );
+    console.log('point three');
     await Promise.all(createArticlesPromises);
 
     // Updates last updated to now since we just updated the articles
@@ -133,30 +135,46 @@ const refreshArticlesByCategory = async (id: string) => {
   }
 };
 
-async function getTopNewsByCategory(category: ApiNewsCategory) {
-  const newsClient = new Newsapi(process.env.NEWS_API_KEY);
+async function getTopNewsByCategory(category: string) {
+  console.log('in getTopNewsByCategory');
+  const newsClient = new NewsAPI(process.env.NEWS_API_KEY);
 
-  let topHeadlines = await newsClient.getTopHeadlines({
-    country: 'us',
-    category,
-    pageSize: 20,
-    page: 1,
-  });
+  let topHeadlines;
+  try {
+    topHeadlines = await newsClient.getTopHeadlines({
+      query: category,
+      country: 'us',
+      pageSize: 20,
+    });
+    console.log('topHeadlines: ', topHeadlines);
+  } catch (error) {
+    console.error('Error fetching top headlines:', error);
+    throw new Error('Failed to fetch top headlines.');
+  }
 
   if (!topHeadlines.articles.length) {
     const currentDate = new Date();
     const fromDate = new Date();
     fromDate.setDate(currentDate.getDate() - PAST_DAYS_TO_QUERY);
 
-    topHeadlines = await newsClient.getEverything({
-      q: category,
-      pageSize: 20,
-      page: 1,
-      to: currentDate.toISOString(),
-      from: fromDate.toISOString(),
-    });
+    try {
+      console.log('about to call getEverything');
+      topHeadlines = await newsClient.getEverything({
+        query: category,
+        pageSize: 20,
+        to: currentDate,
+        from: fromDate,
+      });
+
+      console.log('getEverything: ', topHeadlines);
+    } catch (error) {
+      console.error('Error fetching news articles:', error);
+      throw new Error('Failed to fetch news articles.');
+    }
   }
 
+  console.log('about to return topHeadlines.articles.map');
+  console.log(topHeadlines);
   return topHeadlines.articles.map((article) => ({
     id: v4() as string,
     ...article,
