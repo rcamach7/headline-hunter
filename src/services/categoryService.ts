@@ -15,3 +15,35 @@ export const getAllCategories = async () => {
 
   return categories;
 };
+
+export async function deleteCategoryAndAssociatedArticles(categoryId: string) {
+  try {
+    const articles = await prisma.article.findMany({
+      where: {
+        categories: {
+          some: {
+            id: categoryId,
+          },
+        },
+      },
+    });
+
+    const deletePromises = articles.map((article) =>
+      prisma.article.delete({
+        where: { id: article.id },
+      })
+    );
+    await Promise.all(deletePromises);
+
+    await prisma.category.delete({
+      where: {
+        id: categoryId,
+      },
+    });
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
