@@ -10,15 +10,15 @@ interface Props {
 
 const defaultCategories = [
   {
-    id: '4c57b69b-c496-4c79-be6d-966b9094a630',
+    id: '77d0b6a2-4685-4a5e-9d60-87e05fa5356e',
     type: 'Business',
   },
   {
-    id: '546eeaad-af67-45b7-ba7b-ba6cd04c9ba6',
+    id: '2c6a96f2-25cc-4afd-b78a-eeeb54e58847',
     type: 'Entertainment',
   },
   {
-    id: '169e2a7a-e726-4533-9512-8d8a4c8e435c',
+    id: '928a68a2-7387-4305-b8a8-870ba0929df6',
     type: 'Sports',
   },
   {
