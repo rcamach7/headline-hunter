@@ -8,7 +8,7 @@ const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
 const PAST_DAYS_TO_QUERY = 15;
 const PAGE_SIZE_PER_QUERY = 50;
 
-const BYPASS_EVERYTHING_QUERY = true;
+const BYPASS_EVERYTHING_QUERY = false;
 
 export const getArticlesByCategory = async (
   categoryId: string,
