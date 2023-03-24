@@ -10,7 +10,7 @@ const PAST_DAYS_TO_QUERY = 15;
 const PAGE_SIZE_PER_QUERY = 50;
 const BYPASS_EVERYTHING_QUERY = false;
 
-type CategoryNews = {
+export type CategoryNews = {
   id: string;
   type: string;
   lastUpdated: Date;

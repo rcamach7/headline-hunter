@@ -1,5 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {} from '@/services/articleService';
+import { getServerSession } from 'next-auth/next';
+
+import { authOptions } from '@/auth/[...nextauth]';
+import { popularCategories } from '@/lib/data';
+import { CategoryNews, getNewsByCategories } from '@/services/articleService';
+import {
+  getCategoryById,
+  getCategoriesByIds,
+} from '@/services/categoryService';
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,7 +15,17 @@ export default async function handler(
 ) {
   switch (req.method) {
     case 'GET':
-      res.status(200).json({});
+      const session = await getServerSession(req, res, authOptions);
+
+      if (!session) {
+        const categories = await getCategoriesByIds(
+          popularCategories.map((c) => c.id)
+        );
+        const newsCategories = await getNewsByCategories(categories);
+        return res.status(200).json({ newsCategories });
+      } else {
+      }
+
       break;
     default:
       res.setHeader('Allow', ['GET']);
