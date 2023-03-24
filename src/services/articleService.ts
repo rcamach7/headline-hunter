@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { Category, Article } from '@prisma/client';
 
 import prisma from '@/lib/prisma';
 import NewsAPI from '@/lib/newsapi';
@@ -7,8 +8,14 @@ const ARTICLES_PER_PAGE = 10;
 const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
 const PAST_DAYS_TO_QUERY = 15;
 const PAGE_SIZE_PER_QUERY = 50;
-
 const BYPASS_EVERYTHING_QUERY = false;
+
+type CategoryNews = {
+  id: string;
+  type: string;
+  lastUpdated: Date;
+  articles: Article[];
+};
 
 export const getArticlesByCategory = async (
   categoryId: string,
@@ -176,4 +183,20 @@ async function getNewsByCategory(category: string) {
       ...article,
     }));
   }
+}
+
+export async function getNewsByCategories(categories: Category[]) {
+  for (const category of categories) {
+    await refreshArticlesByCategory(category.id);
+  }
+  const categoryNews: CategoryNews[] = [];
+  for (const category of categories) {
+    const articles = await getArticlesByCategory(category.id, 1);
+    categoryNews.push({
+      ...category,
+      articles,
+    });
+  }
+
+  return categoryNews;
 }
