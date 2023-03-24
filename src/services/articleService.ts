@@ -66,7 +66,7 @@ const refreshArticlesByCategory = async (id: string) => {
 
   // If the last updated is older than X hours, then update the articles
   if (diffHours > MINIMUM_HOURS_BETWEEN_UPDATES) {
-    const articles = await getTopNewsByCategory(category.type);
+    const articles = await getNewsByCategory(category.type);
 
     /**
      * Build an array of promises to create each article.
@@ -135,7 +135,7 @@ const refreshArticlesByCategory = async (id: string) => {
   }
 };
 
-async function getTopNewsByCategory(category: string) {
+async function getNewsByCategory(category: string) {
   const newsClient = new NewsAPI(process.env.NEWS_API_KEY);
 
   let topHeadlines;
