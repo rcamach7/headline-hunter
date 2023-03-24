@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { Typography, MenuItem, Divider } from '@mui/material';
-import { User } from '@/lib/types';
 import Link from 'next/link';
+
+import { User } from '@/lib/types';
 import { popularCategories } from '@/lib/data';
 
 interface Props {
