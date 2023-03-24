@@ -17,45 +17,22 @@ type CategoryNews = {
   articles: Article[];
 };
 
-export const getArticlesByCategory = async (
-  categoryId: string,
-  pageNumber: number
-) => {
-  let articles = [];
-  try {
-    await refreshArticlesByCategory(categoryId);
-
-    const skipCount = (pageNumber - 1) * ARTICLES_PER_PAGE;
-    articles = await prisma.article.findMany({
-      include: {
-        categories: true,
-      },
-      where: {
-        categories: {
-          some: {
-            id: categoryId,
-          },
-        },
-      },
-      orderBy: {
-        publishedAt: 'desc',
-      },
-      skip: skipCount,
-      take: ARTICLES_PER_PAGE,
+export async function getNewsByCategories(categories: Category[]) {
+  for (const category of categories) {
+    await refreshArticlesByCategory(category.id);
+  }
+  const categoryNews: CategoryNews[] = [];
+  for (const category of categories) {
+    const articles = await getArticlesByCategory(category.id, 1);
+    categoryNews.push({
+      ...category,
+      articles,
     });
-  } catch (error) {
-    console.log('An error occurred while processing articles');
-    console.log(error);
   }
 
-  return articles;
-};
+  return categoryNews;
+}
 
-/**
- *  Will return a boolean if the category passed in was updated. Will create a new category if it doesn't exist, and query for articles.
- * @param type
- * @returns boolean
- */
 const refreshArticlesByCategory = async (id: string) => {
   let category = await prisma.category.findFirst({
     where: {
@@ -73,7 +50,7 @@ const refreshArticlesByCategory = async (id: string) => {
 
   // If the last updated is older than X hours, then update the articles
   if (diffHours > MINIMUM_HOURS_BETWEEN_UPDATES) {
-    const articles = await getNewsByCategory(category.type);
+    const articles = await queryForNewsByCategory(category.type);
 
     /**
      * Build an array of promises to create each article.
@@ -142,7 +119,41 @@ const refreshArticlesByCategory = async (id: string) => {
   }
 };
 
-async function getNewsByCategory(category: string) {
+export const getArticlesByCategory = async (
+  categoryId: string,
+  pageNumber: number
+) => {
+  let articles = [];
+  try {
+    await refreshArticlesByCategory(categoryId);
+
+    const skipCount = (pageNumber - 1) * ARTICLES_PER_PAGE;
+    articles = await prisma.article.findMany({
+      include: {
+        categories: true,
+      },
+      where: {
+        categories: {
+          some: {
+            id: categoryId,
+          },
+        },
+      },
+      orderBy: {
+        publishedAt: 'desc',
+      },
+      skip: skipCount,
+      take: ARTICLES_PER_PAGE,
+    });
+  } catch (error) {
+    console.log('An error occurred while processing articles');
+    console.log(error);
+  }
+
+  return articles;
+};
+
+async function queryForNewsByCategory(category: string) {
   const newsClient = new NewsAPI(process.env.NEWS_API_KEY);
 
   let topHeadlines;
@@ -183,20 +194,4 @@ async function getNewsByCategory(category: string) {
       ...article,
     }));
   }
-}
-
-export async function getNewsByCategories(categories: Category[]) {
-  for (const category of categories) {
-    await refreshArticlesByCategory(category.id);
-  }
-  const categoryNews: CategoryNews[] = [];
-  for (const category of categories) {
-    const articles = await getArticlesByCategory(category.id, 1);
-    categoryNews.push({
-      ...category,
-      articles,
-    });
-  }
-
-  return categoryNews;
 }
