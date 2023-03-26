@@ -1,10 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
+import { Category } from '@prisma/client';
 
 import { authOptions } from '@/auth/[...nextauth]';
 import { popularCategories } from '@/lib/data';
-import { getNewsByCategories } from '@/services/articleService';
-import { getCategoriesByIds } from '@/services/categoryService';
+import { getNewsByCategories, CategoryNews } from '@/services/articleService';
+import {
+  getCategoriesByIds,
+  getCustomCategories,
+} from '@/services/categoryService';
+import { getUserByEmail } from '@/services/userService';
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,26 +20,20 @@ export default async function handler(
       case 'GET':
         const session = await getServerSession(req, res, authOptions);
 
+        let newsCategories: CategoryNews[];
+        let selectedCategories: Category[];
         if (session) {
-          const user = await prisma.user.findUnique({
-            where: { email: session.user.email },
-            include: {
-              savedCategories: true,
-            },
-          });
-
-          const selectedCategories = getSelectedCategories(
-            user.savedCategories
-          );
-          const newsCategories = await getNewsByCategories(selectedCategories);
-          return res.status(200).json({ newsCategories });
+          const user = await getUserByEmail(session.user.email);
+          selectedCategories = getCustomCategories(user.savedCategories);
+          newsCategories = await getNewsByCategories(selectedCategories);
         } else {
-          const categories = await getCategoriesByIds(
+          selectedCategories = await getCategoriesByIds(
             popularCategories.map((category) => category.id)
           );
-          const newsCategories = await getNewsByCategories(categories);
-          return res.status(200).json({ newsCategories });
+          newsCategories = await getNewsByCategories(selectedCategories);
         }
+
+        return res.status(200).json({ newsCategories });
 
       default:
         res.setHeader('Allow', ['GET']);
@@ -44,24 +43,4 @@ export default async function handler(
     console.error(error);
     res.status(500).json({ message: 'An unexpected error occurred' });
   }
-}
-
-function getSelectedCategories(savedCategories) {
-  let selectedCategories = [...savedCategories];
-
-  if (selectedCategories.length < 5) {
-    const additionalCategoriesNeeded = 5 - selectedCategories.length;
-    const additionalCategories = popularCategories
-      .filter(
-        (category) =>
-          !selectedCategories.find(
-            (savedCategory) => savedCategory.id === category.id
-          )
-      )
-      .slice(0, additionalCategoriesNeeded);
-
-    selectedCategories = [...selectedCategories, ...additionalCategories];
-  }
-
-  return selectedCategories;
 }

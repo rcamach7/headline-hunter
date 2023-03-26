@@ -1,4 +1,6 @@
 import prisma from '@/lib/prisma';
+import { Category } from '@prisma/client';
+import { popularCategories } from '@/lib/data';
 
 export const getCategoryById = async (id: string) => {
   const category = await prisma.category.findFirst({
@@ -58,4 +60,24 @@ export async function deleteCategoryAndAssociatedArticles(categoryId: string) {
     console.log(error);
     return false;
   }
+}
+
+export function getCustomCategories(savedCategories: Category[]) {
+  let selectedCategories = [...savedCategories];
+
+  if (selectedCategories.length < 5) {
+    const additionalCategoriesNeeded = 5 - selectedCategories.length;
+    const additionalCategories = popularCategories
+      .filter(
+        (category) =>
+          !selectedCategories.find(
+            (savedCategory) => savedCategory.id === category.id
+          )
+      )
+      .slice(0, additionalCategoriesNeeded);
+
+    selectedCategories = [...selectedCategories, ...additionalCategories];
+  }
+
+  return selectedCategories;
 }
