@@ -31,7 +31,7 @@ export default function Home() {
       </Head>
       <AppBar />
 
-      <h3>News Page</h3>
+      {sampleCard && <CategoryCard categoryArticle={sampleCard} />}
     </>
   );
 }

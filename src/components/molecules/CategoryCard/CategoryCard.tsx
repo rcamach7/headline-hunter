@@ -1,39 +1,36 @@
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
-} from '@mui/material';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Textfit } from 'react-textfit';
 
 import { CategoryArticles } from '@/lib/types';
+import { removeNewsSource } from '@/lib/helpers';
 
 interface Props {
   categoryArticle: CategoryArticles;
 }
 
 export default function CategoryCard({ categoryArticle }: Props) {
+  const { articles } = categoryArticle;
+  const primaryArticle = articles[0];
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
+        image={primaryArticle.urlToImage}
         title="green iguana"
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
+        <Textfit mode="multi" max={40} min={1} style={{ width: '100%' }}>
+          <Typography
+            gutterBottom
+            variant="body1"
+            component="div"
+            sx={{ fontWeight: 'bold' }}
+          >
+            {removeNewsSource(primaryArticle.title)}
+          </Typography>
+        </Textfit>
       </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
   );
 }
