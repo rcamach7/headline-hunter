@@ -11,18 +11,19 @@ interface Props {
 
 export default function CategoryCard({ categoryArticle }: Props) {
   const { articles } = categoryArticle;
-  const primaryArticle = articles[0];
+  const primaryArticle = articles[1];
 
   return (
     <Card sx={{ width: 345 }}>
-      <Box sx={{ position: 'relative', height: 140, width: '100%' }}>
+      <Box sx={{ position: 'relative', height: 175, width: '100%' }}>
         <Image
           src={`/api/image-proxy?url=${encodeURIComponent(
             primaryArticle.urlToImage
           )}`}
-          alt="green iguana"
+          alt={primaryArticle.title}
           layout="fill"
-          objectFit="contain"
+          objectFit="cover"
+          objectPosition="top"
         />
       </Box>
       <CardContent>
