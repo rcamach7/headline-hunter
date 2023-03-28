@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { AppBar } from '@/components/organisms';
+import { CategoryCard } from '@/components/molecules';
 import { CategoryArticles } from '@/lib/types';
 
 export default function Home() {
   const [categoryArticles, setCategoryArticles] = useState<CategoryArticles[]>(
     []
   );
+  const sampleCard = categoryArticles.length ? categoryArticles[0] : null;
 
   useEffect(() => {
     const fetchNews = async () => {
