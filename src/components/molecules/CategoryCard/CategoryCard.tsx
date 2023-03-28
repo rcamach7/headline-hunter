@@ -1,5 +1,6 @@
 import { Card, CardContent, Box, Typography, Button } from '@mui/material';
 import { Textfit } from 'react-textfit';
+import { useState } from 'react';
 import Image from 'next/image';
 import { formatDistance } from 'date-fns';
 
@@ -14,6 +15,11 @@ interface Props {
 export default function CategoryCard({ categoryArticle }: Props) {
   const { articles } = categoryArticle;
   const primaryArticle = articles[0];
+  const [visibleNewsItems, setVisibleNewsItems] = useState(3);
+
+  const handleShowMore = () => {
+    setVisibleNewsItems(visibleNewsItems + 3);
+  };
 
   return (
     <Box>
@@ -46,11 +52,11 @@ export default function CategoryCard({ categoryArticle }: Props) {
             </Typography>
           </Textfit>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            {articles.slice(1).map((article) => {
+            {articles.slice(1, 1 + visibleNewsItems).map((article) => {
               return <NewsLine article={article} />;
             })}
           </Box>
-          <Button>Show More</Button>
+          <Button onClick={handleShowMore}>Show More</Button>
         </CardContent>
       </Card>
     </Box>
