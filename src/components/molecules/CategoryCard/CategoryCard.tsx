@@ -1,8 +1,8 @@
-import { Card, CardContent, Box, Typography, Button } from '@mui/material';
-import { ArrowCircleRight as ArrowCircleRightIcon } from '@mui/icons-material/';
+import { Card, CardContent, Box, Typography } from '@mui/material';
 import { Textfit } from 'react-textfit';
 import Image from 'next/image';
 
+import CategoryTitle from './CategoryTitle';
 import { CategoryArticles } from '@/lib/types';
 import { removeNewsSource } from '@/lib/helpers';
 
@@ -16,20 +16,7 @@ export default function CategoryCard({ categoryArticle }: Props) {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography
-          gutterBottom
-          variant="h6"
-          component="div"
-          sx={{ fontWeight: 'bold', pl: 1 }}
-        >
-          {categoryArticle.type.toUpperCase()}
-        </Typography>
-
-        <Button variant="text" startIcon={<ArrowCircleRightIcon />}>
-          View More
-        </Button>
-      </Box>
+      <CategoryTitle title={categoryArticle.type} />
 
       <Card sx={{ width: 345 }}>
         <Box sx={{ position: 'relative', height: 175, width: '100%' }}>
