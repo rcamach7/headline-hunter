@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Box } from '@mui/material';
 
 import { AppBar } from '@/components/organisms';
 import { CategoryCard } from '@/components/molecules';
@@ -31,7 +32,15 @@ export default function Home() {
       </Head>
       <AppBar />
 
-      {sampleCard && <CategoryCard categoryArticle={sampleCard} />}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        {sampleCard && <CategoryCard categoryArticle={sampleCard} />}
+      </Box>
     </>
   );
 }
