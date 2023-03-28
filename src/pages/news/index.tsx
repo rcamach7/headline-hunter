@@ -1,7 +1,28 @@
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import { AppBar } from '@/components/organisms';
 
 export default function Home() {
+  const [categoryArticles, setCategoryArticles] = useState([]);
+
+  useEffect(() => {
+    console.log(categoryArticles);
+  }, [categoryArticles]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const categoryArticles = await axios.get('api/articles');
+        setCategoryArticles(categoryArticles.data.newsCategories);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchNews();
+  }, []);
+
   return (
     <>
       <Head>
@@ -9,7 +30,7 @@ export default function Home() {
       </Head>
       <AppBar />
 
-      <h3>Summary Of Different News Page</h3>
+      <h3>News Page</h3>
     </>
   );
 }
