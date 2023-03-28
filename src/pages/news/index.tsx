@@ -11,7 +11,7 @@ export default function Home() {
   const [categoryArticles, setCategoryArticles] = useState<CategoryArticles[]>(
     []
   );
-  const sampleCard = categoryArticles.length ? categoryArticles[0] : null;
+  const sampleCard = categoryArticles.length ? categoryArticles[1] : null;
 
   useEffect(() => {
     const fetchNews = async () => {

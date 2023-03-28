@@ -1,9 +1,10 @@
-import { Card, CardContent, Box, Typography } from '@mui/material';
+import { Card, CardContent, Box, Typography, Button } from '@mui/material';
 import { Textfit } from 'react-textfit';
 import Image from 'next/image';
+import { formatDistance } from 'date-fns';
 
 import CategoryTitle from './CategoryTitle';
-import { CategoryArticles } from '@/lib/types';
+import { CategoryArticles, Article } from '@/lib/types';
 import { removeNewsSource } from '@/lib/helpers';
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 
 export default function CategoryCard({ categoryArticle }: Props) {
   const { articles } = categoryArticle;
-  const primaryArticle = articles[1];
+  const primaryArticle = articles[0];
 
   return (
     <Box>
@@ -44,8 +45,41 @@ export default function CategoryCard({ categoryArticle }: Props) {
               {primaryArticle.sourceName}
             </Typography>
           </Textfit>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            {articles.slice(1).map((article) => {
+              return <NewsLine article={article} />;
+            })}
+          </Box>
+          <Button>Show More</Button>
         </CardContent>
       </Card>
+    </Box>
+  );
+}
+
+interface NLProps {
+  article: Article;
+}
+
+function NewsLine({ article }: NLProps) {
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <Textfit mode="multi" max={40} min={1} style={{ width: '100%' }}>
+        <Typography variant="body2" color="text.primary" gutterBottom>
+          {removeNewsSource(article.title)}
+        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="body2" color="text.secondary">
+            {removeNewsSource(article.sourceName)}
+          </Typography>
+
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            {formatDistance(new Date(article.publishedAt), new Date(), {
+              addSuffix: true,
+            })}
+          </Typography>
+        </Box>
+      </Textfit>
     </Box>
   );
 }
