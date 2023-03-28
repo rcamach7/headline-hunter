@@ -31,4 +31,4 @@ export type User = {
   dislikedCategories: Category[];
 };
 
-export {};
+export type CategoryArticles = { category: Category; articles: Article[] };

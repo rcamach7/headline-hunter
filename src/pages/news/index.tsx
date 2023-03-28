@@ -3,9 +3,12 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { AppBar } from '@/components/organisms';
+import { CategoryArticles } from '@/lib/types';
 
 export default function Home() {
-  const [categoryArticles, setCategoryArticles] = useState([]);
+  const [categoryArticles, setCategoryArticles] = useState<CategoryArticles[]>(
+    []
+  );
 
   useEffect(() => {
     console.log(categoryArticles);
