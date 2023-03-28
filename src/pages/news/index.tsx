@@ -11,16 +11,12 @@ export default function Home() {
   );
 
   useEffect(() => {
-    console.log(categoryArticles);
-  }, [categoryArticles]);
-
-  useEffect(() => {
     const fetchNews = async () => {
       try {
-        const categoryArticles = await axios.get('api/articles');
-        setCategoryArticles(categoryArticles.data.newsCategories);
+        const response = await axios.get('api/articles');
+        setCategoryArticles(response.data.newsCategories);
       } catch (error) {
-        console.log(error);
+        console.error('Failed to fetch news articles:', error);
       }
     };
     fetchNews();
