@@ -40,6 +40,12 @@ export default function Home() {
         }}
       >
         {sampleCard && <CategoryCard categoryArticle={sampleCard} />}
+        {/* {categoryArticles.map((categoryArticle) => (
+          <CategoryCard
+            key={categoryArticle.id}
+            categoryArticle={categoryArticle}
+          />
+        ))} */}
       </Box>
     </>
   );

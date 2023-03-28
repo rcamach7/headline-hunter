@@ -1,12 +1,19 @@
-import { Card, CardContent, Box, Typography, Button } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  Box,
+  Typography,
+  Button,
+  Divider,
+} from '@mui/material';
 import { Textfit } from 'react-textfit';
 import { useState } from 'react';
 import Image from 'next/image';
-import { formatDistance } from 'date-fns';
+import React from 'react';
 
 import CategoryTitle from './CategoryTitle';
 import NewsLine from './NewsLine';
-import { CategoryArticles, Article } from '@/lib/types';
+import { CategoryArticles } from '@/lib/types';
 import { removeNewsSource } from '@/lib/helpers';
 
 interface Props {
@@ -53,8 +60,13 @@ export default function CategoryCard({ categoryArticle }: Props) {
             </Typography>
           </Textfit>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            {articles.slice(1, 1 + visibleNewsItems).map((article) => {
-              return <NewsLine article={article} />;
+            {articles.slice(1, 1 + visibleNewsItems).map((article, index) => {
+              return (
+                <React.Fragment key={article.id}>
+                  <NewsLine article={article} />
+                  <Divider />
+                </React.Fragment>
+              );
             })}
           </Box>
           <Button onClick={handleShowMore}>Show More</Button>
