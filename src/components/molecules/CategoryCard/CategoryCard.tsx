@@ -30,7 +30,7 @@ export default function CategoryCard({ categoryArticle }: Props) {
             objectPosition="top"
           />
         </Box>
-        <CardContent>
+        <CardContent sx={{ px: 1, py: '8px !important' }}>
           <Textfit mode="multi" max={40} min={1} style={{ width: '100%' }}>
             <Typography
               gutterBottom
@@ -39,6 +39,9 @@ export default function CategoryCard({ categoryArticle }: Props) {
               sx={{ fontWeight: 'bold' }}
             >
               {removeNewsSource(primaryArticle.title)}
+            </Typography>
+            <Typography variant="body1" color="text.secondary" gutterBottom>
+              {primaryArticle.sourceName}
             </Typography>
           </Textfit>
         </CardContent>
