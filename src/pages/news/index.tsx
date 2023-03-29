@@ -36,6 +36,8 @@ export default function Home() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          pb: 2,
+          gap: 1,
         }}
       >
         {categoryArticles.map((categoryArticle) => (
