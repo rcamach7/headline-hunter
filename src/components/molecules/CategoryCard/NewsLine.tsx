@@ -14,7 +14,14 @@ export default function NewsLine({ article }: Props) {
     <Box sx={{ display: 'flex', pt: 0.5 }}>
       <Textfit mode="multi" max={40} min={1} style={{ width: '100%' }}>
         <Typography variant="body2" color="text.primary" gutterBottom>
-          {removeNewsSource(article.title)}
+          <a
+            style={{ color: 'inherit', textDecoration: 'none' }}
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {removeNewsSource(article.title)}
+          </a>
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography
