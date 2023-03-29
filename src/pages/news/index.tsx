@@ -39,13 +39,12 @@ export default function Home() {
           alignItems: 'center',
         }}
       >
-        {sampleCard && <CategoryCard categoryArticle={sampleCard} />}
-        {/* {categoryArticles.map((categoryArticle) => (
+        {categoryArticles.map((categoryArticle) => (
           <CategoryCard
             key={categoryArticle.id}
             categoryArticle={categoryArticle}
           />
-        ))} */}
+        ))}
       </Box>
     </>
   );

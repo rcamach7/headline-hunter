@@ -5,10 +5,12 @@ import {
   Button,
   Divider,
   CardActionArea,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { useState } from 'react';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import CategoryTitle from './CategoryTitle';
 import NewsLine from './NewsLine';
@@ -21,12 +23,23 @@ interface Props {
 
 export default function CategoryCard({ categoryArticle }: Props) {
   const { articles } = categoryArticle;
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+
   const primaryArticle = articles[0];
   const [visibleNewsItems, setVisibleNewsItems] = useState(3);
 
   const handleShowMore = () => {
     setVisibleNewsItems(visibleNewsItems + 2);
   };
+
+  useEffect(() => {
+    if (isMd) {
+      setVisibleNewsItems(4);
+    } else {
+      setVisibleNewsItems(3);
+    }
+  }, [isMd]);
 
   return (
     <Box>
