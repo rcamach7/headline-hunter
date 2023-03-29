@@ -23,11 +23,19 @@ interface Props {
 
 export default function CategoryCard({ categoryArticle }: Props) {
   const { articles } = categoryArticle;
+  const primaryArticle = articles[0];
+  const [visibleNewsItems, setVisibleNewsItems] = useState(3);
+
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
-  const primaryArticle = articles[0];
-  const [visibleNewsItems, setVisibleNewsItems] = useState(3);
+  const [imageUrl, setImageUrl] = useState(
+    `/api/image-proxy?url=${encodeURIComponent(primaryArticle.urlToImage)}`
+  );
+
+  const handleImageError = () => {
+    setImageUrl('/images/fallback.webp');
+  };
 
   const handleShowMore = () => {
     setVisibleNewsItems(visibleNewsItems + 2);
@@ -61,9 +69,8 @@ export default function CategoryCard({ categoryArticle }: Props) {
             }}
           >
             <Image
-              src={`/api/image-proxy?url=${encodeURIComponent(
-                primaryArticle.urlToImage
-              )}`}
+              src={imageUrl}
+              onError={handleImageError}
               alt={primaryArticle.title}
               layout="fill"
               objectFit="cover"
