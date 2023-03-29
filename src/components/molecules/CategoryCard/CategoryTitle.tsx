@@ -1,5 +1,6 @@
 import { Box, Typography, Button } from '@mui/material';
 import { ArrowCircleRight as ArrowCircleRightIcon } from '@mui/icons-material/';
+import Link from 'next/link';
 
 import { FavoriteCategoryButton } from '@/components/atoms';
 
@@ -38,7 +39,9 @@ export default function CategoryTitle({ title, categoryId }: Props) {
         startIcon={<ArrowCircleRightIcon sx={{ color: '#b6b5b5' }} />}
         sx={{ color: '#b6b5b5' }}
       >
-        View More
+        <Link href={`/news/category/${categoryId}`}>
+          <a style={{ color: 'inherit', textDecoration: 'none' }}>View More</a>
+        </Link>
       </Button>
     </Box>
   );
