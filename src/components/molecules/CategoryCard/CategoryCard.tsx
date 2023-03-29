@@ -58,8 +58,16 @@ export default function CategoryCard({ categoryArticle }: Props) {
           />
         </Box>
 
-        <CardContent sx={{ px: 1, pt: 0, pb: '8px !important' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            px: 1,
+            pt: 0,
+            pb: '8px !important',
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', pt: { md: 1 } }}>
             {articles.slice(1, 1 + visibleNewsItems).map((article, index) => {
               return (
                 <React.Fragment key={article.id}>
@@ -79,7 +87,11 @@ export default function CategoryCard({ categoryArticle }: Props) {
             })}
           </Box>
           <CardActionArea
-            sx={{ display: 'flex', justifyContent: 'space-between' }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              mt: 'auto',
+            }}
           >
             <Button onClick={handleShowMore}>Show More</Button>
             {visibleNewsItems > 3 && (
