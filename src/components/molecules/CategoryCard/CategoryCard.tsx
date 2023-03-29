@@ -25,7 +25,7 @@ export default function CategoryCard({ categoryArticle }: Props) {
   const [visibleNewsItems, setVisibleNewsItems] = useState(3);
 
   const handleShowMore = () => {
-    setVisibleNewsItems(visibleNewsItems + 3);
+    setVisibleNewsItems(visibleNewsItems + 2);
   };
 
   return (
@@ -39,8 +39,14 @@ export default function CategoryCard({ categoryArticle }: Props) {
           width: { xs: 345, md: 800 },
         }}
       >
-        <Box>
-          <Box sx={{ position: 'relative', height: 175, width: '100%' }}>
+        <Box sx={{ maxWidth: 400 }}>
+          <Box
+            sx={{
+              position: 'relative',
+              height: 175,
+              width: '100%',
+            }}
+          >
             <Image
               src={`/api/image-proxy?url=${encodeURIComponent(
                 primaryArticle.urlToImage
@@ -55,6 +61,7 @@ export default function CategoryCard({ categoryArticle }: Props) {
             title={primaryArticle.title}
             publishedAt={primaryArticle.publishedAt}
             sourceName={primaryArticle.sourceName}
+            description={primaryArticle.description}
           />
         </Box>
 

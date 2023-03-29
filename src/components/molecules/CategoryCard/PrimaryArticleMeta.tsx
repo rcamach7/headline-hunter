@@ -3,18 +3,20 @@ import { Textfit } from 'react-textfit';
 import React from 'react';
 import { formatDistance } from 'date-fns';
 
-import { removeNewsSource } from '@/lib/helpers';
+import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
 
 interface Props {
   title: string;
   publishedAt: Date;
   sourceName: string;
+  description: string;
 }
 
 export default function PrimaryArticleMeta({
   publishedAt,
   title,
   sourceName,
+  description,
 }: Props) {
   return (
     <Textfit
@@ -30,6 +32,14 @@ export default function PrimaryArticleMeta({
         sx={{ fontWeight: 'bold' }}
       >
         {removeNewsSource(title)}
+      </Typography>
+      <Typography
+        gutterBottom
+        variant="body2"
+        component="div"
+        sx={{ display: { xs: 'none', md: 'block' } }}
+      >
+        {shortenParagraph(description, 25)}
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography
