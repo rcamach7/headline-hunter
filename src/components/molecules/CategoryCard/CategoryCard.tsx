@@ -32,30 +32,45 @@ export default function CategoryCard({ categoryArticle }: Props) {
     <Box>
       <CategoryTitle title={categoryArticle.type} />
 
-      <Card sx={{ width: 345 }}>
-        <Box sx={{ position: 'relative', height: 175, width: '100%' }}>
-          <Image
-            src={`/api/image-proxy?url=${encodeURIComponent(
-              primaryArticle.urlToImage
-            )}`}
-            alt={primaryArticle.title}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="top"
-          />
-        </Box>
-        <CardContent sx={{ px: 1, py: '8px !important' }}>
+      <Card
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          width: { xs: 345, md: 800 },
+        }}
+      >
+        <Box>
+          <Box sx={{ position: 'relative', height: 175, width: '100%' }}>
+            <Image
+              src={`/api/image-proxy?url=${encodeURIComponent(
+                primaryArticle.urlToImage
+              )}`}
+              alt={primaryArticle.title}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="top"
+            />
+          </Box>
           <PrimaryArticleMeta
             title={primaryArticle.title}
             publishedAt={primaryArticle.publishedAt}
             sourceName={primaryArticle.sourceName}
           />
+        </Box>
 
+        <CardContent sx={{ px: 1, pt: 0, pb: '8px !important' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             {articles.slice(1, 1 + visibleNewsItems).map((article, index) => {
               return (
                 <React.Fragment key={article.id}>
-                  {index === 0 && <Divider sx={{ background: '#8b8b8b' }} />}
+                  {index === 0 && (
+                    <Divider
+                      sx={{
+                        background: '#8b8b8b',
+                        display: { sm: 'block', md: 'none' },
+                      }}
+                    />
+                  )}
 
                   <NewsLine article={article} />
                   <Divider sx={{ background: '#8b8b8b' }} />
