@@ -51,7 +51,10 @@ export default function CategoryCard({ categoryArticle }: Props) {
 
   return (
     <Box>
-      <CategoryTitle title={categoryArticle.type} />
+      <CategoryTitle
+        title={categoryArticle.type}
+        categoryId={categoryArticle.id}
+      />
 
       <Card
         sx={{

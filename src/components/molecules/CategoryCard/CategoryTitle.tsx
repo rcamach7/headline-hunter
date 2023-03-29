@@ -1,11 +1,14 @@
 import { Box, Typography, Button } from '@mui/material';
 import { ArrowCircleRight as ArrowCircleRightIcon } from '@mui/icons-material/';
 
+import { FavoriteCategoryButton } from '@/components/atoms';
+
 interface Props {
   title: string;
+  categoryId: string;
 }
 
-export default function CategoryTitle({ title }: Props) {
+export default function CategoryTitle({ title, categoryId }: Props) {
   return (
     <Box
       sx={{
@@ -13,14 +16,22 @@ export default function CategoryTitle({ title }: Props) {
         justifyContent: 'space-between',
       }}
     >
-      <Typography
-        gutterBottom
-        variant="h6"
-        component="div"
-        sx={{ fontWeight: 'bold', pl: 1, color: '#cecece' }}
-      >
-        {title.toUpperCase()}
-      </Typography>
+      <Box sx={{ display: 'flex' }}>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            fontWeight: 'bold',
+            pl: 1,
+            color: '#cecece',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          {title.toUpperCase()}
+        </Typography>
+        <FavoriteCategoryButton categoryId={categoryId} />
+      </Box>
 
       <Button
         variant="text"
