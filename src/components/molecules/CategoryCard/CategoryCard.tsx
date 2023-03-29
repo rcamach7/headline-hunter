@@ -45,11 +45,19 @@ export default function CategoryCard({ categoryArticle }: Props) {
           />
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-            {articles.slice(1, 1 + visibleNewsItems).map((article) => {
+            {articles.slice(1, 1 + visibleNewsItems).map((article, index) => {
               return (
                 <React.Fragment key={article.id}>
+                  {index === 0 && (
+                    <Divider
+                      sx={{ background: '#8b8b8b', borderBottomWidth: '2px' }}
+                    />
+                  )}
+
                   <NewsLine article={article} />
-                  <Divider />
+                  <Divider
+                    sx={{ background: '#8b8b8b', borderBottomWidth: '2px' }}
+                  />
                 </React.Fragment>
               );
             })}

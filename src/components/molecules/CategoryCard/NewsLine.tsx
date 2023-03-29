@@ -17,7 +17,11 @@ export default function NewsLine({ article }: Props) {
           {removeNewsSource(article.title)}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontSize: '.3em' }}
+          >
             {article.sourceName}
           </Typography>
 
