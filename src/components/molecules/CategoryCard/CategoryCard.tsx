@@ -1,20 +1,12 @@
-import {
-  Card,
-  CardContent,
-  Box,
-  Typography,
-  Button,
-  Divider,
-} from '@mui/material';
-import { Textfit } from 'react-textfit';
+import { Card, CardContent, Box, Button, Divider } from '@mui/material';
 import { useState } from 'react';
 import Image from 'next/image';
 import React from 'react';
 
 import CategoryTitle from './CategoryTitle';
 import NewsLine from './NewsLine';
+import PrimaryArticleMeta from './PrimaryArticleMeta';
 import { CategoryArticles } from '@/lib/types';
-import { removeNewsSource } from '@/lib/helpers';
 
 interface Props {
   categoryArticle: CategoryArticles;
@@ -46,21 +38,14 @@ export default function CategoryCard({ categoryArticle }: Props) {
           />
         </Box>
         <CardContent sx={{ px: 1, py: '8px !important' }}>
-          <Textfit mode="multi" max={40} min={1} style={{ width: '100%' }}>
-            <Typography
-              gutterBottom
-              variant="body1"
-              component="div"
-              sx={{ fontWeight: 'bold' }}
-            >
-              {removeNewsSource(primaryArticle.title)}
-            </Typography>
-            <Typography variant="body1" color="text.secondary" gutterBottom>
-              {primaryArticle.sourceName}
-            </Typography>
-          </Textfit>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            {articles.slice(1, 1 + visibleNewsItems).map((article, index) => {
+          <PrimaryArticleMeta
+            title={primaryArticle.title}
+            publishedAt={primaryArticle.publishedAt}
+            sourceName={primaryArticle.sourceName}
+          />
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+            {articles.slice(1, 1 + visibleNewsItems).map((article) => {
               return (
                 <React.Fragment key={article.id}>
                   <NewsLine article={article} />
