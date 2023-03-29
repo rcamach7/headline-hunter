@@ -85,6 +85,7 @@ export default function CategoryCard({ categoryArticle }: Props) {
             publishedAt={primaryArticle.publishedAt}
             sourceName={primaryArticle.sourceName}
             description={primaryArticle.description}
+            url={primaryArticle.url}
           />
         </Box>
 

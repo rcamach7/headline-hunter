@@ -10,6 +10,7 @@ interface Props {
   publishedAt: Date;
   sourceName: string;
   description: string;
+  url: string;
 }
 
 export default function PrimaryArticleMeta({
@@ -17,6 +18,7 @@ export default function PrimaryArticleMeta({
   title,
   sourceName,
   description,
+  url,
 }: Props) {
   return (
     <Textfit
@@ -31,7 +33,14 @@ export default function PrimaryArticleMeta({
         component="div"
         sx={{ fontWeight: 'bold' }}
       >
-        {removeNewsSource(title)}
+        <a
+          style={{ color: 'inherit', textDecoration: 'none' }}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {removeNewsSource(title)}
+        </a>
       </Typography>
       <Typography
         gutterBottom
