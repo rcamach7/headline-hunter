@@ -11,7 +11,7 @@ interface Props {
 
 export default function NewsLine({ article }: Props) {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', pt: 0.5 }}>
       <Textfit mode="multi" max={40} min={1} style={{ width: '100%' }}>
         <Typography variant="body2" color="text.primary" gutterBottom>
           {removeNewsSource(article.title)}

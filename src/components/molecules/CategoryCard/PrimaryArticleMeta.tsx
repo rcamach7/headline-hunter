@@ -17,12 +17,7 @@ export default function PrimaryArticleMeta({
   sourceName,
 }: Props) {
   return (
-    <Textfit
-      mode="multi"
-      max={40}
-      min={1}
-      style={{ width: '100%', paddingBottom: '.25em' }}
-    >
+    <Textfit mode="multi" max={40} min={1} style={{ width: '100%' }}>
       <Typography
         gutterBottom
         variant="body1"

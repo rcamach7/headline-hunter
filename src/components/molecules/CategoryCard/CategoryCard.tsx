@@ -51,20 +51,14 @@ export default function CategoryCard({ categoryArticle }: Props) {
             sourceName={primaryArticle.sourceName}
           />
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             {articles.slice(1, 1 + visibleNewsItems).map((article, index) => {
               return (
                 <React.Fragment key={article.id}>
-                  {index === 0 && (
-                    <Divider
-                      sx={{ background: '#8b8b8b', borderBottomWidth: '2px' }}
-                    />
-                  )}
+                  {index === 0 && <Divider sx={{ background: '#8b8b8b' }} />}
 
                   <NewsLine article={article} />
-                  <Divider
-                    sx={{ background: '#8b8b8b', borderBottomWidth: '2px' }}
-                  />
+                  <Divider sx={{ background: '#8b8b8b' }} />
                 </React.Fragment>
               );
             })}
