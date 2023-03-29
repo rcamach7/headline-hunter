@@ -1,4 +1,11 @@
-import { Card, CardContent, Box, Button, Divider } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  Box,
+  Button,
+  Divider,
+  CardActionArea,
+} from '@mui/material';
 import { useState } from 'react';
 import Image from 'next/image';
 import React from 'react';
@@ -62,7 +69,14 @@ export default function CategoryCard({ categoryArticle }: Props) {
               );
             })}
           </Box>
-          <Button onClick={handleShowMore}>Show More</Button>
+          <CardActionArea
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+          >
+            <Button onClick={handleShowMore}>Show More</Button>
+            {visibleNewsItems > 3 && (
+              <Button onClick={() => setVisibleNewsItems(3)}>Collapse</Button>
+            )}
+          </CardActionArea>
         </CardContent>
       </Card>
     </Box>
