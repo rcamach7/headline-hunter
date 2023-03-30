@@ -37,9 +37,6 @@ export default function ArticleActionButtons({ type, articleId }: Props) {
         </Button>
 
         <FavoriteArticleButton articleId={articleId} type="full" />
-        <IconButton color="secondary" aria-label="dislike">
-          <ThumbDownOffAltIcon />
-        </IconButton>
       </Box>
     );
   }
