@@ -19,9 +19,13 @@ interface Props {
 }
 
 export default function NewsCard({ article }: Props) {
+  const handleClick = (url) => {
+    window.open(url, '_blank');
+  };
+
   return (
     <Card sx={{ width: 345, maxHeight: 200 }}>
-      <CardActionArea>
+      <CardActionArea onClick={() => handleClick(article.url)}>
         <Box sx={{ display: 'flex', p: 1 }}>
           <CardContent
             sx={{

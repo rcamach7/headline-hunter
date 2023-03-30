@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { NewsCard } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
