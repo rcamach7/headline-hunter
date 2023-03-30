@@ -7,10 +7,11 @@ import {
   Box,
 } from '@mui/material';
 import * as React from 'react';
-import { Article } from '@/lib/types';
 import { Textfit } from 'react-textfit';
+
+import { Article } from '@/lib/types';
+import { ArticleActionButtons } from '@/components/atoms';
 import { removeNewsSource } from '@/lib/helpers';
-import CardActionBar from './CardActionBar';
 import NewsMeta from './NewsMeta';
 
 interface Props {
@@ -57,7 +58,7 @@ export default function NewsCard({ article }: Props) {
         />
       </CardActionArea>
 
-      <CardActionBar />
+      <ArticleActionButtons type="full" />
     </Card>
   );
 }
