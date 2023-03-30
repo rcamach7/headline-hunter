@@ -63,26 +63,42 @@ export default function Home() {
         <title>Headline Hunter</title>
       </Head>
       <AppBar />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          pb: 2,
-          gap: 1,
-        }}
-      >
-        {pageData.categoryArticles.map((categoryArticle) => (
-          <CategoryCard
-            key={categoryArticle.id}
-            categoryArticle={categoryArticle}
+      <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+        <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              pb: 2,
+              gap: 1,
+            }}
+          >
+            {pageData.categoryArticles.map((categoryArticle) => (
+              <CategoryCard
+                key={categoryArticle.id}
+                categoryArticle={categoryArticle}
+              />
+            ))}
+          </Box>
+          <LoadMoreButton
+            loadMore={loadMoreCategoryArticles}
+            loading={pageData.loading}
           />
-        ))}
+        </Box>
+
+        <Box
+          sx={{
+            display: { xs: 'none', ml: 'block' },
+            backgroundColor: 'red',
+            flex: 0.5,
+            minWidth: 175,
+            maxWidth: 300,
+          }}
+        >
+          ff
+        </Box>
       </Box>
-      <LoadMoreButton
-        loadMore={loadMoreCategoryArticles}
-        loading={pageData.loading}
-      />
     </>
   );
 }

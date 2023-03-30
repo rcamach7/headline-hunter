@@ -23,6 +23,16 @@ const theme = createTheme({
       contrastText: '#e1b472',
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+      ml: 1000,
+    },
+  },
   typography: {
     fontFamily: [
       '-apple-system',
@@ -38,5 +48,16 @@ const theme = createTheme({
     ].join(','),
   },
 });
+
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+    ml: true;
+  }
+}
 
 export default theme;
