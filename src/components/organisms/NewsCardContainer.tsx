@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
 
 import { NewsCard } from '@/components/molecules';
+import { LoadMoreButton } from '@/components/atoms';
 import { Article } from '@/lib/types';
 
 interface Props {
@@ -36,14 +37,7 @@ export default function NewsCardContainer({
           pb: 2,
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={loadMoreArticles}
-          sx={{ color: 'black' }}
-        >
-          Load More
-        </Button>
+        <LoadMoreButton loadMoreArticles={loadMoreArticles} />
       </Box>
     </>
   );

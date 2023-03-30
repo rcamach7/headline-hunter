@@ -1,5 +1,4 @@
 import prisma from '@/lib/prisma';
-import { Category } from '@prisma/client';
 
 import { popularCategories } from '@/lib/data';
 import { getUserByEmail } from './userService';
