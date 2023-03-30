@@ -195,3 +195,11 @@ async function queryForNewsByCategory(category: string) {
     }));
   }
 }
+
+export async function getArticleById(id: string) {
+  return await prisma.article.findFirst({
+    where: {
+      id,
+    },
+  });
+}
