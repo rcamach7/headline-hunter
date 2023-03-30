@@ -39,7 +39,7 @@ export default function CategoryTitle({ title, categoryId }: Props) {
         startIcon={<ArrowCircleRightIcon sx={{ color: '#b6b5b5' }} />}
         sx={{ color: '#b6b5b5' }}
       >
-        <Link href={`/news/category/${categoryId}`}>
+        <Link href={`/category/${categoryId}`}>
           <a style={{ color: 'inherit', textDecoration: 'none' }}>View More</a>
         </Link>
       </Button>

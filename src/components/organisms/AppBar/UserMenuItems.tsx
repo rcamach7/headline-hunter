@@ -23,15 +23,6 @@ export default function UserMenuItems({ user }: Props) {
           </Typography>
         </MenuItem>
       )}
-      {router.pathname !== '/news' && (
-        <MenuItem>
-          <Typography textAlign="center">
-            <Link href="/news">
-              <a style={{ textDecoration: 'none', color: 'inherit' }}>News</a>
-            </Link>
-          </Typography>
-        </MenuItem>
-      )}
       <MenuItem>
         <Typography textAlign="center">
           <Link href="/account">

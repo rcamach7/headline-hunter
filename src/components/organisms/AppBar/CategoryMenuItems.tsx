@@ -30,7 +30,7 @@ export default function CategoryMenuItems({ handleCloseNavMenu, user }: Props) {
       </MenuItem>
       {popularCategories.map((category) => (
         <MenuItem key={category.id} onClick={handleCloseNavMenu}>
-          <Link href={`/news/category/${category.id}`} passHref>
+          <Link href={`/category/${category.id}`} passHref>
             <Typography
               sx={{ color: 'text.primary', textDecoration: 'none' }}
               variant="body2"
