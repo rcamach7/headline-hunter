@@ -7,11 +7,14 @@ import {
   ThumbDownOffAlt as ThumbDownOffAltIcon,
 } from '@mui/icons-material';
 
+import FavoriteArticle from './FavoriteArticle';
+
 interface Props {
   type: 'full' | 'condensed';
+  articleId: string;
 }
 
-export default function ArticleActionButtons({ type }: Props) {
+export default function ArticleActionButtons({ type, articleId }: Props) {
   if (type === 'condensed') {
     return (
       <Box
@@ -19,9 +22,7 @@ export default function ArticleActionButtons({ type }: Props) {
           display: 'inline',
         }}
       >
-        <IconButton color="secondary" sx={{ padding: 0, ml: 0.5 }}>
-          <FavoriteBorderIcon sx={{ fontSize: 16 }} />
-        </IconButton>
+        <FavoriteArticle articleId={articleId} />
         <IconButton color="secondary" sx={{ padding: 0, ml: 0.5 }}>
           <SmartToyIcon sx={{ fontSize: 16 }} />
         </IconButton>
