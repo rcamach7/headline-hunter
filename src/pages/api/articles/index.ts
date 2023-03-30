@@ -3,26 +3,32 @@ import { getServerSession } from 'next-auth/next';
 
 import { authOptions } from '@/auth/[...nextauth]';
 import { getNewsByCategories, CategoryNews } from '@/services/articleService';
-import { getInitialCategories } from '@/services/categoryService';
+import {
+  getInitialCategories,
+  getAdditionalCategories,
+} from '@/services/categoryService';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    const { page } = req.query;
-    const pageNumber = page ? parseInt(page as string) : 1;
+    const { initialRequest, current } = req.query;
+    const isInitialRequest = initialRequest === 'true';
+    const currentIds = current ? (current as string).split(',') : [];
 
     switch (req.method) {
       case 'GET':
         const session = await getServerSession(req, res, authOptions);
 
         let newsCategories: CategoryNews[];
-        if (pageNumber === 1) {
+        if (isInitialRequest) {
           const categories = await getInitialCategories(session);
           newsCategories = await getNewsByCategories(categories);
+        } else {
+          const categories = await getAdditionalCategories(currentIds);
+          newsCategories = await getNewsByCategories(categories);
         }
-
         return res.status(200).json({ newsCategories });
 
       default:

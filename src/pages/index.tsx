@@ -10,16 +10,18 @@ import { CategoryArticles } from '@/lib/types';
 export default function Home() {
   const [pageData, setPageData] = useState<{
     categoryArticles: CategoryArticles[];
-    page: number;
-  }>({ categoryArticles: [], page: 1 });
+    initialRequest: boolean;
+  }>({ categoryArticles: [], initialRequest: true });
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get('api/articles');
+        const response = await axios.get(
+          `api/articles?initialRequest=${pageData.initialRequest}`
+        );
         setPageData({
           categoryArticles: response.data.newsCategories,
-          page: 1,
+          initialRequest: false,
         });
       } catch (error) {
         console.error('Failed to fetch news articles:', error);
@@ -30,14 +32,20 @@ export default function Home() {
 
   const loadMoreCategoryArticles = async () => {
     try {
-      const page = pageData.page + 1;
-      const response = await axios.get(`api/articles?page=${page}`);
+      const currentIds = pageData.categoryArticles.map(
+        (categoryArticle) => categoryArticle.id
+      );
+      const response = await axios.get(
+        `api/articles?initialRequest=${
+          pageData.initialRequest
+        }&current=${currentIds.join(',')}`
+      );
       setPageData((prevState) => ({
+        ...prevState,
         categoryArticles: [
           ...prevState.categoryArticles,
           ...response.data.newsCategories,
         ],
-        page,
       }));
     } catch (error) {
       console.error('Error loading more articles:', error);

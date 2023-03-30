@@ -90,3 +90,16 @@ export async function getInitialCategories(session: any) {
     );
   }
 }
+
+export async function getAdditionalCategories(current: string[]) {
+  return prisma.category.findMany({
+    where: {
+      NOT: {
+        id: {
+          in: current,
+        },
+      },
+    },
+    take: 2,
+  });
+}
