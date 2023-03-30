@@ -4,6 +4,7 @@ import React from 'react';
 import { formatDistance } from 'date-fns';
 
 import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
+import { ArticleActionButtons } from '@/components/atoms';
 
 interface Props {
   title: string;
@@ -50,6 +51,8 @@ export default function PrimaryArticleMeta({
       >
         {shortenParagraph(description, 25)}
       </Typography>
+      <ArticleActionButtons type="full" />
+
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography
           variant="body1"
