@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 
 import { AppBar } from '@/components/organisms';
 import { CategoryCard } from '@/components/molecules';
+import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
 
 export default function Home() {
@@ -58,7 +59,6 @@ export default function Home() {
         <title>Headline Hunter</title>
       </Head>
       <AppBar />
-
       <Box
         sx={{
           display: 'flex',
@@ -75,6 +75,7 @@ export default function Home() {
           />
         ))}
       </Box>
+      <LoadMoreButton loadMore={loadMoreCategoryArticles} />
     </>
   );
 }

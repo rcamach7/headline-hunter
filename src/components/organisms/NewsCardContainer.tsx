@@ -28,17 +28,7 @@ export default function NewsCardContainer({
           <NewsCard article={article} key={article.id} />
         ))}
       </Box>
-
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          p: 1,
-          pb: 2,
-        }}
-      >
-        <LoadMoreButton loadMoreArticles={loadMoreArticles} />
-      </Box>
+      <LoadMoreButton loadMore={loadMoreArticles} />
     </>
   );
 }

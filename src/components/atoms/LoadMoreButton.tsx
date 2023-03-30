@@ -1,18 +1,22 @@
 import { Box, Button } from '@mui/material';
 
 interface Props {
-  loadMoreArticles: () => void;
+  loadMore: () => void;
 }
 
-export default function LoadMoreButton({ loadMoreArticles }: Props) {
+export default function LoadMoreButton({ loadMore }: Props) {
   return (
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={loadMoreArticles}
-      sx={{ color: 'black' }}
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        p: 1,
+        pb: 2,
+      }}
     >
-      Load More
-    </Button>
+      <Button variant="outlined" color="secondary" onClick={loadMore}>
+        Load More
+      </Button>
+    </Box>
   );
 }
