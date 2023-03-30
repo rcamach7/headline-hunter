@@ -4,23 +4,15 @@ import React from 'react';
 import { formatDistance } from 'date-fns';
 
 import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
+import { Article } from '@/lib/types';
 import { ArticleActionButtons } from '@/components/molecules';
 
 interface Props {
-  title: string;
-  publishedAt: Date;
-  sourceName: string;
-  description: string;
-  url: string;
+  article: Article;
 }
 
-export default function PrimaryArticleMeta({
-  publishedAt,
-  title,
-  sourceName,
-  description,
-  url,
-}: Props) {
+export default function PrimaryArticleMeta({ article }: Props) {
+  const { id, description, title, publishedAt, sourceName, url } = article;
   return (
     <Textfit
       mode="multi"
@@ -72,7 +64,7 @@ export default function PrimaryArticleMeta({
           })}
         </Typography>
       </Box>
-      <ArticleActionButtons type="full" />
+      <ArticleActionButtons type="full" articleId={id} />
     </Textfit>
   );
 }

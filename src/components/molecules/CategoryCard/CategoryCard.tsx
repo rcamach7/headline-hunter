@@ -80,13 +80,7 @@ export default function CategoryCard({ categoryArticle }: Props) {
               objectPosition="top"
             />
           </Box>
-          <PrimaryArticleMeta
-            title={primaryArticle.title}
-            publishedAt={primaryArticle.publishedAt}
-            sourceName={primaryArticle.sourceName}
-            description={primaryArticle.description}
-            url={primaryArticle.url}
-          />
+          <PrimaryArticleMeta article={primaryArticle} />
         </Box>
 
         <CardContent
