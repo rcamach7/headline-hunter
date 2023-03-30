@@ -51,7 +51,6 @@ export default function PrimaryArticleMeta({
       >
         {shortenParagraph(description, 25)}
       </Typography>
-      <ArticleActionButtons type="full" />
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography
@@ -73,6 +72,7 @@ export default function PrimaryArticleMeta({
           })}
         </Typography>
       </Box>
+      <ArticleActionButtons type="full" />
     </Textfit>
   );
 }

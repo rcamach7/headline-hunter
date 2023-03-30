@@ -2,6 +2,9 @@ import { Box, IconButton, Button } from '@mui/material';
 import {
   BookmarkBorder as BookmarkBorderIcon,
   SmartToy as SmartToyIcon,
+  FavoriteBorder as FavoriteBorderIcon,
+  Favorite as FavoriteFullIcon,
+  ThumbDownOffAlt as ThumbDownOffAltIcon,
 } from '@mui/icons-material';
 
 interface Props {
@@ -17,7 +20,7 @@ export default function ArticleActionButtons({ type }: Props) {
         }}
       >
         <IconButton color="secondary" sx={{ padding: 0, ml: 0.5 }}>
-          <BookmarkBorderIcon sx={{ fontSize: 16 }} />
+          <FavoriteBorderIcon sx={{ fontSize: 16 }} />
         </IconButton>
         <IconButton color="secondary" sx={{ padding: 0, ml: 0.5 }}>
           <SmartToyIcon sx={{ fontSize: 16 }} />
@@ -26,14 +29,7 @@ export default function ArticleActionButtons({ type }: Props) {
     );
   } else {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', px: 1 }}>
-        <Button
-          variant="outlined"
-          color="secondary"
-          startIcon={<BookmarkBorderIcon />}
-        >
-          Bookmark
-        </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 1 }}>
         <Button
           variant="outlined"
           color="secondary"
@@ -41,6 +37,17 @@ export default function ArticleActionButtons({ type }: Props) {
         >
           Smart Summary
         </Button>
+
+        <IconButton
+          color="secondary"
+          aria-label="save"
+          sx={{ marginLeft: 'auto !important' }}
+        >
+          <FavoriteBorderIcon />
+        </IconButton>
+        <IconButton color="secondary" aria-label="dislike">
+          <ThumbDownOffAltIcon />
+        </IconButton>
       </Box>
     );
   }
