@@ -1,36 +1,26 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
-import { Category } from '@prisma/client';
 
 import { authOptions } from '@/auth/[...nextauth]';
-import { popularCategories } from '@/lib/data';
 import { getNewsByCategories, CategoryNews } from '@/services/articleService';
-import {
-  getCategoriesByIds,
-  getCustomCategories,
-} from '@/services/categoryService';
-import { getUserByEmail } from '@/services/userService';
+import { getInitialCategories } from '@/services/categoryService';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
+    const { page } = req.query;
+    const pageNumber = page ? parseInt(page as string) : 1;
+
     switch (req.method) {
       case 'GET':
         const session = await getServerSession(req, res, authOptions);
 
         let newsCategories: CategoryNews[];
-        let selectedCategories: Category[];
-        if (session) {
-          const user = await getUserByEmail(session.user.email);
-          selectedCategories = getCustomCategories(user.savedCategories);
-          newsCategories = await getNewsByCategories(selectedCategories);
-        } else {
-          selectedCategories = await getCategoriesByIds(
-            popularCategories.map((category) => category.id)
-          );
-          newsCategories = await getNewsByCategories(selectedCategories);
+        if (pageNumber === 1) {
+          const categories = await getInitialCategories(session);
+          newsCategories = await getNewsByCategories(categories);
         }
 
         return res.status(200).json({ newsCategories });

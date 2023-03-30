@@ -1,6 +1,8 @@
 import prisma from '@/lib/prisma';
 import { Category } from '@prisma/client';
+
 import { popularCategories } from '@/lib/data';
+import { getUserByEmail } from './userService';
 
 export const getCategoryById = async (id: string) => {
   const category = await prisma.category.findFirst({
@@ -62,22 +64,29 @@ export async function deleteCategoryAndAssociatedArticles(categoryId: string) {
   }
 }
 
-export function getCustomCategories(savedCategories: Category[]) {
-  let selectedCategories = [...savedCategories];
+export async function getInitialCategories(session: any) {
+  if (session) {
+    const user = await getUserByEmail(session.user.email);
+    const categories = [...user.savedCategories];
 
-  if (selectedCategories.length < 5) {
-    const additionalCategoriesNeeded = 5 - selectedCategories.length;
-    const additionalCategories = popularCategories
-      .filter(
-        (category) =>
-          !selectedCategories.find(
-            (savedCategory) => savedCategory.id === category.id
-          )
-      )
-      .slice(0, additionalCategoriesNeeded);
+    if (categories.length < 5) {
+      const additionalCategoriesNeeded = 5 - categories.length;
+      const additionalCategories = await prisma.category.findMany({
+        take: additionalCategoriesNeeded,
+        where: {
+          NOT: {
+            id: {
+              in: categories.map((category) => category.id),
+            },
+          },
+        },
+      });
 
-    selectedCategories = [...selectedCategories, ...additionalCategories];
+      return [...categories, ...additionalCategories];
+    }
+  } else {
+    return await getCategoriesByIds(
+      popularCategories.map((category) => category.id)
+    );
   }
-
-  return selectedCategories;
 }
