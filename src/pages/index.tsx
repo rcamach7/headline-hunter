@@ -8,21 +8,41 @@ import { CategoryCard } from '@/components/molecules';
 import { CategoryArticles } from '@/lib/types';
 
 export default function Home() {
-  const [categoryArticles, setCategoryArticles] = useState<CategoryArticles[]>(
-    []
-  );
+  const [pageData, setPageData] = useState<{
+    categoryArticles: CategoryArticles[];
+    page: number;
+  }>({ categoryArticles: [], page: 1 });
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
         const response = await axios.get('api/articles');
-        setCategoryArticles(response.data.newsCategories);
+        setPageData({
+          categoryArticles: response.data.newsCategories,
+          page: 1,
+        });
       } catch (error) {
         console.error('Failed to fetch news articles:', error);
       }
     };
     fetchNews();
   }, []);
+
+  const loadMoreCategoryArticles = async () => {
+    try {
+      const page = pageData.page + 1;
+      const response = await axios.get(`api/articles?page=${page}`);
+      setPageData((prevState) => ({
+        categoryArticles: [
+          ...prevState.categoryArticles,
+          ...response.data.newsCategories,
+        ],
+        page,
+      }));
+    } catch (error) {
+      console.error('Error loading more articles:', error);
+    }
+  };
 
   return (
     <>
@@ -40,7 +60,7 @@ export default function Home() {
           gap: 1,
         }}
       >
-        {categoryArticles.map((categoryArticle) => (
+        {pageData.categoryArticles.map((categoryArticle) => (
           <CategoryCard
             key={categoryArticle.id}
             categoryArticle={categoryArticle}
