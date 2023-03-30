@@ -4,6 +4,7 @@ import {
   Favorite as FavoriteFullIcon,
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { useUserContext } from '@/context/UserContext';
 
@@ -16,18 +17,18 @@ export default function FavoriteArticle({ articleId }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const { user, refreshUser } = useUserContext();
 
-  // async function toggleFavorite() {
-  //   try {
-  //     setIsLoading(true);
-  //     await axios.post('/api/user/favoriteCategories/' + categoryId);
-  //     refreshUser();
-  //     setIsFavorite((prev) => !prev);
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     setIsLoading(false);
-  //     console.error('Error toggling favorite category:', error);
-  //   }
-  // }
+  async function toggleFavorite() {
+    try {
+      setIsLoading(true);
+      await axios.post('/api/user/favoriteArticles/' + articleId);
+      refreshUser();
+      setIsFavorite((prev) => !prev);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.error('Error toggling favorite category:', error);
+    }
+  }
 
   useEffect(() => {
     if (user) {
@@ -43,12 +44,16 @@ export default function FavoriteArticle({ articleId }: Props) {
   if (isLoading) {
     return (
       <IconButton aria-label="loading" disabled>
-        <CircularProgress size={24} />
+        <CircularProgress size={16} />
       </IconButton>
     );
   } else {
     return (
-      <IconButton color="secondary" sx={{ padding: 0, ml: 0.5 }}>
+      <IconButton
+        onClick={toggleFavorite}
+        color="secondary"
+        sx={{ padding: 0, ml: 0.5 }}
+      >
         {isFavorite ? (
           <FavoriteFullIcon sx={{ fontSize: 16 }} />
         ) : (
