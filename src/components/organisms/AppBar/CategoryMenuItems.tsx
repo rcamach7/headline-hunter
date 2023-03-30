@@ -19,6 +19,18 @@ export default function CategoryMenuItems({ handleCloseNavMenu, user }: Props) {
               Favorited
             </Typography>
           </MenuItem>
+          {user.savedCategories.map((category) => (
+            <MenuItem key={category.id} onClick={handleCloseNavMenu}>
+              <Link href={`/category/${category.id}`} passHref>
+                <Typography
+                  sx={{ color: 'text.primary', textDecoration: 'none' }}
+                  variant="body2"
+                >
+                  {category.type}
+                </Typography>
+              </Link>
+            </MenuItem>
+          ))}
           <Divider sx={{ background: '#7e736c' }} variant="middle" />
         </>
       )}
