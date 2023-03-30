@@ -19,7 +19,7 @@ export default function DynamicLogo() {
         <Link href="/">
           <a style={{ display: 'flex', alignItems: 'center' }}>
             <Image
-              src="/logos/h_h.svg"
+              src="/logos/hh_short.svg"
               alt="Headline Hunter"
               width={50}
               height={50}
@@ -37,7 +37,7 @@ export default function DynamicLogo() {
         <Link href="/">
           <a style={{ display: 'flex', alignItems: 'center' }}>
             <Image
-              src="/logos/headline_hunter.svg"
+              src="/logos/hh_long.svg"
               alt="Headline Hunter"
               width={200}
               height={50}
