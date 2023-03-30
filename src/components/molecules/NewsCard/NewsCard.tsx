@@ -58,7 +58,7 @@ export default function NewsCard({ article }: Props) {
         />
       </CardActionArea>
 
-      <ArticleActionButtons type="full" />
+      <ArticleActionButtons type="full" articleId={article.id} />
     </Card>
   );
 }

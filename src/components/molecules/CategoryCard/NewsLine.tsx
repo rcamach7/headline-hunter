@@ -23,7 +23,7 @@ export default function NewsLine({ article }: Props) {
           >
             {removeNewsSource(article.title)}
           </a>
-          <ArticleActionButtons type="condensed" />
+          <ArticleActionButtons type="condensed" articleId={article.id} />
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography
