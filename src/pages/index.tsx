@@ -12,7 +12,8 @@ export default function Home() {
   const [pageData, setPageData] = useState<{
     categoryArticles: CategoryArticles[];
     initialRequest: boolean;
-  }>({ categoryArticles: [], initialRequest: true });
+    loading: boolean;
+  }>({ categoryArticles: [], initialRequest: true, loading: true });
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -23,6 +24,7 @@ export default function Home() {
         setPageData({
           categoryArticles: response.data.newsCategories,
           initialRequest: false,
+          loading: false,
         });
       } catch (error) {
         console.error('Failed to fetch news articles:', error);
@@ -33,6 +35,7 @@ export default function Home() {
 
   const loadMoreCategoryArticles = async () => {
     try {
+      setPageData((prevState) => ({ ...prevState, loading: true }));
       const currentIds = pageData.categoryArticles.map(
         (categoryArticle) => categoryArticle.id
       );
@@ -43,6 +46,7 @@ export default function Home() {
       );
       setPageData((prevState) => ({
         ...prevState,
+        loading: false,
         categoryArticles: [
           ...prevState.categoryArticles,
           ...response.data.newsCategories,
@@ -75,7 +79,10 @@ export default function Home() {
           />
         ))}
       </Box>
-      <LoadMoreButton loadMore={loadMoreCategoryArticles} />
+      <LoadMoreButton
+        loadMore={loadMoreCategoryArticles}
+        loading={pageData.loading}
+      />
     </>
   );
 }

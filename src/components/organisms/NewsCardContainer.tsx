@@ -7,11 +7,13 @@ import { Article } from '@/lib/types';
 interface Props {
   articles: Article[];
   loadMoreArticles: () => void;
+  isLoading: boolean;
 }
 
 export default function NewsCardContainer({
   articles,
   loadMoreArticles,
+  isLoading,
 }: Props) {
   return (
     <>
@@ -28,7 +30,7 @@ export default function NewsCardContainer({
           <NewsCard article={article} key={article.id} />
         ))}
       </Box>
-      <LoadMoreButton loadMore={loadMoreArticles} />
+      <LoadMoreButton loadMore={loadMoreArticles} loading={isLoading} />
     </>
   );
 }

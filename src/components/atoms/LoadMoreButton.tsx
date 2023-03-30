@@ -1,22 +1,29 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 
 interface Props {
   loadMore: () => void;
+  loading: boolean;
 }
 
-export default function LoadMoreButton({ loadMore }: Props) {
+export default function LoadMoreButton({ loadMore, loading }: Props) {
   return (
     <Box
       sx={{
         display: 'flex',
         justifyContent: 'center',
         p: 1,
-        pb: 2,
+        pb: 3,
       }}
     >
-      <Button variant="outlined" color="secondary" onClick={loadMore}>
-        Load More
-      </Button>
+      {loading ? (
+        <Button variant="contained" disabled>
+          <CircularProgress />
+        </Button>
+      ) : (
+        <Button variant="outlined" color="secondary" onClick={loadMore}>
+          Load More
+        </Button>
+      )}
     </Box>
   );
 }

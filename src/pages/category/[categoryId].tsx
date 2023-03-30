@@ -77,6 +77,7 @@ export default function CategoryPage() {
         <NewsCardContainer
           articles={categoryArticles.articles}
           loadMoreArticles={loadMoreArticles}
+          isLoading={categoryArticles.isLoading}
         />
 
         {isLoading && <PageLoading />}
