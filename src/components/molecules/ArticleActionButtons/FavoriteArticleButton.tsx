@@ -10,12 +10,26 @@ import { useUserContext } from '@/context/UserContext';
 
 interface Props {
   articleId: string;
+  type: 'full' | 'condensed';
 }
 
-export default function FavoriteArticle({ articleId }: Props) {
+export default function FavoriteArticle({ articleId, type }: Props) {
+  const { user, refreshUser } = useUserContext();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { user, refreshUser } = useUserContext();
+
+  const iconSize = type === 'full' ? 'medium' : 'small';
+
+  const getStyles = (type: 'full' | 'condensed') => {
+    if (type === 'full') {
+      return { marginLeft: 'auto !important' };
+    } else {
+      return {
+        padding: 0,
+        ml: 0.5,
+      };
+    }
+  };
 
   async function toggleFavorite() {
     try {
@@ -41,24 +55,24 @@ export default function FavoriteArticle({ articleId }: Props) {
     }
   }, [user]);
 
-  if (isLoading) {
-    return (
-      <IconButton aria-label="loading" disabled>
-        <CircularProgress size={16} />
-      </IconButton>
-    );
-  } else {
+  if (!isLoading) {
     return (
       <IconButton
         onClick={toggleFavorite}
         color="secondary"
-        sx={{ padding: 0, ml: 0.5 }}
+        sx={getStyles(type)}
       >
         {isFavorite ? (
-          <FavoriteFullIcon sx={{ fontSize: 16 }} />
+          <FavoriteFullIcon fontSize={iconSize} />
         ) : (
-          <FavoriteBorderIcon sx={{ fontSize: 16 }} />
+          <FavoriteBorderIcon fontSize={iconSize} />
         )}
+      </IconButton>
+    );
+  } else {
+    return (
+      <IconButton aria-label="loading" disabled sx={getStyles(type)}>
+        <CircularProgress size={type == 'full' ? 24 : 16} />
       </IconButton>
     );
   }
