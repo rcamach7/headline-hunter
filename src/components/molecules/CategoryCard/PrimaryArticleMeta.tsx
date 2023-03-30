@@ -4,7 +4,7 @@ import React from 'react';
 import { formatDistance } from 'date-fns';
 
 import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
-import { ArticleActionButtons } from '@/components/atoms';
+import { ArticleActionButtons } from '@/components/molecules';
 
 interface Props {
   title: string;

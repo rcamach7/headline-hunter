@@ -4,7 +4,7 @@ import { formatDistance } from 'date-fns';
 
 import { removeNewsSource } from '@/lib/helpers';
 import { Article } from '@/lib/types';
-import { ArticleActionButtons } from '@/components/atoms';
+import { ArticleActionButtons } from '@/components/molecules';
 
 interface Props {
   article: Article;

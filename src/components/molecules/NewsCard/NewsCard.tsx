@@ -10,7 +10,7 @@ import * as React from 'react';
 import { Textfit } from 'react-textfit';
 
 import { Article } from '@/lib/types';
-import { ArticleActionButtons } from '@/components/atoms';
+import { ArticleActionButtons } from '@/components/molecules';
 import { removeNewsSource } from '@/lib/helpers';
 import NewsMeta from './NewsMeta';
 
