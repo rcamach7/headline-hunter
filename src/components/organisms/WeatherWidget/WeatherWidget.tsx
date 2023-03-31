@@ -4,16 +4,42 @@ export default function WeatherWidget() {
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
 
+  const fetchLocationByIP = async () => {
+    const response = await fetch('https://ipapi.co/json/');
+    const data = await response.json();
+    setLocation({
+      latitude: data.latitude,
+      longitude: data.longitude,
+    });
+  };
+
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      const success = (position) => {
         setLocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
-      });
+      };
+
+      const error = (err) => {
+        if (err.code === err.PERMISSION_DENIED) {
+          fetchLocationByIP();
+        } else {
+          console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+      };
+
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+
+      navigator.geolocation.getCurrentPosition(success, error, options);
     } else {
       console.error('Geolocation is not supported by this browser.');
+      fetchLocationByIP();
     }
   }, []);
 

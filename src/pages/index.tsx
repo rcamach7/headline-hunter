@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box } from '@mui/material';
 
-import { AppBar } from '@/components/organisms';
+import { AppBar, WeatherWidget } from '@/components/organisms';
 import { CategoryCard } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
@@ -91,12 +91,12 @@ export default function Home() {
           sx={{
             display: { xs: 'none', ml: 'block' },
             backgroundColor: 'red',
-            flex: 0.5,
+            flex: 0.75,
             minWidth: 175,
-            maxWidth: 300,
+            maxWidth: 275,
           }}
         >
-          ff
+          <WeatherWidget />
         </Box>
       </Box>
     </>
