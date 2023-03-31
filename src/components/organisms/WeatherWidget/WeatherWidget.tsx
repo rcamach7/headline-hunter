@@ -51,6 +51,7 @@ export default function WeatherWidget() {
         const response = await fetch(url);
         const data = await response.json();
         setWeather(data);
+        console.log(data);
       }
     };
 
@@ -63,11 +64,6 @@ export default function WeatherWidget() {
   return (
     <div>
       <h2>Weather Widget</h2>
-      <p>
-        {weather.name}, {weather.sys.country}
-      </p>
-      <p>{weather.weather[0].main}</p>
-      <p>{Math.round(weather.main.temp)}°C</p>
     </div>
   );
 }
