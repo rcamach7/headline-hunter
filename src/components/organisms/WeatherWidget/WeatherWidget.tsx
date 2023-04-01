@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Weather } from '@/lib/types';
 
 export default function WeatherWidget() {
   const [location, setLocation] = useState(null);
-  const [weather, setWeather] = useState(null);
+  const [weather, setWeather] = useState<Weather>(null);
 
   const fetchLocationByIP = async () => {
     const response = await fetch('https://ipapi.co/json/');
@@ -50,13 +51,21 @@ export default function WeatherWidget() {
 
         const response = await fetch(url);
         const data = await response.json();
-        setWeather(data);
-        console.log(data);
+        setWeather(data as Weather);
       }
     };
 
     fetchWeather();
   }, [location]);
+
+  /**
+   * TESTING PURPOSES ONLY
+   */
+  useEffect(() => {
+    if (weather) {
+      console.log(weather);
+    }
+  }, [weather]);
 
   if (!weather) {
     return <div>Loading...</div>;
