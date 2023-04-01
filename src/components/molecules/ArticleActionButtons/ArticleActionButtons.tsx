@@ -15,6 +15,7 @@ export default function ArticleActionButtons({ type, articleId }: Props) {
   if (type === 'condensed') {
     return (
       <Box
+        component="span"
         sx={{
           display: 'inline',
         }}
@@ -27,7 +28,10 @@ export default function ArticleActionButtons({ type, articleId }: Props) {
     );
   } else {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 1 }}>
+      <Box
+        component="span"
+        sx={{ display: 'flex', justifyContent: 'space-between', py: 1 }}
+      >
         <Button
           variant="outlined"
           color="secondary"

@@ -112,6 +112,7 @@ export default function CategoryCard({ categoryArticle }: Props) {
             })}
           </Box>
           <CardActionArea
+            component="div"
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
