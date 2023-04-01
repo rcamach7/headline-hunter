@@ -83,7 +83,7 @@ export default function WeatherWidget() {
         maxWidth: 275,
       }}
     >
-      <Typography>{weather.name}</Typography>
+      <Typography variant="h4">{weather.name}</Typography>
     </Box>
   );
 }

@@ -33,19 +33,21 @@ export type User = {
 
 export type CategoryArticles = Category & { articles: Article[] };
 
+export type Forecast = {
+  date: string;
+  maxtemp_f: number;
+  mintemp_f: number;
+  avgtemp_f: number;
+  condition: {
+    text: string;
+    icon: string;
+    code: number;
+  };
+};
+
 export type Weather = {
   country: string;
   name: string;
   region: string;
-  forecastsByDay: {
-    date: string;
-    maxtemp_f: number;
-    mintemp_f: number;
-    avgtemp_f: number;
-    condition: {
-      text: string;
-      icon: string;
-      code: number;
-    };
-  }[];
+  forecastsByDay: Forecast[];
 };
