@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Box, Typography } from '@mui/material';
+
+import DayCard from './DayCard';
 import { Weather } from '@/lib/types';
 
 export default function WeatherWidget() {
@@ -51,7 +54,7 @@ export default function WeatherWidget() {
 
         const response = await fetch(url);
         const data = await response.json();
-        setWeather(data as Weather);
+        setWeather(data.weather as Weather);
       }
     };
 
@@ -68,11 +71,19 @@ export default function WeatherWidget() {
   }, [weather]);
 
   if (!weather) {
-    return <div>Loading...</div>;
+    return <></>;
   }
   return (
-    <div>
-      <h2>Weather Widget</h2>
-    </div>
+    <Box
+      sx={{
+        display: { xs: 'none', ml: 'block' },
+        outline: 'auto',
+        flex: 0.75,
+        minWidth: 175,
+        maxWidth: 275,
+      }}
+    >
+      <Typography>{weather.name}</Typography>
+    </Box>
   );
 }

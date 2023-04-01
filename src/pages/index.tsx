@@ -87,17 +87,7 @@ export default function Home() {
           />
         </Box>
 
-        <Box
-          sx={{
-            display: { xs: 'none', ml: 'block' },
-            backgroundColor: 'red',
-            flex: 0.75,
-            minWidth: 175,
-            maxWidth: 275,
-          }}
-        >
-          <WeatherWidget />
-        </Box>
+        <WeatherWidget />
       </Box>
     </>
   );
