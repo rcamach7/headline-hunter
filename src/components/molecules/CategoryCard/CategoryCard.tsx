@@ -69,6 +69,7 @@ export default function CategoryCard({ categoryArticle }: Props) {
               position: 'relative',
               height: 175,
               width: '100%',
+              minWidth: 345,
             }}
           >
             <Image
