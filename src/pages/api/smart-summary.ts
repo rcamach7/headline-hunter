@@ -56,5 +56,6 @@ async function getSummary(content: string) {
     max_tokens: MAX_TOKENS,
   });
 
-  return response.data;
+  console.log('usage: ', response.data.usage);
+  return response.data.choices[0].message.content;
 }
