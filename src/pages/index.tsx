@@ -97,7 +97,7 @@ export default function Home() {
         <Box
           sx={{
             display: { xs: 'none', ml: 'flex' },
-            maxWidth: 275,
+            maxWidth: 225,
             justifyContent: 'center',
             pt: 4,
             flexGrow: 0.75,
