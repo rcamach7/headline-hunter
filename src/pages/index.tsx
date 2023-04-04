@@ -63,7 +63,14 @@ export default function Home() {
         <title>Headline Hunter</title>
       </Head>
       <AppBar />
-      <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: { ml: 2, lg: 3, xl: 4 },
+          p: 1,
+        }}
+      >
         <Box sx={{ overflowY: 'auto', minHeight: '100vh' }}>
           <Box
             sx={{
@@ -90,6 +97,7 @@ export default function Home() {
         <Box
           sx={{
             display: { xs: 'none', ml: 'flex' },
+            maxWidth: 275,
             justifyContent: 'center',
             pt: 4,
             flexGrow: 0.75,
