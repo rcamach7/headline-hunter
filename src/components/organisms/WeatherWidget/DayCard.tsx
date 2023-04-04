@@ -9,12 +9,12 @@ interface Props {
 }
 
 export default function DayCard({ dayForecast }: Props) {
-  const { date, avgtemp_f, maxtemp_f, mintemp_f, condition } = dayForecast;
+  const { date, maxtemp_f, condition } = dayForecast;
   const iconUrl = `${window.location.protocol}${condition.icon}`;
 
   return (
     <Paper
-      elevation={4}
+      elevation={24}
       sx={{
         width: 'clamp(125, 100vw, 300px)',
         display: 'flex',
@@ -24,15 +24,21 @@ export default function DayCard({ dayForecast }: Props) {
         p: 1,
         borderRadius: 4,
         border: 1,
+        borderColor: '#7e736c',
       }}
     >
-      <Typography variant="h6">
+      <Typography
+        sx={{
+          borderColor: '#7e736c',
+          borderBottom: '1px solid #7e736c',
+          fontSize: '1rem',
+          fontWeight: 'bold',
+        }}
+      >
         {format(new Date(date), 'EEEE, d MMMM yyyy')}
       </Typography>
-      <Image src={iconUrl} width={50} height={50} />
-      <Typography variant="h6">
-        {maxtemp_f}°F / {mintemp_f}°F
-      </Typography>
+      <Image src={iconUrl} width={75} height={75} />
+      <Typography variant="h6">{maxtemp_f}°F</Typography>
       <Typography variant="h6">{condition.text}</Typography>
     </Paper>
   );
