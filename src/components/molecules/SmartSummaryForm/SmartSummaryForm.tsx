@@ -1,5 +1,30 @@
-import { Box } from '@mui/material';
+import { Box, Button, Typography, Modal } from '@mui/material';
 
-export default function SmartSummaryForm() {
-  return <Box></Box>;
+interface Props {}
+
+export default function SmartSummaryForm({}: Props) {
+  return (
+    <Modal
+      open={true}
+      onClose={() => console.log('insert close function')}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={{ style }}>
+        <Typography>Hello World</Typography>
+      </Box>
+    </Modal>
+  );
 }
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};

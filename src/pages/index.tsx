@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Box } from '@mui/material';
 
 import { AppBar, WeatherWidget } from '@/components/organisms';
-import { CategoryCard } from '@/components/molecules';
+import { CategoryCard, SmartSummaryForm } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
 
@@ -14,6 +14,12 @@ export default function Home() {
     initialRequest: boolean;
     loading: boolean;
   }>({ categoryArticles: [], initialRequest: true, loading: true });
+
+  const [smartSummaryModal, setSmartSummaryModal] = useState<{
+    open: boolean;
+    articleTitle: string;
+    articleURL: string;
+  }>({ open: false, articleTitle: '', articleURL: '' });
 
   useEffect(() => {
     const fetchNews = async () => {
