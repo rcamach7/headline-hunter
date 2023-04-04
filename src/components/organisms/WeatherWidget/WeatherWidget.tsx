@@ -85,7 +85,7 @@ export default function WeatherWidget() {
         gap: { md: 2, lg: 3 },
       }}
     >
-      <Typography variant="h4" sx={{ pb: 1 }}>
+      <Typography variant="h4" sx={{ pb: 1, textAlign: 'center' }}>
         {weather.name}
       </Typography>
       {weather?.forecastsByDay.map((dayForecast) => (
