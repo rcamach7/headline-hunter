@@ -61,31 +61,24 @@ export default function WeatherWidget() {
     fetchWeather();
   }, [location]);
 
-  /**
-   * TESTING PURPOSES ONLY
-   */
-  useEffect(() => {
-    if (weather) {
-      console.log(weather);
-    }
-  }, [weather]);
-
   if (!weather) {
     return <></>;
   }
   return (
     <Box
       sx={{
-        display: { xs: 'none', ml: 'flex' },
+        position: 'sticky',
+        top: 0,
+        display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        flex: 0.75,
         minWidth: 175,
         maxWidth: 275,
         gap: { md: 2, lg: 3 },
+        height: '100vh',
       }}
     >
-      <Typography variant="h4" sx={{ pb: 1, textAlign: 'center' }}>
+      <Typography variant="h5" sx={{ pb: 1, textAlign: 'center' }}>
         {weather.name}
       </Typography>
       {weather?.forecastsByDay.map((dayForecast) => (

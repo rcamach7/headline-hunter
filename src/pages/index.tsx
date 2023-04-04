@@ -64,7 +64,7 @@ export default function Home() {
       </Head>
       <AppBar />
       <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-        <Box>
+        <Box sx={{ overflowY: 'auto', minHeight: '100vh' }}>
           <Box
             sx={{
               display: 'flex',
@@ -87,7 +87,16 @@ export default function Home() {
           />
         </Box>
 
-        <WeatherWidget />
+        <Box
+          sx={{
+            display: { xs: 'none', ml: 'flex' },
+            justifyContent: 'center',
+            pt: 4,
+            flexGrow: 0.75,
+          }}
+        >
+          <WeatherWidget />
+        </Box>
       </Box>
     </>
   );
