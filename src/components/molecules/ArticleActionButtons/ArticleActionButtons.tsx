@@ -1,17 +1,23 @@
 import { Box, IconButton, Button } from '@mui/material';
-import {
-  SmartToy as SmartToyIcon,
-  ThumbDownOffAlt as ThumbDownOffAltIcon,
-} from '@mui/icons-material';
+import { SmartToy as SmartToyIcon } from '@mui/icons-material';
 
 import FavoriteArticleButton from './FavoriteArticleButton';
 
 interface Props {
   type: 'full' | 'condensed';
   articleId: string;
+  articleTitle: string;
+  articleURL: string;
+  openSmartSummaryModal: (articleTitle: string, articleURL: string) => void;
 }
 
-export default function ArticleActionButtons({ type, articleId }: Props) {
+export default function ArticleActionButtons({
+  type,
+  articleId,
+  articleTitle,
+  articleURL,
+  openSmartSummaryModal,
+}: Props) {
   if (type === 'condensed') {
     return (
       <Box
@@ -21,7 +27,11 @@ export default function ArticleActionButtons({ type, articleId }: Props) {
         }}
       >
         <FavoriteArticleButton articleId={articleId} type="condensed" />
-        <IconButton color="secondary" sx={{ padding: 0, ml: 0.5 }}>
+        <IconButton
+          onClick={() => openSmartSummaryModal(articleTitle, articleURL)}
+          color="secondary"
+          sx={{ padding: 0, ml: 0.5 }}
+        >
           <SmartToyIcon sx={{ fontSize: 16 }} />
         </IconButton>
       </Box>
@@ -36,6 +46,7 @@ export default function ArticleActionButtons({ type, articleId }: Props) {
           variant="outlined"
           color="secondary"
           startIcon={<SmartToyIcon />}
+          onClick={() => openSmartSummaryModal(articleTitle, articleURL)}
         >
           Smart Summary
         </Button>

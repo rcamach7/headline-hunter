@@ -9,9 +9,13 @@ import { ArticleActionButtons } from '@/components/molecules';
 
 interface Props {
   article: Article;
+  openSmartSummaryModal: (articleTitle: string, articleURL: string) => void;
 }
 
-export default function PrimaryArticleMeta({ article }: Props) {
+export default function PrimaryArticleMeta({
+  article,
+  openSmartSummaryModal,
+}: Props) {
   const { id, description, title, publishedAt, sourceName, url } = article;
   return (
     <Textfit
@@ -64,7 +68,13 @@ export default function PrimaryArticleMeta({ article }: Props) {
           })}
         </Typography>
       </Box>
-      <ArticleActionButtons type="full" articleId={id} />
+      <ArticleActionButtons
+        articleTitle={title}
+        articleURL={url}
+        type="full"
+        articleId={id}
+        openSmartSummaryModal={openSmartSummaryModal}
+      />
     </Textfit>
   );
 }

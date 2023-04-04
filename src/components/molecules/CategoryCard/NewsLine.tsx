@@ -8,9 +8,10 @@ import { ArticleActionButtons } from '@/components/molecules';
 
 interface Props {
   article: Article;
+  openSmartSummaryModal: (articleTitle: string, articleURL: string) => void;
 }
 
-export default function NewsLine({ article }: Props) {
+export default function NewsLine({ article, openSmartSummaryModal }: Props) {
   return (
     <Box sx={{ display: 'flex', pt: 0.5 }}>
       <Textfit mode="multi" max={40} min={1} style={{ width: '100%' }}>
@@ -23,7 +24,13 @@ export default function NewsLine({ article }: Props) {
           >
             {removeNewsSource(article.title)}
           </a>
-          <ArticleActionButtons type="condensed" articleId={article.id} />
+          <ArticleActionButtons
+            articleTitle={article.title}
+            articleURL={article.url}
+            type="condensed"
+            articleId={article.id}
+            openSmartSummaryModal={openSmartSummaryModal}
+          />
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography

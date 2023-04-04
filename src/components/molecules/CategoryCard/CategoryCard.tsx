@@ -19,9 +19,13 @@ import { CategoryArticles } from '@/lib/types';
 
 interface Props {
   categoryArticle: CategoryArticles;
+  openSmartSummaryModal: (articleTitle: string, articleURL: string) => void;
 }
 
-export default function CategoryCard({ categoryArticle }: Props) {
+export default function CategoryCard({
+  categoryArticle,
+  openSmartSummaryModal,
+}: Props) {
   const { articles } = categoryArticle;
   const primaryArticle = articles[0];
   const [visibleNewsItems, setVisibleNewsItems] = useState(3);
@@ -81,7 +85,10 @@ export default function CategoryCard({ categoryArticle }: Props) {
               objectPosition="top"
             />
           </Box>
-          <PrimaryArticleMeta article={primaryArticle} />
+          <PrimaryArticleMeta
+            article={primaryArticle}
+            openSmartSummaryModal={openSmartSummaryModal}
+          />
         </Box>
 
         <CardContent
@@ -106,7 +113,10 @@ export default function CategoryCard({ categoryArticle }: Props) {
                     />
                   )}
 
-                  <NewsLine article={article} />
+                  <NewsLine
+                    article={article}
+                    openSmartSummaryModal={openSmartSummaryModal}
+                  />
                   <Divider sx={{ background: '#8b8b8b' }} />
                 </React.Fragment>
               );

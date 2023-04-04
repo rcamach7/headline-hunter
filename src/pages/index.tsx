@@ -103,6 +103,7 @@ export default function Home() {
               <CategoryCard
                 key={categoryArticle.id}
                 categoryArticle={categoryArticle}
+                openSmartSummaryModal={openSmartSummaryModal}
               />
             ))}
           </Box>
