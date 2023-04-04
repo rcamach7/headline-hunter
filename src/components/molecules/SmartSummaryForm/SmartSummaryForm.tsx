@@ -1,17 +1,26 @@
 import { Box, Button, Typography, Modal } from '@mui/material';
 
-interface Props {}
+interface Props {
+  articleTitle: string;
+  articleURL: string;
+  onClose: () => void;
+}
 
-export default function SmartSummaryForm({}: Props) {
+export default function SmartSummaryForm({
+  articleTitle,
+  articleURL,
+  onClose,
+}: Props) {
   return (
     <Modal
       open={true}
-      onClose={() => console.log('insert close function')}
+      onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Box sx={{ style }}>
-        <Typography>Hello World</Typography>
+        <Typography>{articleTitle}</Typography>
+        <Typography>{articleURL}</Typography>
       </Box>
     </Modal>
   );

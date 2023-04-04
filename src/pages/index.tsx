@@ -21,6 +21,18 @@ export default function Home() {
     articleURL: string;
   }>({ open: false, articleTitle: '', articleURL: '' });
 
+  const openSmartSummaryModal = (articleTitle: string, articleURL: string) => {
+    setSmartSummaryModal({
+      open: true,
+      articleTitle,
+      articleURL,
+    });
+  };
+
+  const closeSmartSummaryModal = () => {
+    setSmartSummaryModal({ open: false, articleTitle: '', articleURL: '' });
+  };
+
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -112,6 +124,14 @@ export default function Home() {
           <WeatherWidget />
         </Box>
       </Box>
+
+      {smartSummaryModal.open && (
+        <SmartSummaryForm
+          articleTitle={smartSummaryModal.articleTitle}
+          articleURL={smartSummaryModal.articleURL}
+          onClose={closeSmartSummaryModal}
+        />
+      )}
     </>
   );
 }
