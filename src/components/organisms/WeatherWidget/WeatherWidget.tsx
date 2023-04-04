@@ -76,7 +76,9 @@ export default function WeatherWidget() {
   return (
     <Box
       sx={{
-        display: { xs: 'none', ml: 'block' },
+        display: { xs: 'none', ml: 'flex' },
+        flexDirection: 'column',
+        alignItems: 'center',
         outline: 'auto',
         flex: 0.75,
         minWidth: 175,
@@ -84,6 +86,12 @@ export default function WeatherWidget() {
       }}
     >
       <Typography variant="h4">{weather.name}</Typography>
+      {/* {weather?.forecastsByDay.map((dayForecast) => (
+        <DayCard key={dayForecast.date} dayForecast={dayForecast} />
+      ))} */}
+      {weather?.forecastsByDay.length && (
+        <DayCard dayForecast={weather.forecastsByDay[0]} />
+      )}
     </Box>
   );
 }
