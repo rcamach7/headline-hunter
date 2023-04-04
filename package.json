@@ -24,6 +24,7 @@
     "newsapi": "^2.4.1",
     "next": "12.2.5",
     "next-auth": "^4.19.2",
+    "openai": "^3.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-textfit": "^1.1.1",
