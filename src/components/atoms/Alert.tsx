@@ -28,7 +28,11 @@ export default function Alert({
   }, []);
 
   return (
-    <MuiAlert severity={severity} variant={variant}>
+    <MuiAlert
+      severity={severity}
+      variant={variant}
+      onClose={() => removeSelf(id)}
+    >
       {alertTitle && <AlertTitle>{alertTitle}</AlertTitle>}
       {text}
     </MuiAlert>
