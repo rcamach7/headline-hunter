@@ -1,6 +1,8 @@
 import { Box, Button, Typography, Modal, TextField } from '@mui/material';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+import SummaryModal from './SummaryModal';
 
 interface Props {
   articleTitle: string;
@@ -14,6 +16,7 @@ export default function SmartSummaryForm({
   onClose,
 }: Props) {
   const [articleContent, setArticleContent] = useState<string>('');
+  const [summary, setSummary] = useState<string>('');
 
   function cleanArticleContent(content: string) {
     const cleanedContent = content
@@ -22,10 +25,6 @@ export default function SmartSummaryForm({
       .replace(/https?:\/\/[^\s]+/g, '');
     setArticleContent(cleanedContent);
   }
-
-  useEffect(() => {
-    console.log(articleContent);
-  }, [articleContent]);
 
   return (
     <Modal open={true} onClose={onClose}>
@@ -81,6 +80,7 @@ export default function SmartSummaryForm({
           <Button variant="outlined" type="submit" sx={{ mt: 1 }}>
             Generate Summary
           </Button>
+          <SummaryModal summary={summary} />
         </Box>
 
         <Box sx={{ display: 'flex', gap: 0.5, pt: 1 }}>
