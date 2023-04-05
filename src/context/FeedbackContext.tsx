@@ -49,7 +49,7 @@ export const FeedbackProvider = ({ children }) => {
           paddingLeft: 1,
         }}
       >
-        <Stack>
+        <Stack spacing={1}>
           {alertMessages.map((alertMessage) => {
             return (
               <Alert

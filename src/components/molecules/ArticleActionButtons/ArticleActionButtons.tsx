@@ -29,7 +29,7 @@ export default function ArticleActionButtons({
     } else {
       addAlertMessage({
         severity: 'error',
-        text: 'Please sign in to use this feature',
+        text: 'Please sign in to use smart summary',
         variant: 'filled',
       });
     }

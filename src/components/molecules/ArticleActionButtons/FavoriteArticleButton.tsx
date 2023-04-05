@@ -45,7 +45,7 @@ export default function FavoriteArticle({
     } else {
       addAlertMessage({
         severity: 'error',
-        text: 'Please sign in to use this feature',
+        text: 'Please sign in to favorite articles',
         variant: 'filled',
       });
     }
