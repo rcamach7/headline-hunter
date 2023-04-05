@@ -4,6 +4,9 @@ import {
   Configuration,
   ChatCompletionRequestMessageRoleEnum,
 } from 'openai';
+import { getServerSession } from 'next-auth/next';
+
+import { authOptions } from '@/auth/[...nextauth]';
 
 const MAX_TOKENS = 500;
 const MAX_ARTICLE_LENGTH = 1000;
@@ -12,6 +15,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const session = await getServerSession(req, res, authOptions);
+  if (!session.user)
+    res.status(401).json({ message: 'Unauthorized, please log in.' });
+
   const { article } = req.body;
   let articleContent = article as string;
   if (!articleContent) {
