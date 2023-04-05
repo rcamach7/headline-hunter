@@ -3,14 +3,7 @@ import { Stack, Box } from '@mui/material';
 import { v4 } from 'uuid';
 
 import { Alert } from '@/components/atoms';
-
-type AlertMessage = {
-  id?: string;
-  severity: 'error' | 'info' | 'success' | 'warning';
-  variant: 'filled' | 'outlined' | 'standard';
-  text: string;
-  alertTitle?: string;
-};
+import { AlertMessage } from '@/lib/types';
 
 export const FeedbackContext = createContext({
   addAlertMessage: (alertMessage: AlertMessage) => {},

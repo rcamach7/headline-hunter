@@ -51,3 +51,11 @@ export type Weather = {
   region: string;
   forecastsByDay: Forecast[];
 };
+
+export type AlertMessage = {
+  id?: string;
+  severity: 'error' | 'info' | 'success' | 'warning';
+  variant: 'filled' | 'outlined' | 'standard';
+  text: string;
+  alertTitle?: string;
+};

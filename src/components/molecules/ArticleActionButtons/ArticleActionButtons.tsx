@@ -20,7 +20,7 @@ export default function ArticleActionButtons({
   articleURL,
   openSmartSummaryModal,
 }: Props) {
-  const { user } = useUserContext();
+  const { user, refreshUser } = useUserContext();
   const { addAlertMessage } = useFeedbackContext();
 
   const handleOpenSmartSummaryModal = () => {
@@ -43,7 +43,13 @@ export default function ArticleActionButtons({
           display: 'inline',
         }}
       >
-        <FavoriteArticleButton articleId={articleId} type="condensed" />
+        <FavoriteArticleButton
+          user={user}
+          addAlertMessage={addAlertMessage}
+          articleId={articleId}
+          type="condensed"
+          refreshUser={refreshUser}
+        />
         <IconButton
           onClick={handleOpenSmartSummaryModal}
           color="secondary"
@@ -68,7 +74,13 @@ export default function ArticleActionButtons({
           Smart Summary
         </Button>
 
-        <FavoriteArticleButton articleId={articleId} type="full" />
+        <FavoriteArticleButton
+          user={user}
+          addAlertMessage={addAlertMessage}
+          articleId={articleId}
+          type="condensed"
+          refreshUser={refreshUser}
+        />
       </Box>
     );
   }

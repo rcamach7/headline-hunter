@@ -6,15 +6,23 @@ import {
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { useUserContext } from '@/context/UserContext';
+import { User, AlertMessage } from '@/lib/types';
 
 interface Props {
   articleId: string;
   type: 'full' | 'condensed';
+  user: User | null;
+  refreshUser: () => void;
+  addAlertMessage: (message: AlertMessage) => void;
 }
 
-export default function FavoriteArticle({ articleId, type }: Props) {
-  const { user, refreshUser } = useUserContext();
+export default function FavoriteArticle({
+  articleId,
+  type,
+  addAlertMessage,
+  refreshUser,
+  user,
+}: Props) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,6 +38,18 @@ export default function FavoriteArticle({ articleId, type }: Props) {
       };
     }
   };
+
+  function handleClick() {
+    if (user) {
+      toggleFavorite();
+    } else {
+      addAlertMessage({
+        severity: 'error',
+        text: 'Please sign in to use this feature',
+        variant: 'filled',
+      });
+    }
+  }
 
   async function toggleFavorite() {
     try {
@@ -57,11 +77,7 @@ export default function FavoriteArticle({ articleId, type }: Props) {
 
   if (!isLoading) {
     return (
-      <IconButton
-        onClick={toggleFavorite}
-        color="secondary"
-        sx={getStyles(type)}
-      >
+      <IconButton onClick={handleClick} color="secondary" sx={getStyles(type)}>
         {isFavorite ? (
           <FavoriteFullIcon fontSize={iconSize} />
         ) : (
