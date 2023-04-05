@@ -7,13 +7,14 @@ import { AppBar, WeatherWidget } from '@/components/organisms';
 import { CategoryCard, SmartSummaryForm } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
+import { useLoadingContext } from '@/context/LoadingContext';
 
 export default function Home() {
+  const { isPageLoading, setIsPageLoading } = useLoadingContext();
   const [pageData, setPageData] = useState<{
     categoryArticles: CategoryArticles[];
     initialRequest: boolean;
-    loading: boolean;
-  }>({ categoryArticles: [], initialRequest: true, loading: true });
+  }>({ categoryArticles: [], initialRequest: true });
 
   const [smartSummaryModal, setSmartSummaryModal] = useState<{
     open: boolean;
@@ -35,6 +36,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchNews = async () => {
+      setIsPageLoading(true);
       try {
         const response = await axios.get(
           `api/articles?initialRequest=${pageData.initialRequest}`
@@ -42,18 +44,18 @@ export default function Home() {
         setPageData({
           categoryArticles: response.data.newsCategories,
           initialRequest: false,
-          loading: false,
         });
       } catch (error) {
         console.error('Failed to fetch news articles:', error);
       }
+      setIsPageLoading(false);
     };
     fetchNews();
   }, []);
 
   const loadMoreCategoryArticles = async () => {
     try {
-      setPageData((prevState) => ({ ...prevState, loading: true }));
+      setIsPageLoading(true);
       const currentIds = pageData.categoryArticles.map(
         (categoryArticle) => categoryArticle.id
       );
@@ -64,7 +66,6 @@ export default function Home() {
       );
       setPageData((prevState) => ({
         ...prevState,
-        loading: false,
         categoryArticles: [
           ...prevState.categoryArticles,
           ...response.data.newsCategories,
@@ -73,6 +74,7 @@ export default function Home() {
     } catch (error) {
       console.error('Error loading more articles:', error);
     }
+    setIsPageLoading(false);
   };
 
   return (
@@ -109,7 +111,7 @@ export default function Home() {
           </Box>
           <LoadMoreButton
             loadMore={loadMoreCategoryArticles}
-            loading={pageData.loading}
+            loading={isPageLoading}
           />
         </Box>
 

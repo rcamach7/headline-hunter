@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { PageLoading } from '@/components/atoms';
 export const LoadingContext = createContext({
   setIsPageLoading: (value: boolean) => {},
-  isPageLoading: false,
+  isPageLoading: true,
 });
 
 export const useLoadingContext = () => {
@@ -17,7 +17,7 @@ export const useLoadingContext = () => {
 };
 
 export const LoadingProvider = ({ children }) => {
-  const [isPageLoading, setIsPageLoading] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
