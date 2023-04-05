@@ -8,12 +8,14 @@ interface Props {
   articles: Article[];
   loadMoreArticles: () => void;
   isLoading: boolean;
+  openSmartSummaryModal: (articleTitle: string, articleURL: string) => void;
 }
 
 export default function NewsCardContainer({
   articles,
   loadMoreArticles,
   isLoading,
+  openSmartSummaryModal,
 }: Props) {
   return (
     <>
@@ -27,7 +29,11 @@ export default function NewsCardContainer({
         }}
       >
         {articles.map((article) => (
-          <NewsCard article={article} key={article.id} />
+          <NewsCard
+            article={article}
+            key={article.id}
+            openSmartSummaryModal={openSmartSummaryModal}
+          />
         ))}
       </Box>
       <LoadMoreButton loadMore={loadMoreArticles} loading={isLoading} />

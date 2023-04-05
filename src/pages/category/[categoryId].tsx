@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Article, Category } from '@/lib/types';
 import { CategoryPageTitle, PageLoading } from '@/components/atoms';
 import { AppBar, NewsCardContainer } from '@/components/organisms';
+import { SmartSummaryForm } from '@/components/molecules';
 import { useLoadingContext } from '@/context/LoadingContext';
 
 export default function CategoryPage() {
@@ -20,6 +21,24 @@ export default function CategoryPage() {
     articles: Article[];
     page: number;
   }>({ category: null, articles: [], page: 1 });
+
+  const [smartSummaryModal, setSmartSummaryModal] = useState<{
+    open: boolean;
+    articleTitle: string;
+    articleURL: string;
+  }>({ open: false, articleTitle: '', articleURL: '' });
+
+  const openSmartSummaryModal = (articleTitle: string, articleURL: string) => {
+    setSmartSummaryModal({
+      open: true,
+      articleTitle,
+      articleURL,
+    });
+  };
+
+  const closeSmartSummaryModal = () => {
+    setSmartSummaryModal({ open: false, articleTitle: '', articleURL: '' });
+  };
 
   async function loadMoreArticles() {
     try {
@@ -79,7 +98,16 @@ export default function CategoryPage() {
           articles={categoryArticles.articles}
           loadMoreArticles={loadMoreArticles}
           isLoading={isPageLoading}
+          openSmartSummaryModal={openSmartSummaryModal}
         />
+
+        {smartSummaryModal.open && (
+          <SmartSummaryForm
+            articleTitle={smartSummaryModal.articleTitle}
+            articleURL={smartSummaryModal.articleURL}
+            onClose={closeSmartSummaryModal}
+          />
+        )}
       </>
     );
   } else {

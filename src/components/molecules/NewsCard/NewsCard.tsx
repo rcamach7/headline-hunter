@@ -16,9 +16,10 @@ import NewsMeta from './NewsMeta';
 
 interface Props {
   article: Article;
+  openSmartSummaryModal: (articleTitle: string, articleURL: string) => void;
 }
 
-export default function NewsCard({ article }: Props) {
+export default function NewsCard({ article, openSmartSummaryModal }: Props) {
   const handleClick = (url) => {
     window.open(url, '_blank');
   };
@@ -62,7 +63,13 @@ export default function NewsCard({ article }: Props) {
         />
       </CardActionArea>
 
-      <ArticleActionButtons type="full" articleId={article.id} />
+      <ArticleActionButtons
+        type="full"
+        articleId={article.id}
+        articleTitle={article.title}
+        articleURL={article.url}
+        openSmartSummaryModal={openSmartSummaryModal}
+      />
     </Card>
   );
 }
