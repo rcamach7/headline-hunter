@@ -1,10 +1,11 @@
 import { useState, useContext, createContext } from 'react';
 import { Stack, Box } from '@mui/material';
+import { v4 } from 'uuid';
 
 import { Alert } from '@/components/atoms';
 
 type AlertMessage = {
-  id: string;
+  id?: string;
   severity: 'error' | 'info' | 'success' | 'warning';
   variant: 'filled' | 'outlined' | 'standard';
   text: string;
@@ -27,6 +28,9 @@ export const FeedbackProvider = ({ children }) => {
   const [alertMessages, setAlertMessages] = useState<AlertMessage[]>([]);
 
   const addAlertMessage = (alertMessage: AlertMessage) => {
+    if (!alertMessage.id) {
+      alertMessage.id = v4();
+    }
     setAlertMessages((prevAlertMessages) => [
       ...prevAlertMessages,
       alertMessage,

@@ -7,6 +7,7 @@ import {
 } from '@mui/icons-material';
 
 import { useUserContext } from '@/context/UserContext';
+import { useFeedbackContext } from '@/context/FeedbackContext';
 
 interface Props {
   categoryId: string;
@@ -16,6 +17,7 @@ export default function FavoriteCategoryButton({ categoryId }: Props) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { user, refreshUser } = useUserContext();
+  const { addAlertMessage } = useFeedbackContext();
 
   async function toggleFavorite() {
     try {
@@ -24,8 +26,20 @@ export default function FavoriteCategoryButton({ categoryId }: Props) {
       refreshUser();
       setIsFavorite((prev) => !prev);
       setIsLoading(false);
+      addAlertMessage({
+        severity: 'success',
+        variant: 'filled',
+        text: isFavorite
+          ? 'Category removed from favorites'
+          : 'Category added to favorites',
+      });
     } catch (error) {
       setIsLoading(false);
+      addAlertMessage({
+        severity: 'error',
+        variant: 'filled',
+        text: 'Error toggling favorite category',
+      });
       console.error('Error toggling favorite category:', error);
     }
   }
