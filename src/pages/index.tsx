@@ -141,7 +141,7 @@ export default function Home() {
             flexGrow: 0.75,
           }}
         >
-          <WeatherWidget />
+          {pageData.categoryArticles.length > 0 && <WeatherWidget />}
         </Box>
       </Box>
 
