@@ -84,7 +84,7 @@ export default function SmartSummaryForm({
             onChange={(e) => cleanArticleContent(e.target.value)}
             inputProps={{
               minLength: 100,
-              maxLength: 2000,
+              maxLength: 4000,
             }}
             required
           />
@@ -94,7 +94,7 @@ export default function SmartSummaryForm({
             variant="body2"
             sx={{ fontSize: 12, textAlign: 'right' }}
           >
-            {articleContent.length}/2000 characters
+            {articleContent.length}/4000 characters
           </Typography>
 
           <Button variant="outlined" type="submit" sx={{ mt: 1 }}>

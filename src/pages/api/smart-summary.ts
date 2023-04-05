@@ -8,8 +8,8 @@ import { getServerSession } from 'next-auth/next';
 
 import { authOptions } from '@/auth/[...nextauth]';
 
-const MAX_TOKENS = 500;
-const MAX_ARTICLE_LENGTH = 1000;
+const MAX_TOKENS = 1000;
+const MAX_ARTICLE_LENGTH = 4000;
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,6 +32,12 @@ export default async function handler(
         .map((line) => line.trim())
         .filter((line) => line.length)
         .join('\n');
+
+      if (articleContent.length > MAX_ARTICLE_LENGTH) {
+        return res.status(400).json({
+          message: `Article is too long, max length is ${MAX_ARTICLE_LENGTH}`,
+        });
+      }
 
       const summary = await getSummary(articleContent);
       return res.status(200).json(summary);
