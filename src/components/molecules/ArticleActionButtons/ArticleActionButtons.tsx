@@ -2,6 +2,8 @@ import { Box, IconButton, Button } from '@mui/material';
 import { SmartToy as SmartToyIcon } from '@mui/icons-material';
 
 import FavoriteArticleButton from './FavoriteArticleButton';
+import { useUserContext } from '@/context/UserContext';
+import { useFeedbackContext } from '@/context/FeedbackContext';
 
 interface Props {
   type: 'full' | 'condensed';
@@ -18,6 +20,21 @@ export default function ArticleActionButtons({
   articleURL,
   openSmartSummaryModal,
 }: Props) {
+  const { user } = useUserContext();
+  const { addAlertMessage } = useFeedbackContext();
+
+  const handleOpenSmartSummaryModal = () => {
+    if (user) {
+      openSmartSummaryModal(articleTitle, articleURL);
+    } else {
+      addAlertMessage({
+        severity: 'error',
+        text: 'Please sign in to use this feature',
+        variant: 'filled',
+      });
+    }
+  };
+
   if (type === 'condensed') {
     return (
       <Box
@@ -28,7 +45,7 @@ export default function ArticleActionButtons({
       >
         <FavoriteArticleButton articleId={articleId} type="condensed" />
         <IconButton
-          onClick={() => openSmartSummaryModal(articleTitle, articleURL)}
+          onClick={handleOpenSmartSummaryModal}
           color="secondary"
           sx={{ padding: 0, ml: 0.5 }}
         >
@@ -46,7 +63,7 @@ export default function ArticleActionButtons({
           variant="outlined"
           color="secondary"
           startIcon={<SmartToyIcon />}
-          onClick={() => openSmartSummaryModal(articleTitle, articleURL)}
+          onClick={handleOpenSmartSummaryModal}
         >
           Smart Summary
         </Button>
