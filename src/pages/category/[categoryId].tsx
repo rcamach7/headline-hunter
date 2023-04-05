@@ -8,9 +8,11 @@ import { CategoryPageTitle, PageLoading } from '@/components/atoms';
 import { AppBar, NewsCardContainer } from '@/components/organisms';
 import { SmartSummaryForm } from '@/components/molecules';
 import { useLoadingContext } from '@/context/LoadingContext';
+import { useFeedbackContext } from '@/context/FeedbackContext';
 
 export default function CategoryPage() {
   const { setIsPageLoading, isPageLoading } = useLoadingContext();
+  const { addAlertMessage } = useFeedbackContext();
   const {
     query: { categoryId: cat },
   } = useRouter();
@@ -53,7 +55,17 @@ export default function CategoryPage() {
         isLoading: false,
         page,
       }));
+      addAlertMessage({
+        severity: 'success',
+        text: 'Loaded more articles',
+        variant: 'filled',
+      });
     } catch (error) {
+      addAlertMessage({
+        severity: 'error',
+        text: 'Failed to load more articles',
+        variant: 'filled',
+      });
       console.error('Error loading more articles:', error);
     }
     setIsPageLoading(false);
