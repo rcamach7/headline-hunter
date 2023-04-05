@@ -1,4 +1,5 @@
 import { Box, Button, Typography, Modal, TextField } from '@mui/material';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface Props {
@@ -51,7 +52,7 @@ export default function SmartSummaryForm({
 
         <Box
           component="form"
-          sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}
+          sx={{ display: 'flex', flexDirection: 'column', pt: 2 }}
         >
           <TextField
             id="outlined-multiline-static"
@@ -77,9 +78,14 @@ export default function SmartSummaryForm({
             {articleContent.length}/2000 characters
           </Typography>
 
-          <Button variant="outlined" type="submit">
+          <Button variant="outlined" type="submit" sx={{ mt: 1 }}>
             Generate Summary
           </Button>
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: 0.5, pt: 1 }}>
+          <Image src="/logos/chatgpt.webp" width={15} height={10} />
+          <Typography sx={{ fontSize: 12 }}>Powered By ChatGPT 3.5</Typography>
         </Box>
       </Box>
     </Modal>
