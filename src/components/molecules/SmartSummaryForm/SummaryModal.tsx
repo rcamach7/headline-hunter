@@ -1,5 +1,5 @@
 import { Modal, Box, Typography, Button } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   summary: string;
@@ -7,12 +7,21 @@ interface Props {
 
 export default function SummaryModal({ summary }: Props) {
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (summary.length) {
+      handleOpen();
+    }
+  }, [summary]);
+
   return (
     <>
       {summary.length ? (
