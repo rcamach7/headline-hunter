@@ -16,13 +16,13 @@ export default function DayCard({ dayForecast }: Props) {
     <Paper
       elevation={24}
       sx={{
-        width: 'clamp(125, 100vw, 300px)',
+        width: 180,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        p: 1,
-        borderRadius: 4,
+        p: 0.5,
+        borderRadius: 2,
         border: 1,
         borderColor: '#7e736c',
       }}
@@ -33,13 +33,18 @@ export default function DayCard({ dayForecast }: Props) {
           borderBottom: '1px solid #7e736c',
           fontSize: '1rem',
           fontWeight: 'bold',
+          textAlign: 'center',
         }}
       >
         {format(new Date(date), 'EEEE, d MMMM yyyy')}
       </Typography>
-      <Image src={iconUrl} width={75} height={75} />
-      <Typography variant="h6">{maxtemp_f}°F</Typography>
-      <Typography variant="h6">{condition.text}</Typography>
+      <Image src={iconUrl} width={65} height={65} />
+      <Typography variant="h6" sx={{ fontSize: 16 }}>
+        {maxtemp_f}°F
+      </Typography>
+      <Typography variant="h6" sx={{ fontSize: 16 }}>
+        {condition.text}
+      </Typography>
     </Paper>
   );
 }
