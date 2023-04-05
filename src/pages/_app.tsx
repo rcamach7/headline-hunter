@@ -6,19 +6,22 @@ import Head from 'next/head';
 import theme from '../theme';
 import { UserContextProvider } from '../context/UserContext';
 import { LoadingProvider } from '@/context/LoadingContext';
+import { FeedbackProvider } from '@/context/FeedbackContext';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
       <UserContextProvider>
         <LoadingProvider>
-          <ThemeProvider theme={theme}>
-            <Head>
-              <link rel="icon" type="image/x-icon" href="logos/fav.svg" />
-            </Head>
-            <Component {...pageProps} />
-            <CssBaseline />
-          </ThemeProvider>
+          <FeedbackProvider>
+            <ThemeProvider theme={theme}>
+              <Head>
+                <link rel="icon" type="image/x-icon" href="logos/fav.svg" />
+              </Head>
+              <Component {...pageProps} />
+              <CssBaseline />
+            </ThemeProvider>
+          </FeedbackProvider>
         </LoadingProvider>
       </UserContextProvider>
     </SessionProvider>
