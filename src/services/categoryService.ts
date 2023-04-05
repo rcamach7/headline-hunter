@@ -80,8 +80,9 @@ export async function getInitialCategories(session: any) {
           },
         },
       });
-
       return [...categories, ...additionalCategories];
+    } else {
+      return categories;
     }
   } else {
     return await getCategoriesByIds(

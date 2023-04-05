@@ -22,13 +22,22 @@ export default async function handler(
         const session = await getServerSession(req, res, authOptions);
 
         let newsCategories: CategoryNews[];
-        if (isInitialRequest) {
-          const categories = await getInitialCategories(session);
-          newsCategories = await getNewsByCategories(categories);
-        } else {
-          const categories = await getAdditionalCategories(currentIds);
-          newsCategories = await getNewsByCategories(categories);
+        try {
+          if (isInitialRequest) {
+            const categories = await getInitialCategories(session);
+            newsCategories = await getNewsByCategories(categories);
+          } else {
+            const categories = await getAdditionalCategories(currentIds);
+            newsCategories = await getNewsByCategories(categories);
+          }
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({
+            message:
+              'Error occurred while generating collection of categories and news',
+          });
         }
+
         return res.status(200).json({ newsCategories });
 
       default:
