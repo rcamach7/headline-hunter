@@ -8,9 +8,11 @@ import { CategoryCard, SmartSummaryForm } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
 import { useLoadingContext } from '@/context/LoadingContext';
+import { useFeedbackContext } from '@/context/FeedbackContext';
 
 export default function Home() {
   const { isPageLoading, setIsPageLoading } = useLoadingContext();
+  const { addAlertMessage } = useFeedbackContext();
   const [pageData, setPageData] = useState<{
     categoryArticles: CategoryArticles[];
     initialRequest: boolean;
@@ -46,6 +48,11 @@ export default function Home() {
           initialRequest: false,
         });
       } catch (error) {
+        addAlertMessage({
+          severity: 'error',
+          text: 'Failed to fetch news articles',
+          variant: 'filled',
+        });
         console.error('Failed to fetch news articles:', error);
       }
       setIsPageLoading(false);
@@ -71,7 +78,17 @@ export default function Home() {
           ...response.data.newsCategories,
         ],
       }));
+      addAlertMessage({
+        severity: 'success',
+        text: 'More categories loaded',
+        variant: 'filled',
+      });
     } catch (error) {
+      addAlertMessage({
+        severity: 'error',
+        text: 'Error loading more categories',
+        variant: 'filled',
+      });
       console.error('Error loading more articles:', error);
     }
     setIsPageLoading(false);
