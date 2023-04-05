@@ -15,14 +15,14 @@ export default function SummaryModal({ summary }: Props) {
   };
   return (
     <>
-      {summary && (
+      {summary.length && (
         <Button variant="contained" onClick={handleOpen}>
           View Summary
         </Button>
       )}
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Typography>Hello World</Typography>
+          <Typography>{summary}</Typography>
         </Box>
       </Modal>
     </>

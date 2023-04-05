@@ -1,8 +1,10 @@
 import { Box, Button, Typography, Modal, TextField } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
+import axios from 'axios';
 
 import SummaryModal from './SummaryModal';
+import { useLoadingContext } from '@/context/LoadingContext';
 
 interface Props {
   articleTitle: string;
@@ -15,6 +17,8 @@ export default function SmartSummaryForm({
   articleURL,
   onClose,
 }: Props) {
+  const { setIsPageLoading } = useLoadingContext();
+
   const [articleContent, setArticleContent] = useState<string>('');
   const [summary, setSummary] = useState<string>('');
 
@@ -25,6 +29,21 @@ export default function SmartSummaryForm({
       .replace(/https?:\/\/[^\s]+/g, '');
     setArticleContent(cleanedContent);
   }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsPageLoading(true);
+    try {
+      const { data } = await axios.post('/api/smart-summary', {
+        article: articleContent,
+      });
+      setSummary(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsPageLoading(false);
+  };
 
   return (
     <Modal open={true} onClose={onClose}>
@@ -52,6 +71,7 @@ export default function SmartSummaryForm({
         <Box
           component="form"
           sx={{ display: 'flex', flexDirection: 'column', pt: 2 }}
+          onSubmit={handleSubmit}
         >
           <TextField
             id="outlined-multiline-static"

@@ -26,7 +26,7 @@ export default async function handler(
   }
 
   switch (req.method) {
-    case 'GET':
+    case 'POST':
       articleContent = articleContent
         .split('\n')
         .map((line) => line.trim())
@@ -37,7 +37,7 @@ export default async function handler(
       return res.status(200).json(summary);
 
     default:
-      res.setHeader('Allow', ['GET']);
+      res.setHeader('Allow', ['POST']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
