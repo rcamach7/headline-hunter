@@ -1,4 +1,5 @@
 import { Box, Button, Typography, Modal, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 interface Props {
   articleTitle: string;
@@ -11,6 +12,20 @@ export default function SmartSummaryForm({
   articleURL,
   onClose,
 }: Props) {
+  const [articleContent, setArticleContent] = useState<string>('');
+
+  function cleanArticleContent(content: string) {
+    const cleanedContent = content
+      .replace(/\s+/g, ' ')
+      .replace(/\n+/g, ' ')
+      .replace(/https?:\/\/[^\s]+/g, '');
+    setArticleContent(cleanedContent);
+  }
+
+  useEffect(() => {
+    console.log(articleContent);
+  }, [articleContent]);
+
   return (
     <Modal open={true} onClose={onClose}>
       <Box sx={style}>
@@ -45,12 +60,22 @@ export default function SmartSummaryForm({
             rows={4}
             variant="outlined"
             sx={{ width: '100%' }}
+            value={articleContent}
+            onChange={(e) => cleanArticleContent(e.target.value)}
             inputProps={{
               minLength: 100,
-              maxLength: 1000,
+              maxLength: 2000,
             }}
             required
           />
+
+          <Typography
+            color="text.secondary"
+            variant="body2"
+            sx={{ fontSize: 12, textAlign: 'right' }}
+          >
+            {articleContent.length}/2000 characters
+          </Typography>
 
           <Button variant="outlined" type="submit">
             Generate Summary
