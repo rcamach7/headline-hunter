@@ -2,8 +2,10 @@ import { createContext } from 'react';
 import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 
+import { PageLoading } from '@/components/atoms';
 export const LoadingContext = createContext({
-  isLoading: false,
+  setIsPageLoading: (value: boolean) => {},
+  isPageLoading: false,
 });
 
 export const useLoadingContext = () => {
@@ -15,17 +17,17 @@ export const useLoadingContext = () => {
 };
 
 export const LoadingProvider = ({ children }) => {
-  const [isLoading, setLoading] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     let timer;
 
-    const handleRouteChangeStart = () => setLoading(true);
+    const handleRouteChangeStart = () => setIsPageLoading(true);
     const handleRouteChangeComplete = () => {
-      timer = setTimeout(() => setLoading(false), 1000);
+      timer = setTimeout(() => setIsPageLoading(false), 1000);
     };
-    const handleRouteChangeError = () => setLoading(false);
+    const handleRouteChangeError = () => setIsPageLoading(false);
 
     router.events.on('routeChangeStart', handleRouteChangeStart);
     router.events.on('routeChangeComplete', handleRouteChangeComplete);
@@ -39,8 +41,9 @@ export const LoadingProvider = ({ children }) => {
     };
   }, [router.events]);
   return (
-    <LoadingContext.Provider value={{ isLoading }}>
+    <LoadingContext.Provider value={{ setIsPageLoading, isPageLoading }}>
       {children}
+      {isPageLoading && <PageLoading />}
     </LoadingContext.Provider>
   );
 };

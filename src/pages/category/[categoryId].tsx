@@ -9,7 +9,7 @@ import { AppBar, NewsCardContainer } from '@/components/organisms';
 import { useLoadingContext } from '@/context/LoadingContext';
 
 export default function CategoryPage() {
-  const { isLoading } = useLoadingContext();
+  const { setIsPageLoading, isPageLoading } = useLoadingContext();
   const {
     query: { categoryId: cat },
   } = useRouter();
@@ -18,12 +18,12 @@ export default function CategoryPage() {
   const [categoryArticles, setCategoryArticles] = useState<{
     category: Category;
     articles: Article[];
-    isLoading: boolean;
     page: number;
-  }>({ category: null, articles: [], isLoading: true, page: 1 });
+  }>({ category: null, articles: [], page: 1 });
 
   async function loadMoreArticles() {
     try {
+      setIsPageLoading(true);
       const page = categoryArticles.page + 1;
       const articlesResponse = await axios.get(
         `/api/articles/${categoryId}?page=${page}`
@@ -37,16 +37,17 @@ export default function CategoryPage() {
     } catch (error) {
       console.error('Error loading more articles:', error);
     }
+    setIsPageLoading(false);
   }
 
   useEffect(() => {
     if (categoryId) {
+      setIsPageLoading(true);
       fetchCategoryArticles(categoryId, categoryArticles.page).then(
         (categoryArticles) => {
           setCategoryArticles({
             category: categoryArticles.category,
             articles: categoryArticles.articles,
-            isLoading: false,
             page: 1,
           });
         }
@@ -55,10 +56,10 @@ export default function CategoryPage() {
       setCategoryArticles({
         category: null,
         articles: [],
-        isLoading: false,
         page: 1,
       });
     }
+    setIsPageLoading(false);
   }, [categoryId]);
 
   if (categoryArticles.category) {
@@ -77,10 +78,8 @@ export default function CategoryPage() {
         <NewsCardContainer
           articles={categoryArticles.articles}
           loadMoreArticles={loadMoreArticles}
-          isLoading={categoryArticles.isLoading}
+          isLoading={isPageLoading}
         />
-
-        {isLoading && <PageLoading />}
       </>
     );
   } else {
