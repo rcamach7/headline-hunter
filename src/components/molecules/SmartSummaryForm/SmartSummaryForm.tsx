@@ -20,9 +20,7 @@ export default function SmartSummaryForm({
   const { setIsPageLoading } = useLoadingContext();
 
   const [articleContent, setArticleContent] = useState<string>('');
-  const [summary, setSummary] = useState<string>(
-    'Write a story that contains dialogue about a topic or theme that has a deeper message. The dialogue should showcase a range of emotions and convey a clear underlying message. In parenthesis for each dialogue, include the emotion in which the character is speaking with.'
-  );
+  const [summary, setSummary] = useState<string>('');
 
   function cleanArticleContent(content: string) {
     const cleanedContent = content
