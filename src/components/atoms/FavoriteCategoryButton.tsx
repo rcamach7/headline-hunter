@@ -19,6 +19,18 @@ export default function FavoriteCategoryButton({ categoryId }: Props) {
   const { user, refreshUser } = useUserContext();
   const { addAlertMessage } = useFeedbackContext();
 
+  async function handleClick() {
+    if (user) {
+      toggleFavorite();
+    } else {
+      addAlertMessage({
+        severity: 'error',
+        variant: 'filled',
+        text: 'Please log in to save categories',
+      });
+    }
+  }
+
   async function toggleFavorite() {
     try {
       setIsLoading(true);
@@ -65,7 +77,7 @@ export default function FavoriteCategoryButton({ categoryId }: Props) {
     return (
       <IconButton
         aria-label={isFavorite ? 'un-save' : 'save'}
-        onClick={toggleFavorite}
+        onClick={handleClick}
       >
         {isFavorite ? (
           <FavoriteFullIcon sx={{ color: 'text.primary' }} />
