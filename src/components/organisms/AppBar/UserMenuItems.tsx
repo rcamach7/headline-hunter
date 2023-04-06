@@ -23,13 +23,6 @@ export default function UserMenuItems({ user }: Props) {
           </Typography>
         </MenuItem>
       )}
-      <MenuItem>
-        <Typography textAlign="center">
-          <Link href="/account">
-            <a style={{ textDecoration: 'none', color: 'inherit' }}>Account</a>
-          </Link>
-        </Typography>
-      </MenuItem>
       {user ? (
         <MenuItem onClick={() => signOut()}>
           <Typography textAlign="center">Logout</Typography>
