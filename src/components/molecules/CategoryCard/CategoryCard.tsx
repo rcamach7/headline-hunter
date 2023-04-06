@@ -38,7 +38,7 @@ export default function CategoryCard({
   );
 
   const handleImageError = () => {
-    setImageUrl('/images/fallback.webp');
+    setImageUrl('/images/fallback.jpeg');
   };
 
   const handleShowMore = () => {
@@ -82,7 +82,6 @@ export default function CategoryCard({
               alt={primaryArticle.title}
               layout="fill"
               objectFit="cover"
-              objectPosition="top"
             />
           </Box>
           <PrimaryArticleMeta

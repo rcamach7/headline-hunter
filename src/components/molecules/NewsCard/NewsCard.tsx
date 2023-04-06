@@ -25,9 +25,16 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
   };
 
   return (
-    <Card sx={{ width: 345, maxHeight: 200 }}>
+    <Card
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: 345,
+        maxHeight: 250,
+      }}
+    >
       <CardActionArea onClick={() => handleClick(article.url)}>
-        <Box sx={{ display: 'flex', p: 1 }}>
+        <Box sx={{ display: 'flex', p: 1, justifyContent: 'space-between' }}>
           <CardContent
             sx={{
               maxHeight: '200px',
@@ -51,9 +58,13 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
 
           <CardMedia
             component="img"
-            sx={{ width: '100px', height: '100px' }}
+            sx={{ width: '100px', height: '80px' }}
             image={article.urlToImage}
             alt={`Article image: ${article.title}`}
+            onError={(e: any) => {
+              const target = e.target as HTMLImageElement;
+              target.src = '/images/fallback.jpeg';
+            }}
           />
         </Box>
 
@@ -63,13 +74,15 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
         />
       </CardActionArea>
 
-      <ArticleActionButtons
-        type="full"
-        articleId={article.id}
-        articleTitle={article.title}
-        articleURL={article.url}
-        openSmartSummaryModal={openSmartSummaryModal}
-      />
+      <Box sx={{ px: { xs: 1, md: 2 }, mt: 'auto' }}>
+        <ArticleActionButtons
+          type="full"
+          articleId={article.id}
+          articleTitle={article.title}
+          articleURL={article.url}
+          openSmartSummaryModal={openSmartSummaryModal}
+        />
+      </Box>
     </Card>
   );
 }
