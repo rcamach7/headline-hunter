@@ -1,38 +1,31 @@
-# Headline Hunter: News Aggregator
+<p align="center">
+<a href="">
+<img width="300" src="[public/logos/hh_long.svg](https://res.cloudinary.com/de2ymful4/image/upload/v1680822430/main-portfolio/projects/a_fhaj2z.png)">
+</a>
+</p>
+Check out Headline Hunter, a cool news site that brings together stories from lots of different sources and puts them all in one place. We use ChatGPT to allow you to summarize each article, so you can stay informed even when you're in a hurry!
 
-Headline Hunter is a news aggregator website that collects articles from various sources and presents them in a unified interface. This enables users to easily access a wide range of news and stay updated on current events from diverse perspectives. Additionally, we utilize ChatGPT to provide concise summaries of news articles for a quick and convenient reading experience.
+![Website Image Preview](/a.png)
 
-## Roadmap
+## Key Features ✨
 
-### Structure & Language:
+- Enhanced SEO by taking advantage of Next.js' static generation and server-side rendering capabilities
+- Utilized NextAuth to authenticate users and store their data in a MongoDB database
+- Created a fully responsive design that works on all devices and screen sizes
+- Incorporated a atomic design pattern that allows for easy scaling and maintenance
 
-- Atomic Design: atoms, molecules, organisms
-- TypeScript
+## How to install and run?
 
-### Frontend:
+To get this app up and running, you'll need to set up a few things in your .env file. Specifically, make sure to include the following environments and variables:
 
-- UI: React, MUI Components
-- State Management: Context API
+- DATABASE_URL (We use PostgreSQL + Prisma), GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, NEXTAUTH_SECRET, and NEXTAUTH_URL, NEWS_API_KEY, WEATHER_API_KEY, OPEN_AI_KEY
 
-### Backend:
+```bash
+# Clone this repository
+  git clone https://github.com/rcamach7/headline-hunter
+  cd headline-hunter
 
-- Node & Next.js (SSR)
-- Database: SQL
-  - PostgreSQL
-    - pg: node client for connecting to PostgreSQL
-    - Prisma: ORM for PostgreSQL
-
-### External APIs:
-
-- News API (newsapi.org)
-  - This API offers a simple and easy-to-use interface to access news articles from over 70,000 sources, including major news outlets such as CNN, BBC, The New York Times, and more.
-  - 100 requests per day
-- OpenAI ChatGPT
-  - Used for generating concise summaries of news articles to enhance user experience and facilitate quick reading.
-
-## Features
-
-- Aggregates news articles from multiple sources
-- Provides a unified interface for easy browsing
-- Utilizes ChatGPT to generate article summaries
-- Supports responsive design for various devices
+#  Run local server
+  yarn install
+  yarn dev
+```
