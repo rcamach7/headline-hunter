@@ -1,11 +1,15 @@
 import { Modal, Box, Typography, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
+import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
 
 interface Props {
   summary: string;
+  articleTitle: string;
 }
 
-export default function SummaryModal({ summary }: Props) {
+export default function SummaryModal({ summary, articleTitle }: Props) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -35,7 +39,23 @@ export default function SummaryModal({ summary }: Props) {
       ) : null}
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
+          <Typography
+            variant="h6"
+            sx={{
+              borderBottom: '1px solid gray',
+              textAlign: 'center',
+              mb: 1,
+            }}
+          >
+            {shortenParagraph(removeNewsSource(articleTitle), 50)}
+          </Typography>
           <Typography>{summary}</Typography>
+          <Box sx={{ display: 'flex', gap: 0.5, pt: 2 }}>
+            <Image src="/logos/chatgpt.webp" width={15} height={10} />
+            <Typography sx={{ fontSize: 12 }} color="secondary.main">
+              Powered By OpenAI's ChatGPT 3.5
+            </Typography>
+          </Box>
         </Box>
       </Modal>
     </>

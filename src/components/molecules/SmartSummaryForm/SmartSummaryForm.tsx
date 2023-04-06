@@ -20,7 +20,9 @@ export default function SmartSummaryForm({
   const { setIsPageLoading } = useLoadingContext();
 
   const [articleContent, setArticleContent] = useState<string>('');
-  const [summary, setSummary] = useState<string>('');
+  const [summary, setSummary] = useState<string>(
+    'Write a story that contains dialogue about a topic or theme that has a deeper message. The dialogue should showcase a range of emotions and convey a clear underlying message. In parenthesis for each dialogue, include the emotion in which the character is speaking with.'
+  );
 
   function cleanArticleContent(content: string) {
     const cleanedContent = content
@@ -38,7 +40,6 @@ export default function SmartSummaryForm({
         article: articleContent,
       });
       setSummary(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -100,12 +101,14 @@ export default function SmartSummaryForm({
           <Button variant="outlined" type="submit" sx={{ mt: 1 }}>
             Generate Summary
           </Button>
-          <SummaryModal summary={summary} />
+          <SummaryModal summary={summary} articleTitle={articleTitle} />
         </Box>
 
         <Box sx={{ display: 'flex', gap: 0.5, pt: 1 }}>
           <Image src="/logos/chatgpt.webp" width={15} height={10} />
-          <Typography sx={{ fontSize: 12 }}>Powered By ChatGPT 3.5</Typography>
+          <Typography sx={{ fontSize: 12 }} color="secondary.main">
+            Powered By OpenAI's ChatGPT 3.5
+          </Typography>
         </Box>
       </Box>
     </Modal>
