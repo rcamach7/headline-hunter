@@ -94,11 +94,49 @@ const refreshArticlesByCategory = async (id: string) => {
             },
           });
         })
-        .catch((error) => {
-          console.error(
-            `An error occurred while creating article with ID: ${article.id}`
-          );
-          console.error(error);
+        .catch(async (error) => {
+          // Check if the error is due to the unique constraint violation
+          if (error.code === 'P2002' && error.meta?.target?.includes('title')) {
+            console.log(
+              `Article with title "${article.title}" already exists. Connecting it to category if not connected.`
+            );
+
+            // Query the existing article by its title
+            const existingArticle = await prisma.article.findUnique({
+              where: {
+                title: article.title,
+              },
+              include: {
+                categories: true,
+              },
+            });
+
+            // Check if the current category is already connected to the article
+            const isCategoryConnected = existingArticle.categories.some(
+              (connectedCategory) => connectedCategory.id === category.id
+            );
+
+            if (!isCategoryConnected) {
+              // Connect the existing article to the current category
+              await prisma.article.update({
+                where: {
+                  id: existingArticle.id,
+                },
+                data: {
+                  categories: {
+                    connect: {
+                      id: category.id,
+                    },
+                  },
+                },
+              });
+            }
+          } else {
+            console.error(
+              `An error occurred while creating article with title: ${article.title}`
+            );
+            console.error(error);
+          }
         })
     );
     await Promise.all(createArticlesPromises);
