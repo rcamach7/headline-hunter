@@ -1,0 +1,5 @@
+services:
+  main:
+    image: Dockerfile
+    name: nextjs-app
+    port: 3000
