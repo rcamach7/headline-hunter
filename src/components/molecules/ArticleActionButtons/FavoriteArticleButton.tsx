@@ -39,9 +39,16 @@ export default function FavoriteArticle({
     }
   };
 
-  function handleClick() {
+  async function handleClick() {
     if (user) {
-      toggleFavorite();
+      await toggleFavorite();
+      addAlertMessage({
+        severity: 'success',
+        text: isFavorite
+          ? 'Article removed from favorites'
+          : 'Article added to favorites',
+        variant: 'filled',
+      });
     } else {
       addAlertMessage({
         severity: 'error',
@@ -73,7 +80,7 @@ export default function FavoriteArticle({
         setIsFavorite(isFavorited);
       }
     }
-  }, [user]);
+  }, [user, articleId]);
 
   if (!isLoading) {
     return (

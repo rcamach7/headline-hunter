@@ -1,4 +1,4 @@
-import { useState, useContext, createContext } from 'react';
+import { useState, useContext, createContext, useCallback } from 'react';
 import { Stack, Box } from '@mui/material';
 import { v4 } from 'uuid';
 
@@ -30,11 +30,11 @@ export const FeedbackProvider = ({ children }) => {
     ]);
   };
 
-  const removeAlertMessage = (id: string) => {
+  const removeAlertMessage = useCallback((id: string) => {
     setAlertMessages((prevAlertMessages) =>
       prevAlertMessages.filter((alertMessage) => alertMessage.id !== id)
     );
-  };
+  }, []);
 
   return (
     <FeedbackContext.Provider value={{ addAlertMessage }}>

@@ -65,7 +65,7 @@ export default function FavoriteCategoryButton({ categoryId }: Props) {
         setIsFavorite(isFavorited);
       }
     }
-  }, [user]);
+  }, [user, categoryId]);
 
   if (isLoading) {
     return (

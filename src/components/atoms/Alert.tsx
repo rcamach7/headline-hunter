@@ -25,7 +25,7 @@ export default function Alert({
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [id, removeSelf]);
 
   return (
     <MuiAlert
