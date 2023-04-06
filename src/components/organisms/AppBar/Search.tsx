@@ -49,7 +49,7 @@ export default function Search() {
 
   return (
     <Box sx={searchStyle}>
-      <SearchIcon />
+      <SearchIcon color="secondary" />
       <Autocomplete
         id="search-categories"
         freeSolo
