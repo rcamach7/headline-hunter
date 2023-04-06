@@ -51,9 +51,14 @@ export default function SummaryModal({ summary, articleTitle }: Props) {
           </Typography>
           <Typography>{summary}</Typography>
           <Box sx={{ display: 'flex', gap: 0.5, pt: 2 }}>
-            <Image src="/logos/chatgpt.webp" width={15} height={10} />
+            <Image
+              src="/logos/chatgpt.webp"
+              alt="ChatGPT Logo"
+              width={15}
+              height={10}
+            />
             <Typography sx={{ fontSize: 12 }} color="secondary.main">
-              Powered By OpenAI's ChatGPT 3.5
+              Powered By OpenAIs ChatGPT 3.5
             </Typography>
           </Box>
         </Box>

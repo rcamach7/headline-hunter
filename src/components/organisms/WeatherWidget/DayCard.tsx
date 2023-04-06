@@ -38,7 +38,7 @@ export default function DayCard({ dayForecast }: Props) {
       >
         {format(new Date(date), 'EEEE, d MMMM yyyy')}
       </Typography>
-      <Image src={iconUrl} width={65} height={65} />
+      <Image alt="Weather Icon" src={iconUrl} width={65} height={65} />
       <Typography variant="h6" sx={{ fontSize: 16 }}>
         {maxtemp_f}°F
       </Typography>
