@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+
 import { getArticlesByCategory } from '@/services/articleService';
 
 export default async function handler(

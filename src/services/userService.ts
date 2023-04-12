@@ -1,5 +1,6 @@
-import prisma from '@/lib/prisma';
 import { Article, Category, User } from '@prisma/client';
+
+import prisma from '@/lib/prisma';
 
 export async function getUserByEmail(email: string) {
   return await prisma.user.findUnique({

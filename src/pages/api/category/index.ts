@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+
 import { getAllCategories } from '@/services/categoryService';
 
 export default async function handler(

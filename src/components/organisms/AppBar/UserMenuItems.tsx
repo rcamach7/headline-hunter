@@ -1,9 +1,10 @@
-import { User } from '@/lib/types';
 import * as React from 'react';
 import { Typography, MenuItem } from '@mui/material';
 import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+
+import { User } from '@/lib/types';
 
 interface Props {
   user: User | null;

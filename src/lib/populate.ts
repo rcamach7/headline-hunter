@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+
 import prisma from '@/lib/prisma';
 
 export async function populateCategories() {

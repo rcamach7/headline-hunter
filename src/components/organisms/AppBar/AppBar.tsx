@@ -11,6 +11,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
+
 import DynamicLogo from './DynamicLogo';
 import UserMenuItems from './UserMenuItems';
 import CategoryMenuItems from './CategoryMenuItems';

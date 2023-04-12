@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { authOptions } from '@/auth/[...nextauth]';
 import { getServerSession } from 'next-auth/next';
+
+import { authOptions } from '@/auth/[...nextauth]';
 import { getUserByEmail, toggleArticleFavorited } from '@/services/userService';
 import { getArticleById } from '@/services/articleService';
 

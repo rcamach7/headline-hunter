@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+
 import FavoriteCategoryButton from './FavoriteCategoryButton';
 
 interface Props {

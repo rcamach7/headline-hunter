@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+
 import { User } from '@/lib/types';
 
 interface UserContextType {
