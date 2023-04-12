@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { Textfit } from 'react-textfit';
 import React from 'react';
-import { formatDistance } from 'date-fns';
+import { formatDistance, intervalToDuration, formatDuration } from 'date-fns';
 
 import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
 import { Article } from '@/lib/types';
@@ -17,6 +17,22 @@ export default function PrimaryArticleMeta({
   openSmartSummaryModal,
 }: Props) {
   const { id, description, title, publishedAt, sourceName, url } = article;
+
+  function generateTimeSincePublished() {
+    const now = new Date();
+    const publishedDate = new Date(publishedAt);
+    const duration = intervalToDuration({ start: publishedDate, end: now });
+
+    if (duration.days && duration.days >= 1) {
+      return formatDistance(publishedDate, now, { addSuffix: true });
+    } else {
+      const formattedDuration = formatDuration(duration, {
+        format: ['hours', 'minutes'],
+      });
+
+      return `${formattedDuration} ago`;
+    }
+  }
   return (
     <Textfit
       mode="multi"
@@ -63,9 +79,7 @@ export default function PrimaryArticleMeta({
           sx={{ fontSize: '14px' }}
           gutterBottom
         >
-          {formatDistance(new Date(publishedAt), new Date(), {
-            addSuffix: true,
-          })}
+          {generateTimeSincePublished()}
         </Typography>
       </Box>
       <ArticleActionButtons

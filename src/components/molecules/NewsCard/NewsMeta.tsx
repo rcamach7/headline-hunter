@@ -1,6 +1,6 @@
 import { Typography, Box } from '@mui/material';
 import * as React from 'react';
-import { formatDistance } from 'date-fns';
+import { formatDistance, intervalToDuration, formatDuration } from 'date-fns';
 
 interface Props {
   sourceName: string;
@@ -8,6 +8,22 @@ interface Props {
 }
 
 export default function CardActionBar({ sourceName, publishedAt }: Props) {
+  function generateTimeSincePublished() {
+    const now = new Date();
+    const publishedDate = new Date(publishedAt);
+    const duration = intervalToDuration({ start: publishedDate, end: now });
+
+    if (duration.days && duration.days >= 1) {
+      return formatDistance(publishedDate, now, { addSuffix: true });
+    } else {
+      const formattedDuration = formatDuration(duration, {
+        format: ['hours', 'minutes'],
+      });
+
+      return `${formattedDuration} ago`;
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -20,9 +36,7 @@ export default function CardActionBar({ sourceName, publishedAt }: Props) {
         {sourceName}
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        {formatDistance(new Date(publishedAt), new Date(), {
-          addSuffix: true,
-        })}
+        {generateTimeSincePublished()}
       </Typography>
     </Box>
   );
