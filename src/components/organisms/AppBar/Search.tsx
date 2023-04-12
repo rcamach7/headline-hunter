@@ -71,13 +71,18 @@ export default function Search() {
           />
         )}
         renderOption={(props, option) => (
-          <li {...props}>
-            <Link href={`/category/${option.id}`}>
-              <a style={{ color: 'inherit', textDecoration: 'none' }}>
-                {option.type}
-              </a>
-            </Link>
-          </li>
+          <Link href={`/category/${option.id}`} key={option.id}>
+            <a
+              style={{
+                color: 'inherit',
+                textDecoration: 'none',
+                display: 'block',
+                width: '100%',
+              }}
+            >
+              <li {...props}>{option.type}</li>
+            </a>
+          </Link>
         )}
       />
     </Box>
