@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { Article, Category } from '@/lib/types';
 import { CategoryPageTitle, PageLoading } from '@/components/atoms';
-import { AppBar, NewsCardContainer } from '@/components/organisms';
+import { NewsCardContainer } from '@/components/organisms';
 import { SmartSummaryForm } from '@/components/molecules';
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
@@ -127,7 +127,6 @@ export default function CategoryPage() {
         <Head>
           <title>Headline Hunter</title>
         </Head>
-        <AppBar />
         <PageLoading />
       </>
     );

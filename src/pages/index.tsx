@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box } from '@mui/material';
 
-import { AppBar, WeatherWidget } from '@/components/organisms';
+import { WeatherWidget } from '@/components/organisms';
 import { CategoryCard, SmartSummaryForm } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
