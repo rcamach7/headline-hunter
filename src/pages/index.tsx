@@ -99,7 +99,6 @@ export default function Home() {
       <Head>
         <title>Headline Hunter</title>
       </Head>
-      <AppBar />
       <Box
         sx={{
           display: 'flex',

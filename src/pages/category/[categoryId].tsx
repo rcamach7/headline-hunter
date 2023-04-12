@@ -99,7 +99,6 @@ export default function CategoryPage() {
         <Head>
           <title>Headline Hunter</title>
         </Head>
-        <AppBar />
 
         <CategoryPageTitle
           categoryId={categoryId}

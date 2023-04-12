@@ -7,6 +7,7 @@ import theme from '../theme';
 import { UserContextProvider } from '../context/UserContext';
 import { LoadingProvider } from '@/context/LoadingContext';
 import { FeedbackProvider } from '@/context/FeedbackContext';
+import { AppBar } from '@/components/organisms';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
               <Head>
                 <link rel="icon" type="image/x-icon" href="logos/fav.svg" />
               </Head>
+              <AppBar />
               <Component {...pageProps} />
               <CssBaseline />
             </ThemeProvider>
