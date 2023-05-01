@@ -24,7 +24,7 @@ export default function Test() {
 async function getWebsiteData(url: string) {
   try {
     const encodedUrl = encodeURIComponent(url);
-    const article = await axios.get(`/api/test/proxy?url=${encodedUrl}`);
+    const article = await axios.get(`/api/article-proxy?url=${encodedUrl}`);
     const parser = new DOMParser();
 
     const doc = parser.parseFromString(article.data, 'text/html');
