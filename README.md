@@ -51,7 +51,7 @@ Check out Headline Hunter, a cool news site that brings together stories from lo
 
 To get this app up and running, you'll need to set up a few things in your .env file. Specifically, make sure to include the following environments and variables:
 
-- DATABASE_URL (We use PostgreSQL + Prisma), GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, NEXTAUTH_SECRET, and NEXTAUTH_URL, NEWS_API_KEY, WEATHER_API_KEY, OPEN_AI_KEY
+- DATABASE_URL (We use PostgreSQL + Prisma), GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, NEXTAUTH_SECRET, and NEXTAUTH_URL, NEWS_API_KEY, WEATHER_API_KEY, OPEN_AI_KEY, NEXT_PUBLIC_IS_TEST_ENV
 
 ```bash
 # Clone this repository
