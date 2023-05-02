@@ -5,6 +5,9 @@ import {
   ChatCompletionRequestMessageRoleEnum,
 } from 'openai';
 import { getServerSession } from 'next-auth/next';
+import axios from 'axios';
+import { JSDOM } from 'jsdom';
+import { Readability } from '@mozilla/readability';
 
 import { authOptions } from '@/auth/[...nextauth]';
 
@@ -19,27 +22,30 @@ export default async function handler(
   if (!session.user)
     res.status(401).json({ message: 'Unauthorized, please log in.' });
 
-  const { article } = req.body;
+  const { article, url } = req.body;
   let articleContent = article as string;
+
   if (!articleContent) {
-    return res.status(400).json({ message: 'Missing article content' });
+    if (!url) {
+      return res.status(400).json({ message: 'No article or URL provided.' });
+    }
+    articleContent = await getArticleContent(url as string);
   }
+  articleContent = articleContent
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.length)
+    .join('\n');
 
   switch (req.method) {
     case 'POST':
-      articleContent = articleContent
-        .split('\n')
-        .map((line) => line.trim())
-        .filter((line) => line.length)
-        .join('\n');
-
       if (articleContent.length > MAX_ARTICLE_LENGTH) {
         return res.status(400).json({
           message: `Article is too long, max length is ${MAX_ARTICLE_LENGTH}`,
         });
       }
 
-      const summary = await getSummary(articleContent);
+      const summary = await generateAiSummary(articleContent);
       return res.status(200).json(summary);
 
     default:
@@ -48,7 +54,7 @@ export default async function handler(
   }
 }
 
-async function getSummary(content: string) {
+async function generateAiSummary(content: string) {
   const config = new Configuration({
     apiKey: process.env.OPEN_AI_KEY,
   });
@@ -71,4 +77,16 @@ async function getSummary(content: string) {
 
   console.log('usage: ', response.data.usage);
   return response.data.choices[0].message.content;
+}
+
+async function getArticleContent(URL: string) {
+  try {
+    const response = await axios.get(URL);
+    const doc = new JSDOM(response.data, { url: URL });
+
+    const article = new Readability(doc.window.document).parse();
+    return article.textContent;
+  } catch (error) {
+    console.error(error);
+  }
 }
