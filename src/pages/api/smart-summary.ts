@@ -29,24 +29,36 @@ export default async function handler(
     if (!url) {
       return res.status(400).json({ message: 'No article or URL provided.' });
     }
-    articleContent = await getArticleContent(url as string);
+    try {
+      articleContent = await getArticleContent(url as string);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message:
+          'Unable to scrape article content, please manually perform scrape',
+      });
+    }
   }
+
+  // Article content cleanup and length check
   articleContent = articleContent
     .split('\n')
     .map((line) => line.trim())
     .filter((line) => line.length)
     .join('\n');
+  if (articleContent.length > MAX_ARTICLE_LENGTH) {
+    articleContent = articleContent.substring(0, MAX_ARTICLE_LENGTH);
+  }
 
   switch (req.method) {
     case 'POST':
-      if (articleContent.length > MAX_ARTICLE_LENGTH) {
-        return res.status(400).json({
-          message: `Article is too long, max length is ${MAX_ARTICLE_LENGTH}`,
-        });
+      try {
+        const summary = await generateAiSummary(articleContent);
+        return res.status(200).json(summary);
+      } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Unable to generate summary.' });
       }
-
-      const summary = await generateAiSummary(articleContent);
-      return res.status(200).json(summary);
 
     default:
       res.setHeader('Allow', ['POST']);
