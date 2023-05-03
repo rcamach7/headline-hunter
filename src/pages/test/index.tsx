@@ -1,4 +1,3 @@
-import { useLoadingContext } from '@/context/LoadingContext';
 import { useEffect } from 'react';
 const { Readability } = require('@mozilla/readability');
 import axios from 'axios';

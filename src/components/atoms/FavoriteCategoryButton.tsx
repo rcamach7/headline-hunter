@@ -6,8 +6,7 @@ import {
   Favorite as FavoriteFullIcon,
 } from '@mui/icons-material';
 
-import { useUserContext } from '@/context/UserContext';
-import { useFeedbackContext } from '@/context/FeedbackContext';
+import { useUserContext, useFeedbackContext } from '@/context';
 
 interface Props {
   categoryId: string;

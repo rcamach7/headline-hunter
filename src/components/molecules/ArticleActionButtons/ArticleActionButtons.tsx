@@ -2,8 +2,7 @@ import { Box, IconButton, Button } from '@mui/material';
 import { SmartToy as SmartToyIcon } from '@mui/icons-material';
 
 import FavoriteArticleButton from './FavoriteArticleButton';
-import { useUserContext } from '@/context/UserContext';
-import { useFeedbackContext } from '@/context/FeedbackContext';
+import { useFeedbackContext, useUserContext } from '@/context';
 
 interface Props {
   type: 'full' | 'condensed';

@@ -7,8 +7,7 @@ import { Article, Category } from '@/lib/types';
 import { CategoryPageTitle, PageLoading } from '@/components/atoms';
 import { NewsCardContainer } from '@/components/organisms';
 import { SmartSummaryForm } from '@/components/molecules';
-import { useLoadingContext } from '@/context/LoadingContext';
-import { useFeedbackContext } from '@/context/FeedbackContext';
+import { useFeedbackContext, useLoadingContext } from '@/context';
 
 export default function CategoryPage() {
   const { setIsPageLoading, isPageLoading } = useLoadingContext();

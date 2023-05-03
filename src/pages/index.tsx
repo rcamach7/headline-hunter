@@ -7,8 +7,7 @@ import { WeatherWidget } from '@/components/organisms';
 import { CategoryCard, SmartSummaryForm } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
-import { useLoadingContext } from '@/context/LoadingContext';
-import { useFeedbackContext } from '@/context/FeedbackContext';
+import { useLoadingContext, useFeedbackContext } from '@/context';
 
 export default function Home() {
   const { isPageLoading, setIsPageLoading } = useLoadingContext();

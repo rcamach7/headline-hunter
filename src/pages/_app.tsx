@@ -4,9 +4,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Head from 'next/head';
 
 import theme from '../theme';
-import { UserContextProvider } from '../context/UserContext';
-import { LoadingProvider } from '@/context/LoadingContext';
-import { FeedbackProvider } from '@/context/FeedbackContext';
+import {
+  LoadingProvider,
+  FeedbackProvider,
+  UserContextProvider,
+} from '@/context';
 import { AppBar } from '@/components/organisms';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {

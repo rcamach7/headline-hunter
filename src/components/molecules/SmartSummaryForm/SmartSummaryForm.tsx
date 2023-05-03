@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import SummaryModal from './SummaryModal';
-import { useLoadingContext } from '@/context/LoadingContext';
+import { useLoadingContext } from '@/context';
 import ManualArticleEntryForm from './ManualArticleEntryForm';
 
 interface Props {
