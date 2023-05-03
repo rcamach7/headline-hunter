@@ -76,7 +76,13 @@ export default function SmartSummaryForm({
             articleURL={articleURL}
           />
         )}
-        <SummaryModal summary={summary} articleTitle={articleTitle} />
+        {summary && (
+          <SummaryModal
+            summary={summary}
+            articleTitle={articleTitle}
+            onClose={onClose}
+          />
+        )}
       </Box>
     </Modal>
   );

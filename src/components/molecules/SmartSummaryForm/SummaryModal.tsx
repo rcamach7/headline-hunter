@@ -1,5 +1,4 @@
-import { Modal, Box, Typography, Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Modal, Box, Typography } from '@mui/material';
 import Image from 'next/image';
 
 import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
@@ -7,37 +6,17 @@ import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
 interface Props {
   summary: string;
   articleTitle: string;
+  onClose: () => void;
 }
 
-export default function SummaryModal({ summary, articleTitle }: Props) {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    if (summary.length) {
-      handleOpen();
-    }
-  }, [summary]);
-
+export default function SummaryModal({
+  summary,
+  articleTitle,
+  onClose,
+}: Props) {
   return (
     <>
-      {summary.length ? (
-        <Button
-          variant="contained"
-          onClick={handleOpen}
-          sx={{ color: 'black', mt: 1 }}
-        >
-          View Summary
-        </Button>
-      ) : null}
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={true} onClose={onClose}>
         <Box sx={style}>
           <Typography
             variant="h6"
