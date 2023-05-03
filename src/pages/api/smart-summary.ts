@@ -4,12 +4,9 @@ import {
   Configuration,
   ChatCompletionRequestMessageRoleEnum,
 } from 'openai';
-import { getServerSession } from 'next-auth/next';
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import { Readability } from '@mozilla/readability';
-
-import { authOptions } from '@/auth/[...nextauth]';
 
 const MAX_TOKENS = 1000;
 const MAX_ARTICLE_LENGTH = 4000;
@@ -18,10 +15,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const session = await getServerSession(req, res, authOptions);
-  if (!session.user)
-    res.status(401).json({ message: 'Unauthorized, please log in.' });
-
   const { article, url } = req.body;
   let articleContent = article as string;
 
@@ -31,6 +24,12 @@ export default async function handler(
     }
     try {
       articleContent = await getArticleContent(url as string);
+      if (!article.length) {
+        return res.status(400).json({
+          message:
+            'Unable to scrape article content, please manually perform scrape',
+        });
+      }
     } catch (error) {
       console.error(error);
       return res.status(500).json({
@@ -40,7 +39,6 @@ export default async function handler(
     }
   }
 
-  // Article content cleanup and length check
   articleContent = articleContent
     .split('\n')
     .map((line) => line.trim())
@@ -57,7 +55,9 @@ export default async function handler(
         return res.status(200).json(summary);
       } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Unable to generate summary.' });
+        return res
+          .status(500)
+          .json({ message: 'Unable to generate summary through OpenAI.' });
       }
 
     default:
