@@ -24,7 +24,7 @@ export default async function handler(
     }
     try {
       articleContent = await getArticleContent(url as string);
-      if (!article.length) {
+      if (!articleContent.length) {
         return res.status(400).json({
           message:
             'Unable to scrape article content, please manually perform scrape',
