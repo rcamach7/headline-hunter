@@ -1,5 +1,4 @@
-import { Box, Button, Typography, Modal, TextField } from '@mui/material';
-import Image from 'next/image';
+import { Box, Modal } from '@mui/material';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
