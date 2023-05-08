@@ -1,9 +1,9 @@
-import { Box, Modal } from '@mui/material';
+import { Box, Modal, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import SummaryModal from './SummaryModal';
-import { useLoadingContext } from '@/context';
+import { useLoadingContext, useUserContext } from '@/context';
 import ManualArticleEntryForm from './ManualArticleEntryForm';
 
 interface Props {
@@ -17,6 +17,7 @@ export default function SmartSummaryForm({
   articleURL,
   onClose,
 }: Props) {
+  const { isRateLimited, recordRequest } = useUserContext();
   const { setIsPageLoading } = useLoadingContext();
 
   const [manualArticleEntry, setManualArticleEntry] = useState<boolean>(false);
@@ -32,6 +33,10 @@ export default function SmartSummaryForm({
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (isRateLimited) {
+      return;
+    }
+
     e.preventDefault();
     setIsPageLoading(true);
     try {
@@ -42,7 +47,9 @@ export default function SmartSummaryForm({
     } catch (error) {
       console.log(error);
     }
+
     setIsPageLoading(false);
+    // recordRequest();
   };
 
   useEffect(() => {
@@ -52,12 +59,14 @@ export default function SmartSummaryForm({
         const { data } = await axios.post('/api/smart-summary', {
           url: articleURL,
         });
+        console.log('request made to API');
         setSummary(data);
       } catch (error) {
         console.log(error);
         setManualArticleEntry(true);
       }
       setIsPageLoading(false);
+      recordRequest();
     };
 
     fetchArticleSmartSummary();
@@ -81,6 +90,13 @@ export default function SmartSummaryForm({
             articleTitle={articleTitle}
             onClose={onClose}
           />
+        )}
+        {isRateLimited && (
+          <Box>
+            <Typography>
+              You have reached your hourly limit, please try again later
+            </Typography>
+          </Box>
         )}
       </Box>
     </Modal>
