@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import SummaryModal from './SummaryModal';
+import InformationalMOdal from './InformationalModel';
 import { useLoadingContext, useUserContext } from '@/context';
 import ManualArticleEntryForm from './ManualArticleEntryForm';
 
