@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 
-export async function checkMetDailyUsageLimit(MAX_API_USAGE: number) {
+export async function checkMetDailyUsageLimit(MAX_DAILY_API_USAGE: number) {
   try {
     const gptUsage = await getGptUsage();
 
@@ -16,7 +16,7 @@ export async function checkMetDailyUsageLimit(MAX_API_USAGE: number) {
         },
       });
       return false;
-    } else if (gptUsage.calls >= MAX_API_USAGE) {
+    } else if (gptUsage.calls >= MAX_DAILY_API_USAGE) {
       return true;
     } else {
       await prisma.apiUsageTracker.update({
