@@ -12,7 +12,7 @@ import { checkMetDailyUsageLimit } from '@/services/apiUsageTrackerService';
 
 const MAX_TOKENS = 1000;
 const MAX_ARTICLE_LENGTH = 4000;
-const MAX_DAILY_API_USAGE = 5;
+const MAX_DAILY_API_USAGE = 100;
 
 export default async function handler(
   req: NextApiRequest,
