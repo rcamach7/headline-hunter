@@ -79,3 +79,11 @@ model Article {
   categories  Category[]
   savedBy     User[]
 }
+
+model ApiUsageTracker {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  calls       Int      @default(0)
+  lastUsed    DateTime @default(now())
+  maxRequests Int      @default(250)
+}
