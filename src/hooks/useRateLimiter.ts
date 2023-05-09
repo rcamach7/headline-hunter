@@ -26,7 +26,6 @@ export function useRateLimiter() {
     const timestamps = JSON.parse(
       localStorage.getItem('requestTimestamps') || '[]'
     );
-    console.log('hook recorded request');
     timestamps.push(Date.now());
     localStorage.setItem('requestTimestamps', JSON.stringify(timestamps));
 

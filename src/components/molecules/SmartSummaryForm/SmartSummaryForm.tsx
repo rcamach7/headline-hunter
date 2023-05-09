@@ -47,9 +47,8 @@ export default function SmartSummaryForm({
     } catch (error) {
       console.log(error);
     }
-
+    recordRequest();
     setIsPageLoading(false);
-    // recordRequest();
   };
 
   useEffect(() => {
@@ -59,7 +58,6 @@ export default function SmartSummaryForm({
         const { data } = await axios.post('/api/smart-summary', {
           url: articleURL,
         });
-        console.log('request made to API');
         setSummary(data);
       } catch (error) {
         console.log(error);
@@ -69,7 +67,9 @@ export default function SmartSummaryForm({
       recordRequest();
     };
 
-    fetchArticleSmartSummary();
+    if (!isRateLimited) {
+      fetchArticleSmartSummary();
+    }
   }, []);
 
   return (
