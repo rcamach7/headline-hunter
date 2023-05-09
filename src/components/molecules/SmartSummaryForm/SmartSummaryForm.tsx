@@ -23,6 +23,7 @@ export default function SmartSummaryForm({
   const [manualArticleEntry, setManualArticleEntry] = useState<boolean>(false);
   const [articleContent, setArticleContent] = useState<string>('');
   const [summary, setSummary] = useState<string>('');
+  const [dailyLimitReached, setDailyLimitReached] = useState<boolean>(false);
 
   function cleanArticleContent(content: string) {
     const cleanedContent = content
@@ -45,7 +46,12 @@ export default function SmartSummaryForm({
       });
       setSummary(data);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 429) {
+        setDailyLimitReached(true);
+      } else {
+        setManualArticleEntry(true);
+      }
+      console.error(error);
     }
     recordRequest();
     setIsPageLoading(false);
@@ -60,8 +66,12 @@ export default function SmartSummaryForm({
         });
         setSummary(data);
       } catch (error) {
-        console.log(error);
-        setManualArticleEntry(true);
+        if (error.response && error.response.status === 429) {
+          setDailyLimitReached(true);
+        } else {
+          setManualArticleEntry(true);
+        }
+        console.error(error);
       }
       setIsPageLoading(false);
       recordRequest();
@@ -95,6 +105,13 @@ export default function SmartSummaryForm({
           <Box>
             <Typography>
               You have reached your hourly limit, please try again later
+            </Typography>
+          </Box>
+        )}
+        {dailyLimitReached && (
+          <Box>
+            <Typography>
+              Service has reached its daily limit, please try again tomorrow.
             </Typography>
           </Box>
         )}
