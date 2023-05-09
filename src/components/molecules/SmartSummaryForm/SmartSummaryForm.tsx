@@ -96,25 +96,26 @@ export default function SmartSummaryForm({
           />
         )}
         {summary && (
-          <SummaryModal
-            summary={summary}
-            articleTitle={articleTitle}
+          <InformationalMOdal
             onClose={onClose}
+            title={articleTitle}
+            body={summary}
+            showGPT={true}
           />
         )}
         {isRateLimited && (
-          <Box sx={style}>
-            <Typography color="secondary.main">
-              You have reached your hourly limit, please try again later
-            </Typography>
-          </Box>
+          <InformationalMOdal
+            onClose={onClose}
+            title="You have reached your hourly limit, please try again later"
+            body=""
+          />
         )}
         {dailyLimitReached && (
-          <Box sx={style}>
-            <Typography color="secondary.main">
-              Service has reached its daily limit, please try again tomorrow.
-            </Typography>
-          </Box>
+          <InformationalMOdal
+            onClose={onClose}
+            title="Service has reached its daily limit, please try again tomorrow."
+            body=""
+          />
         )}
       </Box>
     </Modal>
