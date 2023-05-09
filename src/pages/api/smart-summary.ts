@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import { Readability } from '@mozilla/readability';
+import prisma from '@/lib/prisma';
 
 const MAX_TOKENS = 1000;
 const MAX_ARTICLE_LENGTH = 4000;
@@ -15,6 +16,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const metDailyUsageLimit = await metDailyUsageLimit();
+  if (metDailyUsageLimit) {
+    return res.status(400).json({
+      message: 'Daily usage limit met, please try again tomorrow',
+    });
+  }
+
   const { article, url } = req.body;
   let articleContent = article as string;
 
@@ -101,4 +109,64 @@ async function getArticleContent(URL: string) {
   } catch (error) {
     console.error(error);
   }
+}
+
+async function metDailyUsageLimit() {
+  try {
+    const gptUsage = await getGptUsage();
+
+    const today = new Date();
+    const lastUsed = gptUsage.lastUsed;
+
+    if (!isSameDay(today, lastUsed)) {
+      prisma.apiUsageTracker.update({
+        where: { name: 'gpt-3.5-turbo' },
+        data: {
+          lastUsed: today,
+          calls: 0,
+        },
+      });
+      return false;
+    } else if (gptUsage.calls >= 250) {
+      console.log('Call limit reached');
+      return true;
+    } else {
+      prisma.apiUsageTracker.update({
+        where: { name: 'gpt-3.5-turbo' },
+        data: {
+          calls: gptUsage.calls + 1,
+        },
+      });
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+    return true;
+  }
+}
+
+const getGptUsage = async () => {
+  try {
+    const gptUsage = prisma.apiUsageTracker.findUnique({
+      where: { id: 'gpt-3.5-turbo' },
+    });
+    if (!gptUsage) {
+      prisma.apiUsageTracker.create({
+        data: {
+          name: 'gpt-3.5-turbo',
+        },
+      });
+    }
+    return gptUsage;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+function isSameDay(date1: Date, date2: Date) {
+  return (
+    date1.getDate() === date2.getDate() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getFullYear() === date2.getFullYear()
+  );
 }
