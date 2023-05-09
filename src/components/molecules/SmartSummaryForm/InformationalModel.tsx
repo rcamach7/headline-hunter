@@ -59,6 +59,7 @@ const style = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 2,
+  pt: 1,
   borderRadius: 1,
   border: 1,
   borderColor: 'secondary.main',

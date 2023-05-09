@@ -1,8 +1,7 @@
-import { Box, Modal, Typography } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { Box, Modal } from '@mui/material';
+import { useState } from 'react';
 import axios from 'axios';
 
-import SummaryModal from './SummaryModal';
 import InformationalMOdal from './InformationalModel';
 import { useLoadingContext, useUserContext } from '@/context';
 import ManualArticleEntryForm from './ManualArticleEntryForm';
@@ -106,32 +105,18 @@ export default function SmartSummaryForm({
         {isRateLimited && (
           <InformationalMOdal
             onClose={onClose}
-            title="You have reached your hourly limit, please try again later"
-            body=""
+            title="Personal Call Limit Reached"
+            body="You have reached your individual hourly limit of 10 API requests. Please wait for the next hour before making additional requests. This limit helps ensure fair usage for all users. Thank you for your understanding and cooperation!"
           />
         )}
         {dailyLimitReached && (
           <InformationalMOdal
             onClose={onClose}
-            title="Service has reached its daily limit, please try again tomorrow."
-            body=""
+            title="Service limit reached"
+            body="The app has reached its global daily limit for API calls. The quota will reset tomorrow, allowing the app to function normally again. Please check back tomorrow to continue using the app. We appreciate your understanding and patience!"
           />
         )}
       </Box>
     </Modal>
   );
 }
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 'clamp(300px, 90vw, 500px)',
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 2,
-  borderRadius: 1,
-  border: 1,
-  borderColor: 'secondary.main',
-};
