@@ -102,14 +102,14 @@ export default function SmartSummaryForm({
           />
         )}
         {isRateLimited && (
-          <Box>
+          <Box sx={style}>
             <Typography>
               You have reached your hourly limit, please try again later
             </Typography>
           </Box>
         )}
         {dailyLimitReached && (
-          <Box>
+          <Box sx={style}>
             <Typography>
               Service has reached its daily limit, please try again tomorrow.
             </Typography>
@@ -119,3 +119,17 @@ export default function SmartSummaryForm({
     </Modal>
   );
 }
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 'clamp(300px, 90vw, 500px)',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 2,
+  borderRadius: 5,
+  border: 1,
+  borderColor: 'secondary.main',
+};
