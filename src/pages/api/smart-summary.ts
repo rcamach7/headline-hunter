@@ -12,12 +12,13 @@ import { checkMetDailyUsageLimit } from '@/services/apiUsageTrackerService';
 
 const MAX_TOKENS = 1000;
 const MAX_ARTICLE_LENGTH = 4000;
+const MAX_API_USAGE = 5;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const metDailyUsageLimit = await checkMetDailyUsageLimit();
+  const metDailyUsageLimit = await checkMetDailyUsageLimit(MAX_API_USAGE);
   if (metDailyUsageLimit) {
     return res.status(400).json({
       message: 'Daily usage limit met, please try again tomorrow',

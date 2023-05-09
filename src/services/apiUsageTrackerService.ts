@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 
-export async function checkMetDailyUsageLimit() {
+export async function checkMetDailyUsageLimit(MAX_API_USAGE: number) {
   try {
     const gptUsage = await getGptUsage();
 
@@ -8,7 +8,7 @@ export async function checkMetDailyUsageLimit() {
     const lastUsed = gptUsage.lastUsed;
 
     if (!isSameDay(today, lastUsed)) {
-      prisma.apiUsageTracker.update({
+      await prisma.apiUsageTracker.update({
         where: { name: 'gpt-3.5-turbo' },
         data: {
           lastUsed: today,
@@ -16,11 +16,10 @@ export async function checkMetDailyUsageLimit() {
         },
       });
       return false;
-    } else if (gptUsage.calls >= 250) {
-      console.log('Call limit reached');
+    } else if (gptUsage.calls >= MAX_API_USAGE) {
       return true;
     } else {
-      prisma.apiUsageTracker.update({
+      await prisma.apiUsageTracker.update({
         where: { name: 'gpt-3.5-turbo' },
         data: {
           calls: gptUsage.calls + 1,
@@ -36,11 +35,11 @@ export async function checkMetDailyUsageLimit() {
 
 async function getGptUsage() {
   try {
-    const gptUsage = prisma.apiUsageTracker.findUnique({
-      where: { id: 'gpt-3.5-turbo' },
+    let gptUsage = await prisma.apiUsageTracker.findUnique({
+      where: { name: 'gpt-3.5-turbo' },
     });
     if (!gptUsage) {
-      prisma.apiUsageTracker.create({
+      gptUsage = await prisma.apiUsageTracker.create({
         data: {
           name: 'gpt-3.5-turbo',
         },
