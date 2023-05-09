@@ -103,14 +103,14 @@ export default function SmartSummaryForm({
         )}
         {isRateLimited && (
           <Box sx={style}>
-            <Typography>
+            <Typography color="secondary.main">
               You have reached your hourly limit, please try again later
             </Typography>
           </Box>
         )}
         {dailyLimitReached && (
           <Box sx={style}>
-            <Typography>
+            <Typography color="secondary.main">
               Service has reached its daily limit, please try again tomorrow.
             </Typography>
           </Box>
@@ -129,7 +129,7 @@ const style = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 2,
-  borderRadius: 5,
+  borderRadius: 1,
   border: 1,
   borderColor: 'secondary.main',
 };
