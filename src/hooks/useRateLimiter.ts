@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const MAX_REQUESTS = 2;
+const MAX_REQUESTS = 10;
 const TIME_WINDOW = 60 * 60 * 1000; // 1 hour
 
 export function useRateLimiter() {
