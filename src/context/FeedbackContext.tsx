@@ -21,6 +21,8 @@ export const FeedbackProvider = ({ children }) => {
   const [alertMessages, setAlertMessages] = useState<AlertMessage[]>([]);
 
   const addAlertMessage = (alertMessage: AlertMessage) => {
+    alertMessage.variant = alertMessage.variant || 'filled';
+
     if (!alertMessage.id) {
       alertMessage.id = v4();
     }

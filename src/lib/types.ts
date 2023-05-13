@@ -55,7 +55,7 @@ export type Weather = {
 export type AlertMessage = {
   id?: string;
   severity: 'error' | 'info' | 'success' | 'warning';
-  variant: 'filled' | 'outlined' | 'standard';
+  variant?: 'filled' | 'outlined' | 'standard';
   text: string;
   alertTitle?: string;
 };
