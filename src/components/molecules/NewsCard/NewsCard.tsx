@@ -59,7 +59,13 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
           <CardMedia
             component="img"
             sx={{ width: '100px', height: '80px' }}
-            image={article.urlToImage}
+            image={
+              article.urlToImage === null || 'Unknown'
+                ? '/images/fallback.jpeg'
+                : `/api/image-proxy?url=${encodeURIComponent(
+                    article.urlToImage
+                  )}`
+            }
             alt={`Article image: ${article.title}`}
             onError={(e: any) => {
               const target = e.target as HTMLImageElement;

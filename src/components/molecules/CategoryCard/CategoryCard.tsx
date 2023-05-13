@@ -34,7 +34,9 @@ export default function CategoryCard({
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
   const [imageUrl, setImageUrl] = useState(
-    `/api/image-proxy?url=${encodeURIComponent(primaryArticle.urlToImage)}`
+    primaryArticle.urlToImage === 'Unknown'
+      ? '/images/fallback.jpeg'
+      : `/api/image-proxy?url=${encodeURIComponent(primaryArticle.urlToImage)}`
   );
 
   const handleImageError = () => {
