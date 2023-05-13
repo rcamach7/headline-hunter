@@ -198,7 +198,6 @@ async function queryForNewsByCategory(category: string) {
   try {
     topHeadlines = await newsClient.getTopHeadlines({
       query: category,
-      country: 'us',
       pageSize: PAGE_SIZE_PER_QUERY,
     });
   } catch (error) {

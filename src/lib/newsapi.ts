@@ -2,7 +2,7 @@ import axios from 'axios';
 
 type TopHeadlineParams = {
   query: string;
-  country: string;
+  country?: string;
   pageSize: number;
 };
 
@@ -24,7 +24,9 @@ export default class NewsAPI {
   async getTopHeadlines({ query, country, pageSize }: TopHeadlineParams) {
     const endpoint = `${NewsAPI._URL}/top-headlines?apiKey=${
       this._apiKey
-    }&q=${encodeURIComponent(query)}&country=${country}&pageSize=${pageSize}`;
+    }&q=${encodeURIComponent(query)}&pageSize=${pageSize}${
+      country ? `&country=${country}` : ''
+    }}`;
 
     try {
       const response = await axios.get(endpoint);
