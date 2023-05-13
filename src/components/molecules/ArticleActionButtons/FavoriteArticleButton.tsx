@@ -47,13 +47,11 @@ export default function FavoriteArticle({
         text: isFavorite
           ? 'Article removed from favorites'
           : 'Article added to favorites',
-        variant: 'filled',
       });
     } else {
       addAlertMessage({
         severity: 'error',
         text: 'Please sign in to favorite articles',
-        variant: 'filled',
       });
     }
   }

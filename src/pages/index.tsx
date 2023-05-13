@@ -50,7 +50,6 @@ export default function Home() {
         addAlertMessage({
           severity: 'error',
           text: 'Failed to fetch news articles',
-          variant: 'filled',
         });
         console.error('Failed to fetch news articles:', error);
       }
@@ -80,13 +79,11 @@ export default function Home() {
       addAlertMessage({
         severity: 'success',
         text: 'More categories loaded',
-        variant: 'filled',
       });
     } catch (error) {
       addAlertMessage({
         severity: 'error',
         text: 'Error loading more categories',
-        variant: 'filled',
       });
       console.error('Error loading more articles:', error);
     }

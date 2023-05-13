@@ -57,13 +57,11 @@ export default function CategoryPage() {
       addAlertMessage({
         severity: 'success',
         text: 'Loaded more articles',
-        variant: 'filled',
       });
     } catch (error) {
       addAlertMessage({
         severity: 'error',
         text: 'Failed to load more articles',
-        variant: 'filled',
       });
       console.error('Error loading more articles:', error);
     }

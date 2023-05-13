@@ -29,7 +29,6 @@ export default function ArticleActionButtons({
       addAlertMessage({
         severity: 'error',
         text: 'Please sign in to use smart summary',
-        variant: 'filled',
       });
     }
   };

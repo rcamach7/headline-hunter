@@ -24,7 +24,6 @@ export default function FavoriteCategoryButton({ categoryId }: Props) {
     } else {
       addAlertMessage({
         severity: 'error',
-        variant: 'filled',
         text: 'Please log in to save categories',
       });
     }
@@ -39,7 +38,6 @@ export default function FavoriteCategoryButton({ categoryId }: Props) {
       setIsLoading(false);
       addAlertMessage({
         severity: 'success',
-        variant: 'filled',
         text: isFavorite
           ? 'Category removed from favorites'
           : 'Category added to favorites',
@@ -48,7 +46,6 @@ export default function FavoriteCategoryButton({ categoryId }: Props) {
       setIsLoading(false);
       addAlertMessage({
         severity: 'error',
-        variant: 'filled',
         text: 'Error toggling favorite category',
       });
       console.error('Error toggling favorite category:', error);
