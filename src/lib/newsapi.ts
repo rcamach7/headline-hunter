@@ -24,9 +24,9 @@ export default class NewsAPI {
   async getTopHeadlines({ category, country, pageSize }: TopHeadlineParams) {
     const endpoint = `${NewsAPI._URL}/top-headlines?apiKey=${
       this._apiKey
-    }&category=${encodeURIComponent(category)}&pageSize=${pageSize}${
-      country ? `&country=${country}` : ''
-    }}`;
+    }&category=${encodeURIComponent(
+      category
+    )}&pageSize=${pageSize}&country=us}`;
 
     try {
       const response = await axios.get(endpoint);
@@ -41,7 +41,7 @@ export default class NewsAPI {
   async getEverything({ query, pageSize, to, from }: EverythingParams) {
     const endpoint = `${NewsAPI._URL}/everything?apiKey=${
       this._apiKey
-    }&q=${encodeURIComponent(query)}&pageSize=${pageSize}`;
+    }&q=${encodeURIComponent(query)}&pageSize=${pageSize}&language=en`;
 
     try {
       const response = await axios.get(endpoint);
