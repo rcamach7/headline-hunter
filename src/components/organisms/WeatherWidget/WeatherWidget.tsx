@@ -4,7 +4,11 @@ import { Box, Typography } from '@mui/material';
 import DayCard from './DayCard';
 import { Weather } from '@/lib/types';
 
-export default function WeatherWidget() {
+interface Props {
+  onDisplayStyling: Record<string, unknown>;
+}
+
+export default function WeatherWidget({ onDisplayStyling }: Props) {
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState<Weather>(null);
 
@@ -65,25 +69,27 @@ export default function WeatherWidget() {
     return <></>;
   }
   return (
-    <Box
-      sx={{
-        position: 'sticky',
-        top: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minWidth: 175,
-        maxWidth: 275,
-        gap: { md: 2, lg: 3 },
-        height: '100vh',
-      }}
-    >
-      <Typography variant="h5" sx={{ pb: 1, textAlign: 'center' }}>
-        {weather.name}
-      </Typography>
-      {weather?.forecastsByDay.map((dayForecast) => (
-        <DayCard key={dayForecast.date} dayForecast={dayForecast} />
-      ))}
+    <Box sx={{ ...onDisplayStyling }}>
+      <Box
+        sx={{
+          position: 'sticky',
+          top: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          minWidth: 175,
+          maxWidth: 275,
+          gap: { md: 2, lg: 3 },
+          height: '100vh',
+        }}
+      >
+        <Typography variant="h5" sx={{ pb: 1, textAlign: 'center' }}>
+          {weather.name}
+        </Typography>
+        {weather?.forecastsByDay.map((dayForecast) => (
+          <DayCard key={dayForecast.date} dayForecast={dayForecast} />
+        ))}
+      </Box>
     </Box>
   );
 }

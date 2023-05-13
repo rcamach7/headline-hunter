@@ -126,18 +126,17 @@ export default function Home() {
             loading={isPageLoading}
           />
         </Box>
-
-        <Box
-          sx={{
-            display: { xs: 'none', ml: 'flex' },
-            maxWidth: 225,
-            justifyContent: 'center',
-            pt: 4,
-            flexGrow: 0.75,
-          }}
-        >
-          {pageData.categoryArticles.length > 0 && <WeatherWidget />}
-        </Box>
+        {pageData.categoryArticles.length > 0 && (
+          <WeatherWidget
+            onDisplayStyling={{
+              display: { xs: 'none', ml: 'flex' },
+              maxWidth: 225,
+              justifyContent: 'center',
+              pt: 4,
+              flexGrow: 0.75,
+            }}
+          />
+        )}
       </Box>
 
       {smartSummaryModal.open && (
