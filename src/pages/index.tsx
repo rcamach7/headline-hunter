@@ -8,10 +8,13 @@ import { CategoryCard, SmartSummaryForm } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
 import { useLoadingContext, useFeedbackContext } from '@/context';
+import useAvailableHeight from '@/hooks/useAvailableHeight';
 
 export default function Home() {
+  const availableHeight = useAvailableHeight();
   const { isPageLoading, setIsPageLoading } = useLoadingContext();
   const { addAlertMessage } = useFeedbackContext();
+
   const [pageData, setPageData] = useState<{
     categoryArticles: CategoryArticles[];
     initialRequest: boolean;
@@ -103,7 +106,7 @@ export default function Home() {
           p: 1,
         }}
       >
-        <Box sx={{ overflowY: 'auto', minHeight: '100vh' }}>
+        <Box sx={{ overflowY: 'auto', minHeight: `${availableHeight}` }}>
           <Box
             sx={{
               display: 'flex',
