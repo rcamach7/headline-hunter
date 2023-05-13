@@ -194,10 +194,11 @@ export const getArticlesByCategory = async (
 async function queryForNewsByCategory(category: string) {
   const newsClient = new NewsAPI(process.env.NEWS_API_KEY);
 
+  // Query for top headlines first
   let topHeadlines;
   try {
     topHeadlines = await newsClient.getTopHeadlines({
-      query: category,
+      category,
       pageSize: PAGE_SIZE_PER_QUERY,
     });
   } catch (error) {
@@ -205,6 +206,7 @@ async function queryForNewsByCategory(category: string) {
     throw new Error('Failed to fetch top headlines.');
   }
 
+  // If there are no top headlines, then query for everything
   if (!topHeadlines.articles.length && !BYPASS_EVERYTHING_QUERY) {
     const currentDate = new Date();
     const fromDate = new Date();
