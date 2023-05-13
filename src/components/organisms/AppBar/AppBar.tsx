@@ -44,7 +44,11 @@ export default function SearchAppBar() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: 'background.default' }}>
+      <AppBar
+        id="app-bar-mui"
+        position="static"
+        sx={{ backgroundColor: 'background.default' }}
+      >
         <Toolbar sx={{ pl: { xs: 0, sm: 2, md: 3 } }}>
           <Box sx={{ display: 'flex' }}>
             <IconButton
