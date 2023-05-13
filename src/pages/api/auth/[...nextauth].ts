@@ -12,6 +12,9 @@ export const authOptions = {
     }),
   ],
   adapter: PrismaAdapter(prisma),
+  theme: {
+    logo: '/logos/hh_long.svg',
+  },
 };
 
 export default NextAuth(authOptions);
