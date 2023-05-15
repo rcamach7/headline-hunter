@@ -24,9 +24,7 @@ export default class NewsAPI {
   async getTopHeadlines({ category, country, pageSize }: TopHeadlineParams) {
     const endpoint = `${NewsAPI._URL}/top-headlines?apiKey=${
       this._apiKey
-    }&category=${encodeURIComponent(
-      category
-    )}&pageSize=${pageSize}&country=us}`;
+    }&category=${encodeURIComponent(category)}&pageSize=${pageSize}&country=us`;
 
     try {
       const response = await axios.get(endpoint);
