@@ -9,8 +9,8 @@ type TopHeadlineParams = {
 type EverythingParams = {
   query: string;
   pageSize: number;
-  to: Date;
-  from: Date;
+  to: String;
+  from: String;
 };
 
 export default class NewsAPI {
@@ -39,7 +39,9 @@ export default class NewsAPI {
   async getEverything({ query, pageSize, to, from }: EverythingParams) {
     const endpoint = `${NewsAPI._URL}/everything?apiKey=${
       this._apiKey
-    }&q=${encodeURIComponent(query)}&pageSize=${pageSize}&language=en`;
+    }&q=${encodeURIComponent(
+      query
+    )}&pageSize=${pageSize}&language=en&from=${from}&to=${to}`;
 
     try {
       const response = await axios.get(endpoint);

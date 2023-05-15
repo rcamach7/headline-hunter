@@ -3,10 +3,11 @@ import { Category, Article } from '@prisma/client';
 
 import prisma from '@/lib/prisma';
 import NewsAPI from '@/lib/newsapi';
+import { shortenParagraph } from '@/lib/helpers';
 
 const ARTICLES_PER_PAGE = 10;
 const MINIMUM_HOURS_BETWEEN_UPDATES = 4;
-const PAST_DAYS_TO_QUERY = 15;
+const PAST_DAYS_TO_QUERY = 5;
 const PAGE_SIZE_PER_QUERY = 15;
 const BYPASS_EVERYTHING_QUERY = false;
 
@@ -98,7 +99,10 @@ const refreshArticlesByCategory = async (id: string) => {
           // Check if the error is due to the unique constraint violation
           if (error.code === 'P2002' && error.meta?.target?.includes('title')) {
             console.log(
-              `Article with title "${article.title}" already exists. Connecting it to category if not connected.`
+              `Article "${shortenParagraph(
+                article.title,
+                7
+              )}" already exists. Connecting it to category.`
             );
 
             // Query the existing article by its title
@@ -216,8 +220,8 @@ async function queryForNewsByCategory(category: string) {
       topHeadlines = await newsClient.getEverything({
         query: category,
         pageSize: PAGE_SIZE_PER_QUERY,
-        to: currentDate,
-        from: fromDate,
+        to: currentDate.toISOString(),
+        from: fromDate.toISOString(),
       });
     } catch (error) {
       console.error('Error fetching news articles:', error);
