@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Chip } from '@mui/material';
 import { Textfit } from 'react-textfit';
 import React from 'react';
 import { formatDistance, intervalToDuration, formatDuration } from 'date-fns';
@@ -33,6 +33,19 @@ export default function PrimaryArticleMeta({
       return `${formattedDuration} ago`;
     }
   }
+
+  function isLessThanTwoDaysOld() {
+    const now = new Date();
+    const publishedDate = new Date(publishedAt);
+    const duration = intervalToDuration({ start: publishedDate, end: now });
+
+    if (duration.days && duration.days >= 2) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   return (
     <Textfit
       mode="multi"
@@ -79,7 +92,16 @@ export default function PrimaryArticleMeta({
           sx={{ fontSize: '14px' }}
           gutterBottom
         >
-          {generateTimeSincePublished()}
+          {isLessThanTwoDaysOld() ? (
+            <Chip
+              label="New Article"
+              variant="outlined"
+              color="secondary"
+              size="small"
+            />
+          ) : (
+            generateTimeSincePublished()
+          )}
         </Typography>
       </Box>
       <ArticleActionButtons
