@@ -4,13 +4,13 @@ import Image from 'next/image';
 import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
 
 interface Props {
-  title: string;
+  title?: string;
   body: string;
   showGPT?: boolean;
   onClose: () => void;
 }
 
-export default function SummaryModal({
+export default function InformationalModal({
   title,
   body,
   showGPT = false,
@@ -28,7 +28,9 @@ export default function SummaryModal({
               mb: 1,
             }}
           >
-            {shortenParagraph(removeNewsSource(title), 50)}
+            {title
+              ? shortenParagraph(removeNewsSource(title), 50)
+              : 'Generated Summary:'}
           </Typography>
           <Typography color="secondary.main">{body}</Typography>
           {showGPT && (

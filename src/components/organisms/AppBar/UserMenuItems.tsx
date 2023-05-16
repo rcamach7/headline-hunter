@@ -1,10 +1,11 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { Typography, MenuItem } from '@mui/material';
 import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import { User } from '@/lib/types';
+import ExternalArticleSummary from './ExternalArticleSummary';
 
 interface Props {
   user: User | null;
@@ -12,6 +13,8 @@ interface Props {
 
 export default function UserMenuItems({ user }: Props) {
   const router = useRouter();
+  const [showExternalArticleSummary, setShowExternalArticleSummary] =
+    useState(false);
 
   return (
     <>
@@ -33,6 +36,7 @@ export default function UserMenuItems({ user }: Props) {
           <Typography textAlign="center">Sign In</Typography>
         </MenuItem>
       )}
+      <ExternalArticleSummary />
     </>
   );
 }
