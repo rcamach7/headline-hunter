@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { Typography, MenuItem } from '@mui/material';
 import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -12,6 +12,8 @@ interface Props {
 
 export default function UserMenuItems({ user }: Props) {
   const router = useRouter();
+  const [showExternalArticleSummary, setShowExternalArticleSummary] =
+    useState(false);
 
   return (
     <>
@@ -33,6 +35,9 @@ export default function UserMenuItems({ user }: Props) {
           <Typography textAlign="center">Sign In</Typography>
         </MenuItem>
       )}
+      <MenuItem>
+        <Typography textAlign="center">Summarize External Article</Typography>
+      </MenuItem>
     </>
   );
 }
