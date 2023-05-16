@@ -35,9 +35,6 @@ export default function UserMenuItems({ user }: Props) {
           <Typography textAlign="center">Sign In</Typography>
         </MenuItem>
       )}
-      <MenuItem>
-        <Typography textAlign="center">Summarize External Article</Typography>
-      </MenuItem>
     </>
   );
 }

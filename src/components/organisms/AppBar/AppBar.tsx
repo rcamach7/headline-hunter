@@ -16,13 +16,10 @@ import DynamicLogo from './DynamicLogo';
 import UserMenuItems from './UserMenuItems';
 import CategoryMenuItems from './CategoryMenuItems';
 import Search from './Search';
-import ExternalArticleSummary from './ExternalArticleSummary';
 
 export default function SearchAppBar() {
   const { user } = useUserContext();
   const isWindowDesktop = useMediaQuery('(min-width:600px)');
-  const [showExternalArticleSummary, setShowExternalArticleSummary] =
-    React.useState(false);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -124,7 +121,6 @@ export default function SearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
-      {showExternalArticleSummary && <ExternalArticleSummary />}
     </Box>
   );
 }
