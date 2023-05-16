@@ -29,8 +29,8 @@ export default function ExternalArticleSummary() {
       </MenuItem>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
+        <DialogContent sx={{ borderRadius: 1 }}>
+          <DialogContentText color="secondary">
             To summarize an external article, please enter the URL below.
           </DialogContentText>
           <TextField
@@ -40,6 +40,7 @@ export default function ExternalArticleSummary() {
             label="URL"
             type="url"
             fullWidth
+            color="secondary"
           />
         </DialogContent>
         <DialogActions>

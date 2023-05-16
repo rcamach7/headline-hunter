@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import { User } from '@/lib/types';
+import ExternalArticleSummary from './ExternalArticleSummary';
 
 interface Props {
   user: User | null;
@@ -35,6 +36,7 @@ export default function UserMenuItems({ user }: Props) {
           <Typography textAlign="center">Sign In</Typography>
         </MenuItem>
       )}
+      <ExternalArticleSummary />
     </>
   );
 }
