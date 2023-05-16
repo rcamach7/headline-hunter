@@ -38,15 +38,29 @@ export default function ExternalArticleSummary() {
     setOpen(false);
   };
 
-  const fetchArticleSmartSummary = async () => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setArticleURL(event.target.value);
+  };
+
+  const URL_REGEX = /^(ftp|http|https):\/\/[^ "]+$/;
+  const handleSummarizeClick = () => {
     if (isRateLimited) {
       setResponse({
         title: 'Personal Call Limit Reached',
         body: 'You have reached your individual hourly limit of 10 API requests. Please wait for the next hour before making additional requests. This limit helps ensure fair usage for all users. Thank you for your understanding and cooperation!',
       });
       return;
+    } else if (URL_REGEX.test(articleURL)) {
+      fetchArticleSmartSummary();
+    } else {
+      setResponse({
+        title: 'Invalid URL',
+        body: 'Please enter a valid URL.',
+      });
     }
+  };
 
+  const fetchArticleSmartSummary = async () => {
     setIsPageLoading(true);
     try {
       const { data } = await axios.post('/api/smart-summary', {
@@ -90,11 +104,14 @@ export default function ExternalArticleSummary() {
             type="url"
             fullWidth
             color="secondary"
+            value={articleURL}
+            onChange={handleInputChange}
+            required
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Summarize</Button>
+          <Button onClick={handleSummarizeClick}>Summarize</Button>
         </DialogActions>
       </Dialog>
       {response.body && (
