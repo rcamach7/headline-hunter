@@ -2,7 +2,7 @@ import { Box, Modal } from '@mui/material';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import InformationalModal from './InformationalModel';
+import { InformationalModal } from '@/components/atoms';
 import { useLoadingContext, useUserContext } from '@/context';
 import ManualArticleEntryForm from './ManualArticleEntryForm';
 
