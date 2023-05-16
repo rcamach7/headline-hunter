@@ -10,9 +10,25 @@ import {
   Typography,
   MenuItem,
 } from '@mui/material';
+import axios from 'axios';
+
+import { InformationalModal } from '@/components/atoms';
+import { useLoadingContext, useUserContext } from '@/context';
 
 export default function ExternalArticleSummary() {
   const [open, setOpen] = React.useState(false);
+  const [articleURL, setArticleURL] = React.useState<string>('');
+
+  const { isRateLimited, recordRequest } = useUserContext();
+  const { setIsPageLoading } = useLoadingContext();
+
+  const [response, setResponse] = React.useState<{
+    title: string;
+    body: string;
+  }>({
+    title: '',
+    body: '',
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -20,6 +36,39 @@ export default function ExternalArticleSummary() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const fetchArticleSmartSummary = async () => {
+    if (isRateLimited) {
+      setResponse({
+        title: 'Personal Call Limit Reached',
+        body: 'You have reached your individual hourly limit of 10 API requests. Please wait for the next hour before making additional requests. This limit helps ensure fair usage for all users. Thank you for your understanding and cooperation!',
+      });
+      return;
+    }
+
+    setIsPageLoading(true);
+    try {
+      const { data } = await axios.post('/api/smart-summary', {
+        url: articleURL,
+      });
+      setResponse({ title: articleURL, body: data });
+    } catch (error) {
+      if (error.response && error.response.status === 429) {
+        setResponse({
+          title: 'Service limit reached',
+          body: 'The app has reached its global daily limit for API calls. The quota will reset tomorrow, allowing the app to function normally again. Please check back tomorrow to continue using the app. We appreciate your understanding and patience!',
+        });
+      } else {
+        setResponse({
+          title: 'Error',
+          body: 'An error occurred while fetching the article summary. Please try again later.',
+        });
+      }
+      console.error(error);
+    }
+    setIsPageLoading(false);
+    recordRequest();
   };
 
   return (
@@ -48,6 +97,16 @@ export default function ExternalArticleSummary() {
           <Button onClick={handleClose}>Summarize</Button>
         </DialogActions>
       </Dialog>
+      {response.body && (
+        <InformationalModal
+          title={response.title}
+          body={response.body}
+          onClose={() => {
+            setResponse({ title: '', body: '' });
+            handleClose();
+          }}
+        />
+      )}
     </>
   );
 }
