@@ -1,6 +1,6 @@
 import { Typography, MenuItem, Divider } from '@mui/material';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { User, Category } from '@/lib/types';
 import { popularCategories } from '@/lib/data';
@@ -17,6 +17,27 @@ export default function CategoryMenuItems({
   categories,
 }: Props) {
   const [dynamicCategories, setDynamicCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    if (user?.savedArticles) {
+      const dynamicCategories = categories
+        .filter(
+          (category) =>
+            !user.savedCategories.some(
+              (savedCategory) => savedCategory.id === category.id
+            )
+        )
+        .sort(() => Math.random() - Math.random())
+        .slice(0, 7);
+
+      setDynamicCategories(dynamicCategories);
+    } else {
+      const dynamicCategories = categories
+        .sort(() => Math.random() - Math.random())
+        .slice(0, 7);
+      setDynamicCategories(dynamicCategories);
+    }
+  }, [user, categories]);
 
   return (
     <>
@@ -39,16 +60,15 @@ export default function CategoryMenuItems({
               </Link>
             </MenuItem>
           ))}
-          <Divider sx={{ background: '#7e736c' }} variant="middle" />
         </>
       )}
 
       <MenuItem disabled={true} sx={{ py: 0 }} dense>
         <Typography textAlign="center" fontSize={12} sx={{ p: 0 }}>
-          Popular
+          Explore
         </Typography>
       </MenuItem>
-      {popularCategories.map((category) => (
+      {dynamicCategories.map((category) => (
         <MenuItem key={category.id} onClick={handleCloseNavMenu}>
           <Link href={`/category/${category.id}`} passHref>
             <Typography
