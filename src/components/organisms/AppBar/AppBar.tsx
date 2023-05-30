@@ -11,7 +11,9 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
+import axios from 'axios';
 
+import { Category } from '@/lib/types';
 import DynamicLogo from './DynamicLogo';
 import UserMenuItems from './UserMenuItems';
 import CategoryMenuItems from './CategoryMenuItems';
@@ -19,6 +21,7 @@ import Search from './Search';
 
 export default function SearchAppBar() {
   const { user } = useUserContext();
+  const [categories, setCategories] = React.useState<Category[]>([]);
   const isWindowDesktop = useMediaQuery('(min-width:600px)');
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -42,6 +45,18 @@ export default function SearchAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  React.useEffect(() => {
+    axios
+      .get('/api/category')
+      .then((res) => {
+        setCategories(res.data.categories);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -89,7 +104,7 @@ export default function SearchAppBar() {
           {/* Renders S/M Logo Based On ScreenSize */}
           <DynamicLogo />
 
-          <Search />
+          <Search categories={categories} />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open Settings">

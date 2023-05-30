@@ -6,20 +6,12 @@ import axios from 'axios';
 
 import { Category } from '@/lib/types';
 
-export default function Search() {
-  const [isFocused, setIsFocused] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
+interface Props {
+  categories: Category[];
+}
 
-  useEffect(() => {
-    axios
-      .get('/api/category')
-      .then((res) => {
-        setCategories(res.data.categories);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+export default function Search({ categories }: Props) {
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
     setIsFocused(true);
