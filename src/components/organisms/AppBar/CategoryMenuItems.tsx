@@ -1,9 +1,8 @@
-import { Typography, MenuItem, Divider } from '@mui/material';
+import { Typography, MenuItem } from '@mui/material';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 import { User, Category } from '@/lib/types';
-import { popularCategories } from '@/lib/data';
 
 interface Props {
   user: User;
