@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { TextField, Autocomplete, Box } from '@mui/material';
 import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
-import axios from 'axios';
 
 import { Category } from '@/lib/types';
 

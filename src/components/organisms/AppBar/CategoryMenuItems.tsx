@@ -1,15 +1,23 @@
 import { Typography, MenuItem, Divider } from '@mui/material';
 import Link from 'next/link';
+import { useState } from 'react';
 
-import { User } from '@/lib/types';
+import { User, Category } from '@/lib/types';
 import { popularCategories } from '@/lib/data';
 
 interface Props {
   user: User;
   handleCloseNavMenu: () => void;
+  categories: Category[];
 }
 
-export default function CategoryMenuItems({ handleCloseNavMenu, user }: Props) {
+export default function CategoryMenuItems({
+  handleCloseNavMenu,
+  user,
+  categories,
+}: Props) {
+  const [dynamicCategories, setDynamicCategories] = useState<Category[]>([]);
+
   return (
     <>
       {user?.savedCategories && (

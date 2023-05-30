@@ -97,6 +97,7 @@ export default function SearchAppBar() {
               <CategoryMenuItems
                 user={user}
                 handleCloseNavMenu={handleCloseNavMenu}
+                categories={categories}
               />
             </Menu>
           </Box>
