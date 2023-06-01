@@ -23,14 +23,7 @@ export default function ArticleActionButtons({
   const { addAlertMessage } = useFeedbackContext();
 
   const handleOpenSmartSummaryModal = () => {
-    if (user) {
-      openSmartSummaryModal(articleTitle, articleURL);
-    } else {
-      addAlertMessage({
-        severity: 'error',
-        text: 'Please sign in to use smart summary',
-      });
-    }
+    openSmartSummaryModal(articleTitle, articleURL);
   };
 
   if (type === 'condensed') {
