@@ -29,7 +29,6 @@ export default function CardActionBar({ sourceName, publishedAt }: Props) {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        px: 1,
       }}
     >
       <Typography variant="body2" color="text.secondary">

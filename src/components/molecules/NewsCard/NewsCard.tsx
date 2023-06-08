@@ -40,10 +40,12 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
         display: 'flex',
         flexDirection: 'column',
         width: 345,
-        maxHeight: 300,
       }}
     >
-      <CardActionArea onClick={() => handleClick(article.url)}>
+      <CardActionArea
+        onClick={() => handleClick(article.url)}
+        sx={{ flex: 1, display: 'flex', alignItems: 'center' }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -65,6 +67,7 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
               flexDirection: 'column',
               justifyContent: 'center',
               p: 0,
+              paddingBottom: '0 !important',
             }}
           >
             <Textfit mode="multi" max={40} min={1} style={{ width: '100%' }}>
@@ -72,7 +75,7 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
                 gutterBottom
                 variant="body1"
                 component="div"
-                sx={{ fontWeight: 'bold', textAlign: 'center' }}
+                sx={{ fontWeight: 'bold', pt: 1, px: 1 }}
               >
                 {removeNewsSource(article.title)}
               </Typography>
@@ -80,22 +83,23 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
                 gutterBottom
                 variant="body2"
                 component="div"
-                sx={{ textAlign: 'center' }}
                 color="secondary.main"
+                sx={{ px: 1 }}
               >
-                {shortenParagraph(article.description, 50)}
+                {article.description === 'Unknown'
+                  ? 'No description available'
+                  : shortenParagraph(article.description, 25)}
               </Typography>
             </Textfit>
           </CardContent>
         </Box>
+      </CardActionArea>
 
+      <Box sx={{ px: { xs: 1, md: 2 }, mt: 'auto' }}>
         <NewsMeta
           sourceName={article.sourceName}
           publishedAt={article.publishedAt}
         />
-      </CardActionArea>
-
-      <Box sx={{ px: { xs: 1, md: 2 }, mt: 'auto' }}>
         <ArticleActionButtons
           type="full"
           articleId={article.id}
