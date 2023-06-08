@@ -26,6 +26,7 @@ export default function InformationalModal({
               borderBottom: '1px solid gray',
               textAlign: 'center',
               mb: 1,
+              overflow: 'hidden',
             }}
           >
             {title
