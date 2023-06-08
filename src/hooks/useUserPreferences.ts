@@ -10,11 +10,10 @@ export default function useUserPreferences() {
   });
 
   function toggleWeatherWidget() {
-    setUserPreferences({
-      ...userPreferences,
-      weatherWidget: !userPreferences.weatherWidget,
-    });
-    localStorage.setItem('userPreferences', JSON.stringify(userPreferences));
+    setUserPreferences((prevState) => ({
+      ...prevState,
+      weatherWidget: !prevState.weatherWidget,
+    }));
   }
 
   useEffect(() => {
@@ -24,7 +23,11 @@ export default function useUserPreferences() {
     } else {
       localStorage.setItem('userPreferences', JSON.stringify(userPreferences));
     }
-  }, []);
+  }, [userPreferences]);
+
+  useEffect(() => {
+    localStorage.setItem('userPreferences', JSON.stringify(userPreferences));
+  }, [userPreferences]);
 
   return { userPreferences, toggleWeatherWidget };
 }
