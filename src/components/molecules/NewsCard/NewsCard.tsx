@@ -1,17 +1,17 @@
 import {
   Card,
   CardContent,
-  CardMedia,
   Typography,
   CardActionArea,
   Box,
 } from '@mui/material';
 import * as React from 'react';
 import { Textfit } from 'react-textfit';
+import Image from 'next/image';
 
 import { Article } from '@/lib/types';
 import { ArticleActionButtons } from '@/components/molecules';
-import { removeNewsSource } from '@/lib/helpers';
+import { removeNewsSource, shortenParagraph } from '@/lib/helpers';
 import NewsMeta from './NewsMeta';
 
 interface Props {
@@ -20,8 +20,18 @@ interface Props {
 }
 
 export default function NewsCard({ article, openSmartSummaryModal }: Props) {
+  const [imageUrl, setImageUrl] = React.useState(
+    article.urlToImage === 'Unknown'
+      ? '/images/fallback.jpeg'
+      : `/api/image-proxy?url=${encodeURIComponent(article.urlToImage)}`
+  );
+
   const handleClick = (url) => {
     window.open(url, '_blank');
+  };
+
+  const handleImageError = () => {
+    setImageUrl('/images/fallback.jpeg');
   };
 
   return (
@@ -30,11 +40,24 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
         display: 'flex',
         flexDirection: 'column',
         width: 345,
-        maxHeight: 250,
+        maxHeight: 300,
       }}
     >
       <CardActionArea onClick={() => handleClick(article.url)}>
-        <Box sx={{ display: 'flex', p: 1, justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Image
+            src={imageUrl}
+            onError={handleImageError}
+            alt={article.title}
+            width={250}
+            height={100}
+          />
           <CardContent
             sx={{
               maxHeight: '200px',
@@ -49,29 +72,21 @@ export default function NewsCard({ article, openSmartSummaryModal }: Props) {
                 gutterBottom
                 variant="body1"
                 component="div"
-                sx={{ fontWeight: 'bold' }}
+                sx={{ fontWeight: 'bold', textAlign: 'center' }}
               >
                 {removeNewsSource(article.title)}
               </Typography>
+              <Typography
+                gutterBottom
+                variant="body2"
+                component="div"
+                sx={{ textAlign: 'center' }}
+                color="secondary.main"
+              >
+                {shortenParagraph(article.description, 50)}
+              </Typography>
             </Textfit>
           </CardContent>
-
-          <CardMedia
-            component="img"
-            sx={{ width: '100px', height: '80px' }}
-            image={
-              article.urlToImage === null || 'Unknown'
-                ? '/images/fallback.jpeg'
-                : `/api/image-proxy?url=${encodeURIComponent(
-                    article.urlToImage
-                  )}`
-            }
-            alt={`Article image: ${article.title}`}
-            onError={(e: any) => {
-              const target = e.target as HTMLImageElement;
-              target.src = '/images/fallback.jpeg';
-            }}
-          />
         </Box>
 
         <NewsMeta
