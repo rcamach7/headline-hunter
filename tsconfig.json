@@ -4,7 +4,7 @@
     "paths": {
       "@/auth/*": ["src/pages/api/auth/*"],
       "@/lib/*": ["src/lib/*"],
-      "@/hooks/*": ["src/hooks/*"],
+      "@/hooks": ["src/hooks/index.ts"],
       "@/context": ["src/context/index.ts"],
       "@/components/atoms": ["src/components/atoms/index.ts"],
       "@/components/molecules": ["src/components/molecules/index.ts"],
