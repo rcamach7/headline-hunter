@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 
-interface UserPreferences {
-  weatherWidget: boolean;
+export interface UserPreferences {
+  showWeatherWidget: boolean;
 }
 
 export default function useUserPreferences() {
   const [userPreferences, setUserPreferences] = useState<UserPreferences>({
-    weatherWidget: true,
+    showWeatherWidget: true,
   });
 
   function toggleWeatherWidget() {
     setUserPreferences((prevState) => ({
       ...prevState,
-      weatherWidget: !prevState.weatherWidget,
+      weatherWidget: !prevState.showWeatherWidget,
     }));
   }
 

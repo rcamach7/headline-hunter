@@ -3,13 +3,15 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
 import { User } from '@/lib/types';
-import { useRateLimiter } from 'src/hooks/useRateLimiter';
+import { useRateLimiter, useUserPreferences, UserPreferences } from 'src/hooks';
 
 interface UserContextType {
   user: User | null;
   refreshUser: () => {};
   isRateLimited: boolean;
   recordRequest: () => {};
+  userPreferences: UserPreferences;
+  toggleWeatherWidget: () => {};
 }
 
 export const UserContext = createContext(null);
@@ -25,6 +27,7 @@ export const UserContextProvider = ({ children }) => {
   const { data: session } = useSession();
   const [user, setUser] = useState<User>(null);
   const { isRateLimited, recordRequest } = useRateLimiter();
+  const { userPreferences, toggleWeatherWidget } = useUserPreferences();
 
   const fetchUser = async () => {
     try {
@@ -47,7 +50,14 @@ export const UserContextProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, refreshUser, isRateLimited, recordRequest }}
+      value={{
+        user,
+        refreshUser,
+        isRateLimited,
+        recordRequest,
+        userPreferences,
+        toggleWeatherWidget,
+      }}
     >
       {children}
     </UserContext.Provider>

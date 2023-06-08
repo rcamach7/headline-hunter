@@ -8,7 +8,7 @@ import { CategoryCard, SmartSummaryForm } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
 import { useLoadingContext, useFeedbackContext } from '@/context';
-import useAvailableHeight from '@/hooks/useAvailableHeight';
+import { useAvailableHeight } from '@/hooks';
 
 export default function Home() {
   const availableHeight = useAvailableHeight();
