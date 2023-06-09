@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useUserContext } from '@/context';
 import {
   AppBar,
   Box,
@@ -10,9 +9,13 @@ import {
   IconButton,
   useMediaQuery,
 } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import {
+  Menu as MenuIcon,
+  Thunderstorm as ThunderstormIcon,
+} from '@mui/icons-material';
 import axios from 'axios';
 
+import { useUserContext } from '@/context';
 import { Category } from '@/lib/types';
 import DynamicLogo from './DynamicLogo';
 import UserMenuItems from './UserMenuItems';
@@ -20,7 +23,7 @@ import CategoryMenuItems from './CategoryMenuItems';
 import Search from './Search';
 
 export default function SearchAppBar() {
-  const { user } = useUserContext();
+  const { user, userPreferences, toggleWeatherWidget } = useUserContext();
   const [categories, setCategories] = React.useState<Category[]>([]);
   const isWindowDesktop = useMediaQuery('(min-width:600px)');
 
@@ -44,6 +47,10 @@ export default function SearchAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleWeatherWidgetToggle = () => {
+    toggleWeatherWidget();
   };
 
   React.useEffect(() => {
@@ -104,6 +111,21 @@ export default function SearchAppBar() {
 
           {/* Renders S/M Logo Based On ScreenSize */}
           <DynamicLogo />
+
+          <Box sx={{ pr: 1 }}>
+            <IconButton
+              size="small"
+              aria-label="toggle weather widget"
+              aria-controls="toggle-weather"
+              aria-haspopup="false"
+              color={`${
+                userPreferences.showWeatherWidget ? 'primary' : 'secondary'
+              }`}
+              onClick={handleWeatherWidgetToggle}
+            >
+              <ThunderstormIcon />
+            </IconButton>
+          </Box>
 
           <Search categories={categories} />
 

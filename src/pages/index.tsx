@@ -7,13 +7,18 @@ import { WeatherWidget } from '@/components/organisms';
 import { CategoryCard, SmartSummaryForm } from '@/components/molecules';
 import { LoadMoreButton } from '@/components/atoms';
 import { CategoryArticles } from '@/lib/types';
-import { useLoadingContext, useFeedbackContext } from '@/context';
+import {
+  useLoadingContext,
+  useFeedbackContext,
+  useUserContext,
+} from '@/context';
 import { useAvailableHeight } from '@/hooks';
 
 export default function Home() {
   const availableHeight = useAvailableHeight();
   const { isPageLoading, setIsPageLoading } = useLoadingContext();
   const { addAlertMessage } = useFeedbackContext();
+  const { userPreferences } = useUserContext();
 
   const [pageData, setPageData] = useState<{
     categoryArticles: CategoryArticles[];
@@ -129,7 +134,8 @@ export default function Home() {
             loading={isPageLoading}
           />
         </Box>
-        {pageData.categoryArticles.length > 0 && (
+        {pageData.categoryArticles.length > 0 &&
+        userPreferences.showWeatherWidget ? (
           <WeatherWidget
             onDisplayStyling={{
               display: { xs: 'none', ml: 'flex' },
@@ -139,7 +145,7 @@ export default function Home() {
               flexGrow: 0.75,
             }}
           />
-        )}
+        ) : null}
       </Box>
 
       {smartSummaryModal.open && (
