@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { User } from '@/lib/types';
 import ExternalArticleSummary from './ExternalArticleSummary';
+import UserFavoritesModal from './UserFavoritesModal';
 
 interface Props {
   user: User | null;
@@ -35,6 +36,7 @@ export default function UserMenuItems({ user }: Props) {
         </MenuItem>
       )}
       <ExternalArticleSummary />
+      <UserFavoritesModal user={user} />
     </>
   );
 }
