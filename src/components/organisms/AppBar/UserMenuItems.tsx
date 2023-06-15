@@ -13,8 +13,6 @@ interface Props {
 
 export default function UserMenuItems({ user }: Props) {
   const router = useRouter();
-  const [showExternalArticleSummary, setShowExternalArticleSummary] =
-    useState(false);
 
   return (
     <>
