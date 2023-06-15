@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Typography, MenuItem } from '@mui/material';
 import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
