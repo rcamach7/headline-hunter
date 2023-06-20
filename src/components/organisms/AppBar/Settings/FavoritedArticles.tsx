@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Link } from '@mui/material';
 
 import { User } from '@/lib/types';
 import { FavoriteArticleButton } from '@/components/atoms';
@@ -38,7 +38,14 @@ export default function FavoritedArticles({ savedArticles }: Props) {
             }}
           >
             <FavoriteArticleButton articleId={article.id} type="condensed" />
-            <Typography>{article.title}</Typography>
+            <Link
+              target="_blank"
+              rel="noopener"
+              href={article.url}
+              sx={{ pl: 1 }}
+            >
+              {article.title}
+            </Link>
           </Box>
         ))}
       </Box>
