@@ -1,7 +1,5 @@
 import { Typography, MenuItem } from '@mui/material';
 import { signIn, signOut } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 import { User } from '@/lib/types';
 import ExternalArticleSummary from './ExternalArticleSummary';
@@ -12,19 +10,8 @@ interface Props {
 }
 
 export default function UserMenuItems({ user }: Props) {
-  const router = useRouter();
-
   return (
     <>
-      {router.pathname !== '/' && (
-        <MenuItem>
-          <Typography textAlign="center">
-            <Link href="/">
-              <a style={{ textDecoration: 'none', color: 'inherit' }}>Home</a>
-            </Link>
-          </Typography>
-        </MenuItem>
-      )}
       <ExternalArticleSummary />
       <Settings user={user} />
       {user ? (
