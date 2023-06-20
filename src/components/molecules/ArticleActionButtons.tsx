@@ -2,7 +2,6 @@ import { Box, IconButton, Button } from '@mui/material';
 import { SmartToy as SmartToyIcon } from '@mui/icons-material';
 
 import { FavoriteArticleButton } from '@/components/atoms';
-import { useFeedbackContext, useUserContext } from '@/context';
 
 interface Props {
   type: 'full' | 'condensed';
@@ -19,9 +18,6 @@ export default function ArticleActionButtons({
   articleURL,
   openSmartSummaryModal,
 }: Props) {
-  const { user, refreshUser } = useUserContext();
-  const { addAlertMessage } = useFeedbackContext();
-
   const handleOpenSmartSummaryModal = () => {
     openSmartSummaryModal(articleTitle, articleURL);
   };
@@ -34,13 +30,7 @@ export default function ArticleActionButtons({
           display: 'inline',
         }}
       >
-        <FavoriteArticleButton
-          user={user}
-          addAlertMessage={addAlertMessage}
-          articleId={articleId}
-          type="condensed"
-          refreshUser={refreshUser}
-        />
+        <FavoriteArticleButton articleId={articleId} type="condensed" />
         <IconButton
           onClick={handleOpenSmartSummaryModal}
           color="secondary"
@@ -65,13 +55,7 @@ export default function ArticleActionButtons({
           Smart Summary
         </Button>
 
-        <FavoriteArticleButton
-          user={user}
-          addAlertMessage={addAlertMessage}
-          articleId={articleId}
-          type="condensed"
-          refreshUser={refreshUser}
-        />
+        <FavoriteArticleButton articleId={articleId} type="condensed" />
       </Box>
     );
   }

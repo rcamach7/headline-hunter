@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 
 import { User } from '@/lib/types';
+import { FavoriteArticleButton } from '@/components/atoms';
 
 interface Props {
   savedArticles: User['savedArticles'];
@@ -36,6 +37,7 @@ export default function FavoritedArticles({ savedArticles }: Props) {
               justifyContent: 'center',
             }}
           >
+            <FavoriteArticleButton articleId={article.id} type="condensed" />
             <Typography>{article.title}</Typography>
           </Box>
         ))}

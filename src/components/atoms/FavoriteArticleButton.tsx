@@ -6,23 +6,17 @@ import {
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { User, AlertMessage } from '@/lib/types';
+import { useUserContext, useFeedbackContext } from '@/context';
 
 interface Props {
   articleId: string;
   type: 'full' | 'condensed';
-  user: User | null;
-  refreshUser: () => void;
-  addAlertMessage: (message: AlertMessage) => void;
 }
 
-export default function FavoriteArticle({
-  articleId,
-  type,
-  addAlertMessage,
-  refreshUser,
-  user,
-}: Props) {
+export default function FavoriteArticle({ articleId, type }: Props) {
+  const { user, refreshUser } = useUserContext();
+  const { addAlertMessage } = useFeedbackContext();
+
   const [isFavorite, setIsFavorite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
