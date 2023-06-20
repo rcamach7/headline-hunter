@@ -10,9 +10,17 @@ import { Settings } from './Settings';
 
 interface Props {
   user: User | null;
+  toggleWeatherWidget: () => void;
+  userPreferences: {
+    showWeatherWidget: boolean;
+  };
 }
 
-export default function UserMenuItems({ user }: Props) {
+export default function UserMenuItems({
+  user,
+  toggleWeatherWidget,
+  userPreferences,
+}: Props) {
   const router = useRouter();
   return (
     <>
@@ -26,7 +34,11 @@ export default function UserMenuItems({ user }: Props) {
         </MenuItem>
       )}
       <ExternalArticleSummary />
-      <Settings user={user} />
+      <Settings
+        user={user}
+        toggleWeatherWidget={toggleWeatherWidget}
+        userPreferences={userPreferences}
+      />
       {user ? (
         <MenuItem onClick={() => signOut()}>
           <Typography textAlign="center">Logout</Typography>

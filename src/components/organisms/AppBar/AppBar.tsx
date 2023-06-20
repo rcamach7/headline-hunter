@@ -154,7 +154,11 @@ export default function SearchAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <UserMenuItems user={user} />
+              <UserMenuItems
+                user={user}
+                toggleWeatherWidget={toggleWeatherWidget}
+                userPreferences={userPreferences}
+              />
             </Menu>
           </Box>
         </Toolbar>

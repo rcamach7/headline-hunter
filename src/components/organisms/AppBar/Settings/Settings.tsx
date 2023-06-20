@@ -5,6 +5,8 @@ import {
   DialogContent,
   Typography,
   MenuItem,
+  Switch,
+  Box,
 } from '@mui/material';
 
 import { User } from '@/lib/types';
@@ -13,9 +15,17 @@ import FavoritedArticles from './FavoritedArticles';
 
 interface Props {
   user: User | null;
+  toggleWeatherWidget: () => void;
+  userPreferences: {
+    showWeatherWidget: boolean;
+  };
 }
 
-export default function Settings({ user }: Props) {
+export default function Settings({
+  user,
+  toggleWeatherWidget,
+  userPreferences,
+}: Props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -40,6 +50,23 @@ export default function Settings({ user }: Props) {
           <DialogContent>
             <FavoritedCategories savedCategories={user.savedCategories} />
             <FavoritedArticles savedArticles={user.savedArticles} />
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>
+                Weather Widget
+              </Typography>
+              <Switch
+                checked={userPreferences.showWeatherWidget}
+                onChange={toggleWeatherWidget}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            </Box>
           </DialogContent>
         </Dialog>
       </>
