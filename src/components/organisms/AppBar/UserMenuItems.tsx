@@ -3,7 +3,7 @@ import { signIn, signOut } from 'next-auth/react';
 
 import { User } from '@/lib/types';
 import ExternalArticleSummary from './ExternalArticleSummary';
-import Settings from './Settings';
+import { Settings } from './Settings';
 
 interface Props {
   user: User | null;
