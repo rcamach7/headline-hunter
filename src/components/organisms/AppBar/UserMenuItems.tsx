@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { User } from '@/lib/types';
 import ExternalArticleSummary from './ExternalArticleSummary';
-import UserFavoritesModal from './UserFavoritesModal';
+import Settings from './Settings';
 
 interface Props {
   user: User | null;
@@ -25,6 +25,8 @@ export default function UserMenuItems({ user }: Props) {
           </Typography>
         </MenuItem>
       )}
+      <ExternalArticleSummary />
+      <Settings user={user} />
       {user ? (
         <MenuItem onClick={() => signOut()}>
           <Typography textAlign="center">Logout</Typography>
@@ -34,8 +36,6 @@ export default function UserMenuItems({ user }: Props) {
           <Typography textAlign="center">Sign In</Typography>
         </MenuItem>
       )}
-      <ExternalArticleSummary />
-      <UserFavoritesModal user={user} />
     </>
   );
 }

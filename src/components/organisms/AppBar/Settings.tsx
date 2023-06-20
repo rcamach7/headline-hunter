@@ -7,7 +7,7 @@ interface Props {
   user: User | null;
 }
 
-export default function ExternalArticleSummary({ user }: Props) {
+export default function Settings({ user }: Props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -23,10 +23,10 @@ export default function ExternalArticleSummary({ user }: Props) {
     return (
       <>
         <MenuItem onClick={handleClickOpen}>
-          <Typography textAlign="center">User Favorites</Typography>
+          <Typography textAlign="center">Settings</Typography>
         </MenuItem>
         <Dialog open={open} onClose={handleClose}>
-          <p>User Favorite Modal</p>
+          <p>Settings</p>
         </Dialog>
       </>
     );
