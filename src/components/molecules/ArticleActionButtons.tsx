@@ -1,7 +1,7 @@
 import { Box, IconButton, Button } from '@mui/material';
 import { SmartToy as SmartToyIcon } from '@mui/icons-material';
 
-import FavoriteArticleButton from './FavoriteArticleButton';
+import { FavoriteArticleButton } from '@/components/atoms';
 import { useFeedbackContext, useUserContext } from '@/context';
 
 interface Props {
