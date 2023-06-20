@@ -9,6 +9,7 @@ import {
 
 import { User } from '@/lib/types';
 import FavoritedCategories from './FavoritedCategories';
+import FavoritedArticles from './FavoritedArticles';
 
 interface Props {
   user: User | null;
@@ -38,6 +39,7 @@ export default function Settings({ user }: Props) {
           </DialogTitle>
           <DialogContent>
             <FavoritedCategories savedCategories={user.savedCategories} />
+            <FavoritedArticles savedArticles={user.savedArticles} />
           </DialogContent>
         </Dialog>
       </>

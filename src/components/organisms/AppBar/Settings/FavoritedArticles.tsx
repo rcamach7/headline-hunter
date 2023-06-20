@@ -1,3 +1,5 @@
+import { Box, Typography } from '@mui/material';
+
 import { User } from '@/lib/types';
 
 interface Props {
@@ -5,5 +7,39 @@ interface Props {
 }
 
 export default function FavoritedArticles({ savedArticles }: Props) {
-  return <> </>;
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Typography
+        sx={{
+          fontWeight: 'bold',
+          pb: 0.5,
+          textDecoration: 'underline',
+        }}
+      >
+        Favorited Articles
+      </Typography>
+      <Box
+        sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', overflow: 'scroll' }}
+      >
+        {savedArticles.map((article) => (
+          <Box
+            key={article.id}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography>{article.title}</Typography>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
 }
