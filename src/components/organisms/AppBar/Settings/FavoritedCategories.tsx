@@ -4,10 +4,10 @@ import { FavoriteCategoryButton } from '@/components/atoms';
 import { User } from '@/lib/types';
 
 interface Props {
-  user: User;
+  savedCategories: User['savedCategories'];
 }
 
-export default function FavoritedCategories({ user }: Props) {
+export default function FavoritedCategories({ savedCategories }: Props) {
   return (
     <Box
       sx={{
@@ -26,7 +26,7 @@ export default function FavoritedCategories({ user }: Props) {
         Favorited Categories
       </Typography>
       <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-        {user.savedCategories.map((category) => (
+        {savedCategories.map((category) => (
           <Box
             key={category.id}
             sx={{

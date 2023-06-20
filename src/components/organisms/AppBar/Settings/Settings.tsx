@@ -37,7 +37,7 @@ export default function Settings({ user }: Props) {
             Settings
           </DialogTitle>
           <DialogContent>
-            <FavoritedCategories user={user} />
+            <FavoritedCategories savedCategories={user.savedCategories} />
           </DialogContent>
         </Dialog>
       </>
