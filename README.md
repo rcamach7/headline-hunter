@@ -8,7 +8,7 @@
 Check out Headline Hunter, a cool news site that brings together stories from lots of different sources and puts them all in one place. We use ChatGPT to allow you to summarize each article, so you can stay informed even when you're in a hurry!
 </p>
 
-<img src="https://res.cloudinary.com/de2ymful4/image/upload/v1680823086/main-portfolio/projects/Screenshot_2023-04-06_at_4.17.47_PM_hyirtm.png">
+<img src="https://res.cloudinary.com/de2ymful4/image/upload/v1687745105/presentation_final_xszheg.png">
 <div align="center">
 
 [Visit Headline Hunter](https://headline-hunter-production.up.railway.app/)
