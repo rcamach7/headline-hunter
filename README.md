@@ -11,7 +11,7 @@ Check out Headline Hunter, a cool news site that brings together stories from lo
 <img src="https://res.cloudinary.com/de2ymful4/image/upload/v1687745105/presentation_final_xszheg.png">
 <div align="center">
 
-[Visit Headline Hunter](https://headline-hunter-production.up.railway.app/)
+[Visit Headline Hunter](https://rcamach7.github.io/headline-hunter/)
 
 </div>
 
