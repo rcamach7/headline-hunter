@@ -13,19 +13,18 @@ export default function FavoritedCategories({ savedCategories }: Props) {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        mb: 1,
       }}
     >
       <Typography
         sx={{
           fontWeight: 'bold',
           pb: 0.5,
-          textDecoration: 'underline',
         }}
       >
         Favorited Categories
       </Typography>
-      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
         {savedCategories.map((category) => (
           <Box
             key={category.id}
@@ -34,7 +33,7 @@ export default function FavoritedCategories({ savedCategories }: Props) {
               alignItems: 'center',
               justifyContent: 'center',
               border: 1,
-              borderRadius: 2,
+              borderRadius: 1,
               pr: 1,
             }}
           >

@@ -13,14 +13,13 @@ export default function FavoritedArticles({ savedArticles }: Props) {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        mb: 1,
       }}
     >
       <Typography
         sx={{
           fontWeight: 'bold',
           pb: 0.5,
-          textDecoration: 'underline',
         }}
       >
         Favorited Articles

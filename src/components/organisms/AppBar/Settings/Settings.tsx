@@ -7,6 +7,7 @@ import {
   MenuItem,
   Switch,
   Box,
+  Divider,
 } from '@mui/material';
 
 import { User } from '@/lib/types';
@@ -44,17 +45,22 @@ export default function Settings({
           <Typography textAlign="center">Settings</Typography>
         </MenuItem>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle id="alert-dialog-title" textAlign="center">
+          <DialogTitle
+            id="alert-dialog-title"
+            textAlign="center"
+            variant="h4"
+            sx={{ pb: 1 }}
+          >
             Settings
           </DialogTitle>
-          <DialogContent>
+          <Divider variant="middle" sx={{ backgroundColor: '#B6B5B5', p: 0 }} />
+          <DialogContent sx={{ pt: 1 }}>
             <FavoritedCategories savedCategories={user.savedCategories} />
             <FavoritedArticles savedArticles={user.savedArticles} />
             <Box
               sx={{
                 display: 'flex',
                 gap: 1,
-                justifyContent: 'center',
                 alignItems: 'center',
               }}
             >
