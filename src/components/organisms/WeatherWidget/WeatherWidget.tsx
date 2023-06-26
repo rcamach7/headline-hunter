@@ -3,53 +3,64 @@ import { Box, Typography } from '@mui/material';
 
 import DayCard from './DayCard';
 import { Weather } from '@/lib/types';
+import { useUserContext } from '@/context';
 
 interface Props {
   onDisplayStyling: Record<string, unknown>;
 }
 
 export default function WeatherWidget({ onDisplayStyling }: Props) {
+  const { userPreferences } = useUserContext();
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState<Weather>(null);
 
   const fetchLocationByIP = async () => {
-    const response = await fetch('https://ipapi.co/json/');
-    const data = await response.json();
-    setLocation({
-      latitude: data.latitude,
-      longitude: data.longitude,
-    });
+    if (userPreferences && userPreferences.showWeatherWidget) {
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+      setLocation({
+        latitude: data.latitude,
+        longitude: data.longitude,
+      });
+    }
   };
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      const success = (position) => {
-        setLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      };
+    if (userPreferences && userPreferences.showWeatherWidget) {
+      if (navigator.geolocation) {
+        const success = (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        };
 
-      const error = (err) => {
-        if (err.code === err.PERMISSION_DENIED) {
+        const error = (err) => {
+          if (
+            userPreferences.showWeatherWidget &&
+            err.code === err.PERMISSION_DENIED
+          ) {
+            fetchLocationByIP();
+          } else {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+          }
+        };
+
+        const options = {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
+        };
+
+        navigator.geolocation.getCurrentPosition(success, error, options);
+      } else {
+        if (userPreferences.showWeatherWidget) {
+          console.error('Geolocation is not supported by this browser.');
           fetchLocationByIP();
-        } else {
-          console.warn(`ERROR(${err.code}): ${err.message}`);
         }
-      };
-
-      const options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0,
-      };
-
-      navigator.geolocation.getCurrentPosition(success, error, options);
-    } else {
-      console.error('Geolocation is not supported by this browser.');
-      fetchLocationByIP();
+      }
     }
-  }, []);
+  }, [userPreferences?.showWeatherWidget]);
 
   useEffect(() => {
     const fetchWeather = async () => {
